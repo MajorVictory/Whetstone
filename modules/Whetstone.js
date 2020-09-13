@@ -7,13 +7,14 @@ class WhetstoneThemes extends EntityCollection {
         super(...args);
 
 
-        console.log(`+=============================================+
-| __        __   _       _                    |
-| \\ \\      / /__| |_ ___| |_ ___  _ __   ___  |
-|  \\ \\ /\\ / / _ \\ __/ __| __/ _ \\| '_ \\ / _ \\ |
-|   \\ V  V /  __/ |_\\__ \\ || (_) | | | |  __/ |
-|    \\_/\\_/ \\___|\\__|___/\\__\\___/|_| |_|\\___| |
-+=============================================+`);
+        console.log(`+=====================================================+
+| __        ___          _       _                    |
+| \\ \\      / / |__   ___| |_ ___| |_ ___  _ __   ___  |
+|  \\ \\ /\\ / /| '_ \\ / _ \\ __/ __| __/ _ \\| '_ \\ / _ \\ |
+|   \\ V  V / | | | |  __/ |_\\__ \\ || (_) | | | |  __/ |
+|    \\_/\\_/  |_| |_|\\___|\\__|___/\\__\\___/|_| |_|\\___| |
+|                                                     |
++=====================================================+`);
 
         /**
          * A reference to the theme configuration settings
@@ -319,6 +320,68 @@ Hooks.once('WhetstoneReady', () => {
         conflicts: {
             'darksheet': '',
             'dnd-ui': ''
+        },
+    });
+
+    game.themes.register('RetroUI-P5e', {
+
+        // the following keys will be pulled from the module.json
+        // name, title, description, version, author/authors, url
+
+        name: 'A-Thrid-Style',
+        title: 'A Third Style',
+        description: 'A third style to fill in the menu for now.',
+        version: '1.4.3',
+
+        // author/authors will be formattd to fit this format
+        authors: [
+            { name: 'MajorVictory', contact: 'https://github.com/MajorVictory', url: 'https://github.com/MajorVictory' }
+        ],
+
+        // will be merged with 'styles' entry in module.json
+        // these sheets are considered to be the 'core' styles for this theme
+        // these files are always loaded first when the theme is enabed
+        // no system specific themes should be defined here
+        styles: [],
+
+        // FormApplication extended class that creates the options dialog
+        dialog: RetroUIP5eStylesConfigDialog,
+
+        // RetroUICoreConfig extended class that handles theme settings
+        config: RetroUIP5eStylesConfig,
+
+        // (optional) Thumbnail image
+        img: 'modules/Whetstone/images/MajorVictory_64.png',
+
+        // (optional) Large preview image
+        preview: 'modules/Whetstone/preview.png',
+
+        // (optional) Ensure the specified module is loaded before registering theme 
+        dependencies: {
+            'RetroUI-Core': ''
+        },
+
+        // (optional) known compatible systems/versions
+        // if specified, sheets are attempted to be loaded in the following order
+        // 1. /modules/<Module_Name>/styles/systems/<SystemID>.css
+        // 2. /modules/<Module_Name>/styles/systems/<SystemID>-<Version>.css
+        // 
+        // <SystemID> : will be the current active system id
+        // <Version> : will be the current active system's version
+        // 
+        // specified versions are used to indicate to the user if a theme may have issues with their world
+        // These are NOT ENFORCED
+        systems: {
+            'core': '0.6.6',
+            'dnd5e': '0.96'
+        },
+
+        // (optional) known compatibilities
+        compatible: {},
+
+        // (optional) known conflicts
+        conflicts: {
+            'darksheet': ''
         },
     });
 });

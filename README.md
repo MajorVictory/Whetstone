@@ -7,7 +7,7 @@
 <br />
 <p align="center">
   <a href="https://github.com/MajorVictory/RetroUI-P5e">
-    <img src="readme/Whetstone-thumb.png" alt="Logo" width="128" height="128">
+    <img src="images/Whetstone-thumb.png" alt="Logo" width="128" height="128">
   </a>
   <h3 align="center">Whetstone - Foundry Theme Manager</h3>
   <p align="center">

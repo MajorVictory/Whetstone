@@ -1,8 +1,8 @@
 {
-    "WHETSTONE.Config": "Wetstone Options",
+    "WHETSTONE.Config": "Whetstone Options",
     "WHETSTONE.ConfigTitle": "Theme Options",
     "WHETSTONE.ConfigHint": "Customize theme colors and settings.",
-    "WHETSTONE.ThemeEntry": "Wetstone Theme",
+    "WHETSTONE.ThemeEntry": "Whetstone Theme",
 
     "WHETSTONE.InvalidColorFormat": "Invalid Color Format! Must be in hexadecimal format '#rrggbb'",
     "WHETSTONE.ColorOptionCustom": "Custom Color",

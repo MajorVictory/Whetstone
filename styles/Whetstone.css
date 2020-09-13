@@ -103,25 +103,25 @@
 .theme-list .theme .tag.languages {
   background: #224224;
 }
-#WetstoneConfig .expand {
+#WhetstoneConfig .expand {
   flex: 0 0 32px;
   height: 30px;
   margin: -6px 0 0 6px;
   padding: 0;
 }
-#WetstoneConfig .theme-list {
+#WhetstoneConfig .theme-list {
   margin-top: 5px;
   border-top: 1px solid #7a7971;
   height: 600px;
 }
-#WetstoneConfig .theme-list .theme-metadata {
+#WhetstoneConfig .theme-list .theme-metadata {
   flex: 0 0 100%;
 }
-#WetstoneConfig .theme-list .theme-title {
+#WhetstoneConfig .theme-list .theme-title {
   font-weight: bold;
 }
-#WetstoneConfig .theme-list .theme-title,
-#WetstoneConfig .theme-list .theme-metadata,
-#WetstoneConfig .theme-list .theme-description {
+#WhetstoneConfig .theme-list .theme-title,
+#WhetstoneConfig .theme-list .theme-metadata,
+#WhetstoneConfig .theme-list .theme-description {
   color: #191813;
 }
