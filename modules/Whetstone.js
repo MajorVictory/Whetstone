@@ -54,6 +54,9 @@ class WhetstoneThemes extends EntityCollection {
         // (optional) Large preview image
         preview: 'modules/RetroUI-P5e/preview.png',
 
+        // (optional) priority, higher priorities load last (numeric > 0)
+        priority: 1,
+
         // (optional) Ensure the specified module is loaded before registering theme 
         dependencies: {
             'RetroUI-Core': ''
@@ -98,12 +101,13 @@ class WhetstoneThemes extends EntityCollection {
         let moduledata = game.modules.get(module);
 
         data.name = data.name || moduledata.data.name;
-        data._id = module+'/'+data.name;
+        data._id = data.name;
         data.title = data.title || moduledata.data.title;
         data.description = data.description || moduledata.data.description;
         data.version = data.version || moduledata.data.version;
         data.author = data.author || moduledata.data.author;
         data.authors = data.authors || moduledata.data.authors;
+        data.priority = data.priority || 1;
 
         console.log('Whetstone | module: ', module, ' - data: ', data);
 
@@ -112,14 +116,87 @@ class WhetstoneThemes extends EntityCollection {
 
     /**
      * Filter the results in the Compendium pack to only show ones which match a provided search string
-     * @param {string} module    The theme's module id
+     * @param {string} moduleid    The theme's module id
      */
-    activate(module) {
+    async activate(moduleid) {
 
+        let moduledata = this.filter(t => t.data.name == moduleid)[0];
+        if(!moduledata) throw new Error("Whetstone | Cannot activate theme: "+moduleid);
+
+        moduledata.update({active: true});
+
+        let corestyles = await this.getCoreStyles(moduleid);
+        let systemstyles = await this.getSystemStyles(moduleid, game.system.id, game.system.data.version);
+        let allstyles = corestyles.concat(systemstyles);
+
+        for (var i = allstyles.length - 1; i >= 0; i--) {
+            WhetstoneThemes.addStyle(allstyles[i]);
+        }
     }
 
-    getStyle(module, system, version) {
+    async deactivate(moduleid) {
 
+        let moduledata = this.filter(t => t.data.name == moduleid)[0];
+        if(!moduledata) throw new Error("Whetstone | Cannot deactivate theme: "+moduleid);
+
+        moduledata.update({active: false});
+
+        let corestyles = await this.getCoreStyles(moduleid);
+        let systemstyles = await this.getSystemStyles(moduleid, game.system.id, game.system.data.version);
+        let allstyles = corestyles.concat(systemstyles);
+
+        for (var i = allstyles.length - 1; i >= 0; i--) {
+            WhetstoneThemes.removeStyle(allstyles[i]);
+        }
+    }
+
+    async getCoreStyles(moduleid) {
+
+        let path = 'modules/';
+        let validpaths = [];
+
+        let moduledata = this.filter(t => t.data.name == moduleid)[0];
+        if(!moduledata || !moduledata.data.styles) return paths;
+
+        path += moduledata.data.name+'/';
+
+        for (var i = 0; i < moduledata.data.styles.length; i++) {
+            if(await WhetstoneThemes.srcExists(path + moduledata.data.styles[i])) {
+                validpaths.push(path + moduledata.data.styles[i]);
+            }
+        }
+
+        return validpaths;
+    }
+
+    /**
+    * Get an array of stylesheets to load
+    * @param {string} moduleid  module id
+    * @param {string} system    system id
+    * @param {string} version   (optional) specific version
+    * @return {Array.<String>} a list of stylesheet paths
+    **/
+    async getSystemStyles(moduleid, system, version = null) {
+
+        let path = 'modules/';
+        let validpaths = [];
+
+        let moduledata = this.filter(t => t.data.name == moduleid)[0];
+        if(!moduledata || !system) return validpaths;
+
+        path += moduledata.name+'/styles/';
+
+        //try just <system>.css
+        if(await WhetstoneThemes.srcExists(path + system + '.css')) {
+            validpaths.push(path + system + '.css');
+        }
+
+        //look for <system>-<version>.css
+        if(version && await WhetstoneThemes.srcExists(path + system + '-' + version + '.css')) {
+            validpaths.push(path + system + '-' + version + '.css');
+        }
+
+        return validpaths;
     }
     /**
     * Return the Entity class which is featured as a member of this collection
@@ -129,17 +206,39 @@ class WhetstoneThemes extends EntityCollection {
         return WhetstoneTheme;
     }
 
+    /**
+    * The currently active WetstoneTheme instances
+    * @return {WetstoneTheme}
+    */
+    get active() {
+        return this.find(t => t.data.active);
+    }
+
     static get instance() {
         return game.themes;
     }
 
-    get directory() {
-        return null;
+    static removeStyle(path) {
+        let element = $('head link[href="'+path+'"]');
+        if (element) element.remove();
     }
 
-    fromCompendium(data) {
-        data = super.fromCompendium(data);
-        return data;
+    static addStyle(path) {
+        WhetstoneThemes.removeStyle(path);
+        $('<link href="'+path+'" rel="stylesheet" type="text/css" media="all">').appendTo($('head'));
+    }
+
+    /**
+    * Test whether a file source exists by performing a HEAD request against it
+    * @param {string} src    The source URL or path to test
+    * @return {boolean}      Does the file exist at the provided url?
+    */
+    static async srcExists(src) {
+        return fetch(src, { method: 'HEAD' }).then(resp => {
+            return resp.status < 400;
+        }).catch((error) => {
+            return false;
+        });
     }
 }
 
@@ -162,7 +261,14 @@ class WhetstoneTheme extends Entity {
         };
     }
 
-    get visible() { return true; }
+    /** @override */
+    async delete(options) {
+        if ( this.active ) {
+            WhetstoneThemes.deactivate(this.name);
+        }
+        return super.delete(options);
+    }
+
 }
 
 Hooks.once('init', () => {
@@ -271,7 +377,8 @@ Hooks.once('WhetstoneReady', () => {
         // these files are always loaded first when the theme is enabed
         // no system specific themes should be defined here
         styles: [
-            'styles/fonts/loadfonts.css'
+            'styles/fonts/loadfonts.css',
+            'styles/RetroUI-P5e-1.4.0.css'
         ],
 
         // FormApplication extended class that creates the options dialog
@@ -328,7 +435,7 @@ Hooks.once('WhetstoneReady', () => {
         // the following keys will be pulled from the module.json
         // name, title, description, version, author/authors, url
 
-        name: 'A-Thrid-Style',
+        name: 'A-Third-Style',
         title: 'A Third Style',
         description: 'A third style to fill in the menu for now.',
         version: '1.4.3',
@@ -399,9 +506,10 @@ class WhetstoneConfigDialog extends FormApplication {
             title: game.i18n.localize('WHETSTONE.Config'),
             id: 'WhetstoneConfig',
             template: 'modules/Whetstone/templates/settings.html',
-            width: 510,
+            width: 680,
             height: 'auto',
             closeOnSubmit: true,
+            scrollY: [".theme-list"],
             tabs: [{navSelector: ".tabs", contentSelector: "form", initial: "themeselect"}]
         });
     }
