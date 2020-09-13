@@ -1,0 +1,19 @@
+{
+    "WHETSTONE.Config": "Wetstone Options",
+    "WHETSTONE.ConfigTitle": "Theme Options",
+    "WHETSTONE.ConfigHint": "Customize theme colors and settings.",
+    "WHETSTONE.ThemeEntry": "Wetstone Theme",
+
+    "WHETSTONE.InvalidColorFormat": "Invalid Color Format! Must be in hexadecimal format '#rrggbb'",
+    "WHETSTONE.ColorOptionCustom": "Custom Color",
+
+
+    "WHETSTONE.ThemeSelectTab": "Themes",
+    "WHETSTONE.GlobalOptionsTab": "Global Options",
+
+    "WHETSTONE.ConfigureTheme": "Configure Theme",
+
+    "WHETSTONE.Reset": "Reset",
+    "WHETSTONE.Save": "Save",
+    "WHETSTONE.SaveMessage": "Theme Settings Applied"
+}

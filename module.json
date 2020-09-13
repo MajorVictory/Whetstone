@@ -1,0 +1,25 @@
+{
+  "name": "Whetstone",
+  "title": "Whetstone - Foundry Theme Manager",
+  "description": "A theme manager for Foundry",
+  "version": "0.0.1",
+  "author": "MajorVictory",
+  "esmodules": [
+    "modules/Whetstone.js"
+  ],
+  "styles": [
+    "styles/Whetstone.css"
+  ],
+  "languages": [{
+    "lang": "en",
+    "name": "English",
+    "path": "./lang/en.json"
+  }],
+  "scripts": [],
+  "packs": [],
+  "url": "https://github.com/MajorVictory/Whetstone",
+  "manifest": "https://raw.githubusercontent.com/MajorVictory/Whetstone/master/module.json",
+  "download": "",
+  "compatibleCoreVersion": "0.6.6",
+  "minimumCoreVersion": "0.6.6"
+}
