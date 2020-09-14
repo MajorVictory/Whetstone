@@ -24,75 +24,75 @@ class WhetstoneThemes extends EntityCollection {
     }
 
     /*
-    game.themes.register('RetroUI-P5e', {
+game.themes.register('RetroUI-P5e', {
 
-        // the following keys will be pulled from the module.json
-        // name, title, description, version, author/authors, url
+    // the following keys will be pulled from the module.json
+    // name, title, description, version, author/authors, url
 
-        // author/authors will be formattd to fit this format
-        author: [
-            { name: 'MajorVictory', contact: 'https://github.com/MajorVictory', url: 'https://github.com/MajorVictory' }
-        ],
+    // author/authors will be formattd to fit this format
+    author: [
+        { name: 'MajorVictory', contact: 'https://github.com/MajorVictory', url: 'https://github.com/MajorVictory' }
+    ],
 
-        // will be merged with 'styles' entry in module.json
-        // these sheets are considered to be the 'core' styles for this theme
-        // these files are always loaded first when the theme is enabed
-        // no system specific themes should be defined here
-        'styles': [
-            'styles/fonts/loadfonts.css'
-        ],
+    // will be merged with 'styles' entry in module.json
+    // these sheets are considered to be the 'core' styles for this theme
+    // these files are always loaded first when the theme is enabed
+    // no system specific themes should be defined here
+    'styles': [
+        'styles/fonts/loadfonts.css'
+    ],
 
-        // FormApplication extended class that creates the options dialog
-        dialog: RetroUIP5eStylesConfigDialog,
+    // FormApplication extended class that creates the options dialog
+    dialog: RetroUIP5eStylesConfigDialog,
 
-        // RetroUICoreConfig extended class that handles theme settings
-        config: RetroUIP5eStylesConfig,
+    // RetroUICoreConfig extended class that handles theme settings
+    config: RetroUIP5eStylesConfig,
 
-        // (optional) Thumbnail image
-        img: 'modules/RetroUI-P5e/thumb.png',
+    // (optional) Thumbnail image
+    img: 'modules/RetroUI-P5e/thumb.png',
 
-        // (optional) Large preview image
-        preview: 'modules/RetroUI-P5e/preview.png',
+    // (optional) Large preview image
+    preview: 'modules/RetroUI-P5e/preview.png',
 
-        // (optional) priority, higher priorities load last (numeric > 0)
-        priority: 1,
+    // (optional) priority, higher priorities load last (numeric > 0)
+    priority: 1,
 
-        // (optional) Ensure the specified module is loaded before registering theme 
-        dependencies: {
-            'RetroUI-Core': ''
-        },
+    // (optional) Ensure the specified module is loaded before registering theme 
+    dependencies: {
+        'RetroUI-Core': ''
+    },
 
-        // (optional) known compatible systems/versions
-        // if specified, sheets are attempted to be loaded in the following order
-        // 1. /modules/<Module_Name>/styles/systems/<SystemID>.css
-        // 2. /modules/<Module_Name>/styles/systems/<SystemID>-<Version>.css
-        // 
-        // <SystemID> : will be the current active system id
-        // <Version> : will be the current active system's version
-        // 
-        // specified versions are used to indicate to the user if a theme may have issues with their world
-        // These are NOT ENFORCED
-        systems: {
-            'core': '0.6.6',
-            'dnd5e': '0.96',
-            'worldbuilding': '0.36',
-            'pf2e': '1.10.10.1973'
-        },
+    // (optional) known compatible systems/versions
+    // if specified, sheets are attempted to be loaded in the following order
+    // 1. /modules/<Module_Name>/styles/systems/<SystemID>.css
+    // 2. /modules/<Module_Name>/styles/systems/<SystemID>-<Version>.css
+    // 
+    // <SystemID> : will be the current active system id
+    // <Version> : will be the current active system's version
+    // 
+    // specified versions are used to indicate to the user if a theme may have issues with their world
+    // These are NOT ENFORCED
+    systems: {
+        'core': '0.6.6',
+        'dnd5e': '0.96',
+        'worldbuilding': '0.36',
+        'pf2e': '1.10.10.1973'
+    },
 
-        // (optional) known compatibilities
-        compatible: {
-            'alt5e': '1.3.4',
-            'tidy5e-sheet': '0.2.21',
-            'furnace':'',
-            'dice-calculator': ''
-        },
+    // (optional) known compatibilities
+    compatible: {
+        'alt5e': '1.3.4',
+        'tidy5e-sheet': '0.2.21',
+        'furnace':'',
+        'dice-calculator': ''
+    },
 
-        // (optional) known conflicts
-        conflicts: {
-            'darksheet': '',
-            'dnd-ui': ''
-        },
-    });
+    // (optional) known conflicts
+    conflicts: {
+        'darksheet': '',
+        'dnd-ui': ''
+    },
+});
     */
     register(module, data) {
 
@@ -104,10 +104,13 @@ class WhetstoneThemes extends EntityCollection {
         data._id = data.name;
         data.title = data.title || moduledata.data.title;
         data.description = data.description || moduledata.data.description;
+        data.img = data.img || 'modules/Whetstone/images/Whetstone-thumb.png';
+        data.preview = (data.preview || data.img) || 'modules/Whetstone/images/Whetstone-thumb.png';
         data.version = data.version || moduledata.data.version;
         data.author = data.author || moduledata.data.author;
         data.authors = data.authors || moduledata.data.authors;
         data.priority = data.priority || 1;
+        data.active = data.active || false;
 
         console.log('Whetstone | module: ', module, ' - data: ', data);
 
@@ -129,7 +132,7 @@ class WhetstoneThemes extends EntityCollection {
         let systemstyles = await this.getSystemStyles(moduleid, game.system.id, game.system.data.version);
         let allstyles = corestyles.concat(systemstyles);
 
-        for (var i = allstyles.length - 1; i >= 0; i--) {
+        for (let i=0, len=allstyles.length; i < len; ++i) {
             WhetstoneThemes.addStyle(allstyles[i]);
         }
     }
@@ -145,7 +148,7 @@ class WhetstoneThemes extends EntityCollection {
         let systemstyles = await this.getSystemStyles(moduleid, game.system.id, game.system.data.version);
         let allstyles = corestyles.concat(systemstyles);
 
-        for (var i = allstyles.length - 1; i >= 0; i--) {
+        for (let i=0, len=allstyles.length; i < len; ++i) {
             WhetstoneThemes.removeStyle(allstyles[i]);
         }
     }
@@ -184,7 +187,7 @@ class WhetstoneThemes extends EntityCollection {
         let moduledata = this.filter(t => t.data.name == moduleid)[0];
         if(!moduledata || !system) return validpaths;
 
-        path += moduledata.name+'/styles/';
+        path += moduledata.name+'/styles/systems/';
 
         //try just <system>.css
         if(await WhetstoneThemes.srcExists(path + system + '.css')) {
@@ -264,7 +267,7 @@ class WhetstoneTheme extends Entity {
     /** @override */
     async delete(options) {
         if ( this.active ) {
-            WhetstoneThemes.deactivate(this.name);
+            game.themes.deactivate(this.name);
         }
         return super.delete(options);
     }
@@ -305,6 +308,8 @@ Hooks.once('init', () => {
 Hooks.once('ready', () => {
     game.themes = new WhetstoneThemes();
     Hooks.callAll('WhetstoneReady');
+
+    WhetstoneConfig.apply(game.settings.get('Whetstone', 'settings'));
 });
 
 Hooks.once('WhetstoneReady', () => {
@@ -327,10 +332,10 @@ Hooks.once('WhetstoneReady', () => {
         styles: [],
 
         // FormApplication extended class that creates the options dialog
-        dialog: RetroUIP5eStylesConfigDialog,
+        dialog: '',
 
         // RetroUICoreConfig extended class that handles theme settings
-        config: RetroUIP5eStylesConfig,
+        config: '',
 
         // (optional) Thumbnail image
         img: 'modules/Whetstone/images/Whetstone-thumb.png',
@@ -382,16 +387,20 @@ Hooks.once('WhetstoneReady', () => {
         ],
 
         // FormApplication extended class that creates the options dialog
-        dialog: RetroUIP5eStylesConfigDialog,
+        // >                                  This Value ---v
+        // > game.settings.registerMenu('RetroUI-P5e', 'RetroUI-P5e', {...});
+        dialog: 'RetroUI-P5e',
 
         // RetroUICoreConfig extended class that handles theme settings
-        config: RetroUIP5eStylesConfig,
+        // >                              This Value ---v
+        // > game.settings.register('RetroUI-P5e', 'settings', {...});
+        config: 'settings',
 
         // (optional) Thumbnail image
         img: 'modules/Whetstone/images/p5e-thumb.png',
 
         // (optional) Large preview image
-        preview: 'modules/Whetstone/preview.png',
+        preview: 'modules/RetroUI-P5e/readme/Overview-9-4-2020.png',
 
         // (optional) Ensure the specified module is loaded before registering theme 
         dependencies: {
@@ -500,6 +509,10 @@ class RetroUIP5eStylesConfig {}
 
 
 class WhetstoneConfigDialog extends FormApplication {
+    constructor(...args) {
+        super(...args);
+        this._expanded = false;
+    }
 
     static get defaultOptions() {
         return mergeObject(super.defaultOptions, {
@@ -538,6 +551,7 @@ class WhetstoneConfigDialog extends FormApplication {
 
         settings.counts = counts;
         settings.themes = themes;
+        settings.expanded = this._expanded;
         return settings;
     }
 
@@ -546,6 +560,8 @@ class WhetstoneConfigDialog extends FormApplication {
 
         html.find('input, select').change(this.onApply.bind(this));
         html.find('button[name="reset"]').click(this.onReset.bind(this));
+        html.find('button.expand').click(this._onExpandCollapse.bind(this));
+        html.find('button.theme-configure').click(this._onOpenConfig.bind(this));
 
         this.reset = false;
     }
@@ -559,6 +575,29 @@ class WhetstoneConfigDialog extends FormApplication {
         this.render();
     }
 
+    _onExpandCollapse(event) {
+        event.preventDefault();
+        this._expanded = !this._expanded;
+        this.render();
+    }
+
+    _onOpenConfig(event) {
+        event.preventDefault();
+
+        console.log('Whetstone | _onOpenConfig', event);
+
+        let button = $(event.target);
+        let moduleid = button.val();
+
+        let theme = game.themes.filter(t => t.data.name == moduleid)[0];
+        let menuname = theme.data.dialog;
+
+        const menu = game.settings.menus.get(moduleid + '.' + menuname);
+        if ( !menu ) return ui.notifications.error('No submenu found for the provided key');
+        const app = new menu.type();
+        return app.render(true);
+    }
+
     async _updateObject(event, formData) {
         await game.settings.set('Whetstone', 'settings', formData);
         ui.notifications.info(game.i18n.localize("WHETSTONE.SaveMessage"));
@@ -570,7 +609,7 @@ class WhetstoneConfig {
 
     static get getDefaults() {
         return {
-            activatedThemes: []
+
         };
     }
 
@@ -582,6 +621,42 @@ class WhetstoneConfig {
 
         console.log('Whetstone | WhetstoneConfig.apply()', options);
 
+        let activate = [];
+        let deactivate = [];
+
+        for (let k in options) {
+            let v = options[k];
+
+            let theme = game.themes.get(k);
+
+            if (!theme) continue;
+
+            if (v) {
+                activate.push({name: k, priority: options[k+'_priority']});
+            } else {
+                deactivate.push(k);
+            }
+        }
+
+        // sort by priority first, then name in alphabetical
+        if (activate.length > 0) {
+            activate.sort((a, b) => (a.priority > b.priority) ? 1 : (a.priority === b.priority) ? ((a.name > b.name) ? 1 : -1) : -1);
+        }
+
+        console.log('Whetstone | activate', activate);
+        console.log('Whetstone | deactivate', deactivate);
+
+        if (deactivate.length > 0) {
+            for (let i=0, len=deactivate.length; i < len; ++i) {
+                game.themes.deactivate(deactivate[i]);
+            }
+        }
+
+        if (activate.length > 0) {
+            for (let i=0, len=activate.length; i < len; ++i) {
+                game.themes.activate(activate[i].name);
+            }
+        }
     }
 
 

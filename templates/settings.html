@@ -8,6 +8,9 @@
         <a class="item" data-tab="globaloptions">
             <i class="fas fa-comment-alt"></i> {{localize "WHETSTONE.GlobalOptionsTab"}}
         </a>
+        <button type="button" class="expand">
+            <i class="fa {{#if expanded}}fa-angle-double-down{{ else }}fa-angle-double-up{{/if}}"></i>
+        </button>
     </nav>
 
     <!-- Theme Select Tab -->
@@ -17,45 +20,65 @@
          <li class="theme package flexcol" data-theme-name="{{this.name}}">
             <div class="theme-overview package-overview flexrow">
                 <img class="theme-image package-image" src="{{this.img}}" style="width:50px;height:50px;flex: 0 0 50px;margin: 0px 5px;" />
-                <label class="theme-title package-title checkbox">
-                    <input type="checkbox" class="active" name="{{this.name}}" data-dtype="Boolean" {{checked this.active}}>
-                    {{~this.title~}}
-                </label>
+                <div class="flexrow">
+                    <label class="theme-title package-title checkbox">
+                        <input type="checkbox" class="active" name="{{this.name}}" data-dtype="Boolean" {{checked this.active}}>
+                        {{~this.title~}}
+                    </label>
+                    {{#if ../expanded}}
+
+                    {{else}}
+                        {{#if this.systems}}
+                        {{#each this.systems as |version name|}}
+                        <span class="tag version">{{name}} {{version}}</span>
+                        {{/each}}
+                        {{/if}}
+                    {{/if}}
+                </div>
             </div>
-            <ul class="theme-tags">
-                {{#if this.systems}}
-                <li><strong>{{localize "Systems"}}:</strong>
-                {{#each this.systems as |version name|}}
-                <span class="tag version">{{name}} {{version}}</span>
-                {{/each}}
-                </li>
+
+            {{#if ../expanded}}
+            <div class="flexrow">
+                <div class="theme-description package-description">
+                    {{this.description}}
+                    <ul class="theme-tags">
+                        {{#if this.systems}}
+                        <li><strong>{{localize "Systems"}}:</strong>
+                        {{#each this.systems as |version name|}}
+                        <span class="tag version">{{name}} {{version}}</span>
+                        {{/each}}
+                        </li>
+                        {{/if}}
+                        {{#if this.dependencies}}
+                        <li><strong>{{localize "Dependencies"}}:</strong>
+                        {{#each this.dependencies as |name version|}}
+                        <span class="tag javascript">{{name}} {{version}}</span>
+                        {{/each}}
+                        </li>
+                        {{/if}}
+                        {{#if this.compatible}}
+                        <li><strong>{{localize "Compatible"}}:</strong>
+                        {{#each this.compatible as |name version|}}
+                        <span class="tag languages">{{name}} {{version}}</span>
+                        {{/each}}
+                        </li>
+                        {{/if}}
+                        {{#if this.conflicts}}
+                        <li><strong>{{localize "Conflicts"}}:</strong>
+                        {{#each this.conflicts as |name version|}}
+                        <span class="tag unavailable">{{name}} {{version}}</span>
+                        {{/each}}
+                        </li>
+                        {{/if}}
+                    </ul>
+                </div>
+                {{#if this.preview}}
+                <img class="theme-preview package-image" src="{{this.preview}}" style="margin: 5px auto;max-width: 600px;" />
                 {{/if}}
-                {{#if this.dependencies}}
-                <li><strong>{{localize "Dependencies"}}:</strong>
-                {{#each this.dependencies as |name version|}}
-                <span class="tag javascript">{{name}} {{version}}</span>
-                {{/each}}
-                </li>
-                {{/if}}
-                {{#if this.compatible}}
-                <li><strong>{{localize "Compatible"}}:</strong>
-                {{#each this.compatible as |name version|}}
-                <span class="tag languages">{{name}} {{version}}</span>
-                {{/each}}
-                </li>
-                {{/if}}
-                {{#if this.conflicts}}
-                <li><strong>{{localize "Conflicts"}}:</strong>
-                {{#each this.conflicts as |name version|}}
-                <span class="tag unavailable">{{name}} {{version}}</span>
-                {{/each}}
-                </li>
-                {{/if}}
-            </ul>
-            <div class="theme-description package-description">
-                {{this.description}}
             </div>
-            <button type="button" name="configure">
+            {{/if}}
+
+            <button type="button" class="theme-configure" name="configure" value="{{this.name}}" >
                 <i class="fas fa-paint-brush"></i> {{localize "WHETSTONE.ConfigureTheme"}}
             </button>
          </li>
