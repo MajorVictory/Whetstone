@@ -100,36 +100,58 @@ game.themes.register('RetroUI-P5e', {
 
         let moduledata = game.modules.get(module);
 
-        data.name = data.name || moduledata.data.name;
-        data._id = data.name;
-        data.title = data.title || moduledata.data.title;
-        data.description = data.description || moduledata.data.description;
-        data.img = data.img || 'modules/Whetstone/images/Whetstone-thumb.png';
-        data.preview = (data.preview || data.img) || 'modules/Whetstone/images/Whetstone-thumb.png';
-        data.version = data.version || moduledata.data.version;
-        data.author = data.author || moduledata.data.author;
-        data.authors = data.authors || moduledata.data.authors;
-        data.priority = data.priority || 1;
-        data.active = data.active || false;
+        // apply defaults
+        data = mergeObject(data, {
+            name: (data.name || moduledata.data.name),
+            id: (data.name || moduledata.data.name),
+            _id: (data.name || moduledata.data.name)
+        }, {overwrite:false});
+
+
+        let data_data = mergeObject(data, {
+            name: (data.name || moduledata.data.name),
+            title: moduledata.data.title,
+            description: moduledata.data.description,
+            img: 'modules/Whetstone/images/Whetstone-thumb.png',
+            preview: (data.img || 'modules/Whetstone/images/Whetstone-thumb.png'),
+            version: moduledata.data.version,
+            author: moduledata.data.author,
+            authors: moduledata.data.authors,
+
+            hint: '', system: '', version: '', priority: 1,
+            author: '', authors: [], styles: [], substyles: [],
+            variables: [], colorsets: [], dialog: '', config: '',
+            img: '', preview: '', dependencies: {}, systems: {},
+            compatible: {}, conflicts: {}, active: false
+        }, {overwrite:false});
 
         console.log('Whetstone | module: ', module, ' - data: ', data);
 
-        this.insert(new WhetstoneTheme(data, data));
+        this.insert(new WhetstoneTheme(data, data_data));
+    }
+
+    registerColor(moduleid, data) {
+
+        let moduledata = this.get(moduleid);
+        if(!moduledata) throw new Error("Whetstone | Cannot find theme: "+moduleid);
+
+
+
     }
 
     /**
      * Filter the results in the Compendium pack to only show ones which match a provided search string
      * @param {string} moduleid    The theme's module id
      */
-    async activate(moduleid) {
+    activate(moduleid) {
 
-        let moduledata = this.filter(t => t.data.name == moduleid)[0];
+        let moduledata = this.get(moduleid);
         if(!moduledata) throw new Error("Whetstone | Cannot activate theme: "+moduleid);
 
         moduledata.update({active: true});
 
-        let corestyles = await this.getCoreStyles(moduleid);
-        let systemstyles = await this.getSystemStyles(moduleid, game.system.id, game.system.data.version);
+        let corestyles = this.getCoreStyles(moduleid);
+        let systemstyles = this.getSubStyles(moduleid, game.system.id, game.system.data.version);
         let allstyles = corestyles.concat(systemstyles);
 
         for (let i=0, len=allstyles.length; i < len; ++i) {
@@ -137,15 +159,15 @@ game.themes.register('RetroUI-P5e', {
         }
     }
 
-    async deactivate(moduleid) {
+    deactivate(moduleid) {
 
-        let moduledata = this.filter(t => t.data.name == moduleid)[0];
+        let moduledata = this.get(moduleid);
         if(!moduledata) throw new Error("Whetstone | Cannot deactivate theme: "+moduleid);
 
         moduledata.update({active: false});
 
-        let corestyles = await this.getCoreStyles(moduleid);
-        let systemstyles = await this.getSystemStyles(moduleid, game.system.id, game.system.data.version);
+        let corestyles = this.getCoreStyles(moduleid);
+        let systemstyles = this.getSubStyles(moduleid, game.system.id, game.system.data.version);
         let allstyles = corestyles.concat(systemstyles);
 
         for (let i=0, len=allstyles.length; i < len; ++i) {
@@ -153,23 +175,10 @@ game.themes.register('RetroUI-P5e', {
         }
     }
 
-    async getCoreStyles(moduleid) {
-
-        let path = 'modules/';
-        let validpaths = [];
-
-        let moduledata = this.filter(t => t.data.name == moduleid)[0];
-        if(!moduledata || !moduledata.data.styles) return paths;
-
-        path += moduledata.data.name+'/';
-
-        for (var i = 0; i < moduledata.data.styles.length; i++) {
-            if(await WhetstoneThemes.srcExists(path + moduledata.data.styles[i])) {
-                validpaths.push(path + moduledata.data.styles[i]);
-            }
-        }
-
-        return validpaths;
+    getCoreStyles(moduleid) {
+        let moduledata = this.get(moduleid);
+        if(!moduledata) throw new Error("Whetstone | Cannot find theme: "+moduleid);
+        return moduledata.data.styles;
     }
 
     /**
@@ -179,27 +188,51 @@ game.themes.register('RetroUI-P5e', {
     * @param {string} version   (optional) specific version
     * @return {Array.<String>} a list of stylesheet paths
     **/
-    async getSystemStyles(moduleid, system, version = null) {
+    getSubStyles(moduleid, system = '', version = '') {
 
-        let path = 'modules/';
-        let validpaths = [];
+        let moduledata = this.get(moduleid);
+        if(!moduledata) throw new Error("Whetstone | Cannot find theme: "+moduleid);
 
-        let moduledata = this.filter(t => t.data.name == moduleid)[0];
-        if(!moduledata || !system) return validpaths;
+        let styles = [];
+        let matches = [];
 
-        path += moduledata.name+'/styles/systems/';
+        if (system && version) {
+            console.log('Whetstone | system && version', system, version);
+            matches = moduledata.data.substyles.filter(
+                substyle => substyle.system == system && (substyle.version == version || isNewerVersion(version, substyle.version))
+            );
+            console.log('Whetstone | filter', matches);
 
-        //try just <system>.css
-        if(await WhetstoneThemes.srcExists(path + system + '.css')) {
-            validpaths.push(path + system + '.css');
+            matches = matches ? matches.filter(substyle => substyle.activate == 'auto' || substyle.active) : [];
+
+
+        } else if (system && !version) {
+            console.log('Whetstone | system && !version', system, version);
+            matches = moduledata.data.substyles.filter(substyle => substyle.system == system && !substyle.version);
+
+            console.log('Whetstone | filter', matches);
+            matches = matches ? matches.filter(substyle => substyle.activate == 'auto' || substyle.active) : [];
+
+
+        } else {
+            console.log('Whetstone | !system && !version', system, version);
+            matches = moduledata.data.substyles.filter(substyle => !substyle.system && !substyle.version);
+
+            console.log('Whetstone | filter', matches);
+            matches = matches ? matches.filter(substyle => substyle.activate == 'manual' && substyle.active) : [];
+
         }
 
-        //look for <system>-<version>.css
-        if(version && await WhetstoneThemes.srcExists(path + system + '-' + version + '.css')) {
-            validpaths.push(path + system + '-' + version + '.css');
-        }
+        console.log('Whetstone | getSubStyles', matches);
 
-        return validpaths;
+        if (matches) {
+            for (let i=0, len=matches.length; i < len; ++i) {
+                styles = styles.concat(matches[i].styles);
+                
+            }
+            return styles;
+        }
+        return [];
     }
     /**
     * Return the Entity class which is featured as a member of this collection
@@ -246,7 +279,6 @@ game.themes.register('RetroUI-P5e', {
 }
 
 class WhetstoneTheme extends Entity {
-
     /**
     * Configure the attributes of the JournalEntry Entity
     *
@@ -271,7 +303,6 @@ class WhetstoneTheme extends Entity {
         }
         return super.delete(options);
     }
-
 }
 
 Hooks.once('init', () => {
@@ -316,197 +347,33 @@ Hooks.once('WhetstoneReady', () => {
     console.log('Whetstone | Ready');
 
      game.themes.register('Whetstone', {
-
-        // the following keys will be pulled from the module.json
-        // name, title, description, version, author/authors, url
-
-        // author/authors will be formattd to fit this format
-        authors: [
-            { name: 'MajorVictory', contact: 'https://github.com/MajorVictory', url: 'https://github.com/MajorVictory' }
+        id: 'OceanBlues',
+        name: 'OceanBlues',
+        title: 'Ocean Blues',
+        description: 'An example Style for Whetstone with static colors',
+        version: '1.0.0',
+        authors: [{ name: 'MajorVictory', contact: 'https://github.com/MajorVictory', url: 'https://github.com/MajorVictory' }],
+        styles: ['modules/Whetstone/styles/OceanBlues.css'],
+        variables: [
+            {name: '--OceanBlues-bg-color', value: '#3D5A80', type: 'color', presets: ''},
+            {name: '--OceanBlues-text-light-color', value: '#98C1D9', type: 'color', presets: ''},
+            {name: '--OceanBlues-text-dark-color', value: '#102632', type: 'color', presets: ''},
+            {name: '--OceanBlues-text-highlight-color', value: '#72B9D5', type: 'color', presets: ''},
+            {name: '--OceanBlues-text-selection-color', value: '#B0C2BD', type: 'color', presets: ''},
+            {name: '--OceanBlues-fg-color', value: '#E0FBFC', type: 'color', presets: ''},
+            {name: '--OceanBlues-highlight-color', value: '#EE6C4D', type: 'color', presets: ''},
+            {name: '--OceanBlues-border-color', value: '#293241', type: 'color', presets: ''}
         ],
-
-        // will be merged with 'styles' entry in module.json
-        // these sheets are considered to be the 'core' styles for this theme
-        // these files are always loaded first when the theme is enabed
-        // no system specific themes should be defined here
-        styles: [],
-
-        // FormApplication extended class that creates the options dialog
         dialog: '',
-
-        // RetroUICoreConfig extended class that handles theme settings
         config: '',
-
-        // (optional) Thumbnail image
         img: 'modules/Whetstone/images/Whetstone-thumb.png',
-
-        // (optional) Large preview image
-        preview: 'modules/Whetstone/preview.png',
-
-        // (optional) Ensure the specified module is loaded before registering theme 
+        preview: 'modules/Whetstone/images/OceanBlues-preview.png',
         dependencies: {},
-
-        // (optional) known compatible systems/versions
-        // if specified, sheets are attempted to be loaded in the following order
-        // 1. /modules/<Module_Name>/styles/systems/<SystemID>.css
-        // 2. /modules/<Module_Name>/styles/systems/<SystemID>-<Version>.css
-        // 
-        // <SystemID> : will be the current active system id
-        // <Version> : will be the current active system's version
-        // 
-        // specified versions are used to indicate to the user if a theme may have issues with their world
-        // These are NOT ENFORCED
-        systems: {
-            'core': '0.6.6'
-        },
-
-        // (optional) known compatibilities
+        systems: { 'core': '0.6.6' },
         compatible: {},
-
-        // (optional) known conflicts
-        conflicts: {},
-    });
-
-    game.themes.register('RetroUI-P5e', {
-
-        // the following keys will be pulled from the module.json
-        // name, title, description, version, author/authors, url
-
-        // author/authors will be formattd to fit this format
-        authors: [
-            { name: 'MajorVictory', contact: 'https://github.com/MajorVictory', url: 'https://github.com/MajorVictory' }
-        ],
-
-        // will be merged with 'styles' entry in module.json
-        // these sheets are considered to be the 'core' styles for this theme
-        // these files are always loaded first when the theme is enabed
-        // no system specific themes should be defined here
-        styles: [
-            'styles/fonts/loadfonts.css',
-            'styles/RetroUI-P5e-1.4.0.css'
-        ],
-
-        // FormApplication extended class that creates the options dialog
-        // >                                  This Value ---v
-        // > game.settings.registerMenu('RetroUI-P5e', 'RetroUI-P5e', {...});
-        dialog: 'RetroUI-P5e',
-
-        // RetroUICoreConfig extended class that handles theme settings
-        // >                              This Value ---v
-        // > game.settings.register('RetroUI-P5e', 'settings', {...});
-        config: 'settings',
-
-        // (optional) Thumbnail image
-        img: 'modules/Whetstone/images/p5e-thumb.png',
-
-        // (optional) Large preview image
-        preview: 'modules/RetroUI-P5e/readme/Overview-9-4-2020.png',
-
-        // (optional) Ensure the specified module is loaded before registering theme 
-        dependencies: {
-            'RetroUI-Core': ''
-        },
-
-        // (optional) known compatible systems/versions
-        // if specified, sheets are attempted to be loaded in the following order
-        // 1. /modules/<Module_Name>/styles/systems/<SystemID>.css
-        // 2. /modules/<Module_Name>/styles/systems/<SystemID>-<Version>.css
-        // 
-        // <SystemID> : will be the current active system id
-        // <Version> : will be the current active system's version
-        // 
-        // specified versions are used to indicate to the user if a theme may have issues with their world
-        // These are NOT ENFORCED
-        systems: {
-            'core': '0.6.6',
-            'dnd5e': '0.96',
-            'worldbuilding': '0.36',
-            'pf2e': '1.10.10.1973'
-        },
-
-        // (optional) known compatibilities
-        compatible: {
-            'alt5e': '1.3.4',
-            'tidy5e-sheet': '0.2.21',
-            'furnace':'',
-            'dice-calculator': ''
-        },
-
-        // (optional) known conflicts
-        conflicts: {
-            'darksheet': '',
-            'dnd-ui': ''
-        },
-    });
-
-    game.themes.register('RetroUI-P5e', {
-
-        // the following keys will be pulled from the module.json
-        // name, title, description, version, author/authors, url
-
-        name: 'A-Third-Style',
-        title: 'A Third Style',
-        description: 'A third style to fill in the menu for now.',
-        version: '1.4.3',
-
-        // author/authors will be formattd to fit this format
-        authors: [
-            { name: 'MajorVictory', contact: 'https://github.com/MajorVictory', url: 'https://github.com/MajorVictory' }
-        ],
-
-        // will be merged with 'styles' entry in module.json
-        // these sheets are considered to be the 'core' styles for this theme
-        // these files are always loaded first when the theme is enabed
-        // no system specific themes should be defined here
-        styles: [],
-
-        // FormApplication extended class that creates the options dialog
-        dialog: RetroUIP5eStylesConfigDialog,
-
-        // RetroUICoreConfig extended class that handles theme settings
-        config: RetroUIP5eStylesConfig,
-
-        // (optional) Thumbnail image
-        img: 'modules/Whetstone/images/MajorVictory_64.png',
-
-        // (optional) Large preview image
-        preview: 'modules/Whetstone/preview.png',
-
-        // (optional) Ensure the specified module is loaded before registering theme 
-        dependencies: {
-            'RetroUI-Core': ''
-        },
-
-        // (optional) known compatible systems/versions
-        // if specified, sheets are attempted to be loaded in the following order
-        // 1. /modules/<Module_Name>/styles/systems/<SystemID>.css
-        // 2. /modules/<Module_Name>/styles/systems/<SystemID>-<Version>.css
-        // 
-        // <SystemID> : will be the current active system id
-        // <Version> : will be the current active system's version
-        // 
-        // specified versions are used to indicate to the user if a theme may have issues with their world
-        // These are NOT ENFORCED
-        systems: {
-            'core': '0.6.6',
-            'dnd5e': '0.96'
-        },
-
-        // (optional) known compatibilities
-        compatible: {},
-
-        // (optional) known conflicts
-        conflicts: {
-            'darksheet': ''
-        },
+        conflicts: {}
     });
 });
-
-
-class RetroUIP5eStylesConfigDialog extends FormApplication {}
-class RetroUIP5eStylesConfig {}
-
-
 
 class WhetstoneConfigDialog extends FormApplication {
     constructor(...args) {
@@ -584,12 +451,8 @@ class WhetstoneConfigDialog extends FormApplication {
     _onOpenConfig(event) {
         event.preventDefault();
 
-        console.log('Whetstone | _onOpenConfig', event);
-
-        let button = $(event.target);
-        let moduleid = button.val();
-
-        let theme = game.themes.filter(t => t.data.name == moduleid)[0];
+        let moduleid = $(event.target).val();
+        let theme = game.themes.get(moduleid);
         let menuname = theme.data.dialog;
 
         const menu = game.settings.menus.get(moduleid + '.' + menuname);

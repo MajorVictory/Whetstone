@@ -8,7 +8,7 @@
     "modules/Whetstone.js"
   ],
   "styles": [
-    "styles/Whetstone.css"
+    "styles/Whetstone-core.css"
   ],
   "languages": [{
     "lang": "en",
