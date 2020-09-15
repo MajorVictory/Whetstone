@@ -1,35 +1,3 @@
-{{#*inline "settingPartial"}}
-<div class="form-group">
-    <label>{{localize this.name}}</label>
-    <div class="form-fields">
-
-        {{#if this.isCheckbox}}
-        <input type="checkbox" name="{{this.module}}.{{this.key}}" data-dtype="Boolean" {{checked this.value}}/>
-
-        {{else if this.isSelect}}
-        <select name="{{this.module}}.{{this.key}}">
-            {{#select this.value}}
-            {{#each this.choices as |name k|}}
-            <option value="{{k}}">{{localize name}}</option>
-            {{/each}}
-            {{/select}}
-        </select>
-
-        {{else if this.isRange}}
-        <input type="range" name="{{this.module}}.{{this.key}}" data-dtype="Number" value="{{ this.value }}"
-               min="{{ this.range.min }}" max="{{ this.range.max }}" step="{{ this.range.step }}"/>
-        <span class="range-value">{{this.value}}</span>
-
-        {{else}}
-        <input type="text" name="{{this.module}}.{{this.key}}" value="{{this.value}}" data-dtype="{{this.type}}"/>
-        {{/if}}
-    </div>
-
-    <p class="notes">{{localize this.hint}}</p>
-</div>
-{{/inline}}
-
-
 <form autocomplete="off" onsubmit="event.preventDefault();" class="Whetstone">
 
     <!-- Sheet Navigation Tabs -->

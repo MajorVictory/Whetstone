@@ -1,18 +1,41 @@
 {
-    "WHETSTONE.Config": "Whetstone Options",
-    "WHETSTONE.ConfigTitle": "Theme Options",
+    "WHETSTONE.Config": "Whetstone Theme Options",
+    "WHETSTONE.ConfigTitle": "Whetstone Options",
     "WHETSTONE.ConfigHint": "Customize theme colors and settings.",
+
+    "WHETSTONE.ThemeSelectTab": "Themes",
+    "WHETSTONE.GlobalOptionsTab": "Global Options",
+    "WHETSTONE.ThemeColorsTab": "Colors",
+    "WHETSTONE.ThemeSettingsTab": "Settings",
+    "WHETSTONE.SubstylesTab": "Substyles",
+
     "WHETSTONE.ThemeEntry": "Whetstone Theme",
+
+    "WHETSTONE.ConfigureTheme": "Configure Theme",
 
     "WHETSTONE.InvalidColorFormat": "Invalid Color Format! Must be in hexadecimal format '#rrggbb'",
     "WHETSTONE.ColorOptionCustom": "Custom Color",
 
+    "WHETSTONE.BackgroundColor": "Background Color",
+    "WHETSTONE.ForegroundColor": "Foreground Color",
+    "WHETSTONE.TextColor": "Text Color",
+    "WHETSTONE.LinkColor": "Link Color",
+    "WHETSTONE.HighlightColor": "Highlight Color",
+    "WHETSTONE.SelectionColor": "Selection Color",
+    "WHETSTONE.ShadowColor": "Shadow Color",
+    "WHETSTONE.BorderColor": "Border Color",
+    "WHETSTONE.LightColor": "Light Color",
+    "WHETSTONE.DarkColor": "Dark Color",
+    "WHETSTONE.OutlineColor": "Outline Color",
+    "WHETSTONE.HoverColor": "Hover Color",
+    "WHETSTONE.ActiveColor": "Active Color",
+    "WHETSTONE.PrimaryColor": "Primary Color",
+    "WHETSTONE.SecondaryColor": "Secondary Color",
+    "WHETSTONE.TertiaryColor": "Tertiary Color",
+    "WHETSTONE.AlternateColor": "Alternate Color",
 
-    "WHETSTONE.ThemeSelectTab": "Themes",
-    "WHETSTONE.GlobalOptionsTab": "Global Options",
-
-    "WHETSTONE.ConfigureTheme": "Configure Theme",
-
+    "WHETSTONE.Open": "Open",
+    "WHETSTONE.Edit": "Edit",
     "WHETSTONE.Reset": "Reset",
     "WHETSTONE.Save": "Save",
     "WHETSTONE.SaveMessage": "Theme Settings Applied"

@@ -1,0 +1,117 @@
+{{#*inline "settingPartial"}}
+<div class="form-group">
+    <label>{{localize this.name}}</label>
+    {{#if this.isColor}}
+    <div class="form-fields ws-color-input flexcol" style="flex-direction: column;">
+        <select name="{{this.theme}}.{{this.key}}" class="ws-color-value">
+            <option value="custom">{{localize "WHETSTONE.ColorOptionCustom"}}</option>
+            {{#select this.value}}
+            {{#each this.choices as |name k|}}
+            <option value="{{k}}">{{localize name}}</option>
+            {{/each}}
+            {{/select}}
+        </select>
+        <div class="flexrow" style="margin-top: 5px;">
+            <input type="text" name="{{this.theme}}.{{this.key}}" class="ws-color-value" value="{{this.value}}" data-dtype="String"/>
+            <input type="color" name="{{this.theme}}.{{this.key}}" class="ws-color-value" value="{{this.value}}" data-edit="{{this.theme}}.{{this.key}}"/>
+        </div>
+    </div>
+    {{else}}
+    <div class="form-fields">
+
+        {{#if this.isCheckbox}}
+        <input type="checkbox" name="{{theme.name}}.{{this.key}}" data-dtype="Boolean" {{checked this.value}}/>
+
+        {{else if this.isSelect}}
+        <select name="{{theme.name}}.{{this.key}}">
+            {{#select this.value}}
+            {{#each this.choices as |name k|}}
+            <option value="{{k}}">{{localize name}}</option>
+            {{/each}}
+            {{/select}}
+        </select>
+
+        {{else if this.isRange}}
+        <input type="range" name="{{theme.name}}.{{this.key}}" data-dtype="Number" value="{{ this.value }}"
+               min="{{ this.range.min }}" max="{{ this.range.max }}" step="{{ this.range.step }}"/>
+        <span class="range-value">{{this.value}}</span>
+
+        {{else}}
+        <input type="text" name="{{theme.name}}.{{this.key}}" value="{{this.value}}" data-dtype="{{this.type}}"/>
+        {{/if}}
+    </div>
+    {{/if}}
+
+    <p class="notes">{{localize this.hint}}</p>
+</div>
+{{/inline}}
+
+
+<form autocomplete="off" onsubmit="event.preventDefault();" class="{{theme.name}}">
+
+    <header class="sheet-header">
+        <img src="{{theme.img}}" title="{{theme.name}}" height="32" width="32"/>
+        <h1>{{theme.title}}</h1>
+    </header>
+
+    <!-- Sheet Navigation Tabs -->
+    <nav class="sheet-tabs tabs" data-group="sections">
+        <a class="item" data-tab="themecolors">
+            <i class="fas fa-paint-brush"></i> {{localize "WHETSTONE.ThemeColorsTab"}}
+        </a>
+        <a class="item" data-tab="themesettings">
+            <i class="fas fa-tasks"></i> {{localize "WHETSTONE.ThemeSettingsTab"}}
+        </a>
+        <a class="item" data-tab="substyles">
+            <i class="fas fa-tasks"></i> {{localize "WHETSTONE.SubstylesTab"}}
+        </a>
+    </nav>
+
+    <!-- Main Content Section -->
+    <section id="config-tabs" class="content">
+
+        <!-- Theme Colors Tab -->
+        <div class="tab" data-tab="themecolors" data-group="sections">
+            <div class="settings-list">
+                {{#each settings.colors}}
+                {{> settingPartial}}
+                {{else}}
+                <p class="notes">{{localize 'SETTINGS.None'}}</p>
+                {{/each}}
+            </div>
+        </div>
+
+        <!-- Theme Settings Tab -->
+        <div class="tab" data-tab="themesettings" data-group="sections">
+            <div class="settings-list">
+                {{#each settings.settings}}
+                {{> settingPartial}}
+                {{else}}
+                <p class="notes">{{localize 'SETTINGS.None'}}</p>
+                {{/each}}
+            </div>
+        </div>
+
+        <!-- Substyles Tab -->
+        <div class="tab" data-tab="substyles" data-group="sections">
+            <div class="settings-list">
+                {{#each settings.sybstyles}}
+                {{> settingPartial}}
+                {{else}}
+                <p class="notes">{{localize 'SETTINGS.None'}}</p>
+                {{/each}}
+            </div>
+        </div>
+
+    </section>
+
+    <!-- Footer -->
+    <footer class="sheet-footer flexrow">
+        <button type="submit" name="submit">
+            <i class="far fa-save"></i> {{localize 'SETTINGS.Save'}}
+        </button>
+        <button type="button" name="reset">
+            <i class="fas fa-undo"></i> {{localize 'SETTINGS.Reset'}}
+        </button>
+    </footer>
+</form>
