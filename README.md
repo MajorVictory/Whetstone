@@ -11,7 +11,7 @@
   </a>
   <h3 align="center">Whetstone - Foundry Theme Manager</h3>
   <p align="center">
-    A theme manager for Foundry
+    A robust theme manager for Foundry
     <br />
     <br />
     <a href="https://github.com/MajorVictory/Whetstone/issues">Report Bug / Request Feature</a>
@@ -26,10 +26,14 @@
  * *FoundryVTT* 0.6.5-0.6.6
 
 **[Known Issues]**
- * *Unknown Compatibility* with game specific sheets and dialogs
+ * Substyles don't work yet
+ * Changing styles produces some console errors, but works fine >_>
  * [Report Problems](https://github.com/MajorVictory/Whetstone/issues)
 
-### Latest Release
+### Latest Release: **None** *Alpha testers only*
+
+This module is currently in **ACTIVE DEVELOPMENT** and is only meant for alpha feedback and testing.
+Documentation will be written eventually, but for now, there's tons of comments in the code.
 
 You can download the module in it's current state by pasting the following manifest url into Foundry.
 
@@ -42,6 +46,8 @@ You can download the module in it's current state by pasting the following manif
 [Previous Versions Changelog](CHANGELOG.md)
 
 ## Screenshots 
+
+![](images/OceanBlues-Preview.png)
 
 
 ## License
