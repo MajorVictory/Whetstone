@@ -1,29 +1,32 @@
 {{#*inline "settingPartial"}}
 <div class="form-group">
-    <label>{{localize this.name}}</label>
+    <div class="flexcol">
+        <label>{{localize this.name}}</label>
+        {{#if this.hint}}
+        <p class="notes">{{localize this.hint}}</p>
+        {{/if}}
+    </div>
     {{#if this.isColor}}
-    <div class="form-fields ws-color-input flexcol" style="flex-direction: column;">
-        <select name="{{this.theme}}.{{this.key}}" class="ws-color-value">
+    <div class="form-fields ws-color-input">
+        <select class="ws-color-value">
             <option value="custom">{{localize "WHETSTONE.ColorOptionCustom"}}</option>
-            {{#select this.value}}
             {{#each this.choices as |name k|}}
             <option value="{{k}}">{{localize name}}</option>
             {{/each}}
-            {{/select}}
         </select>
         <div class="flexrow" style="margin-top: 5px;">
-            <input type="text" name="{{this.theme}}.{{this.key}}" class="ws-color-value" value="{{this.value}}" data-dtype="String"/>
-            <input type="color" name="{{this.theme}}.{{this.key}}" class="ws-color-value" value="{{this.value}}" data-edit="{{this.theme}}.{{this.key}}"/>
+            <input type="text" name="{{this.key}}" class="ws-color-value" value="{{this.value}}" data-dtype="String"/>
+            <input type="color" class="ws-color-value" value="{{this.value}}" data-edit="{{this.key}}"/>
         </div>
     </div>
     {{else}}
     <div class="form-fields">
 
         {{#if this.isCheckbox}}
-        <input type="checkbox" name="{{theme.name}}.{{this.key}}" data-dtype="Boolean" {{checked this.value}}/>
+        <input type="checkbox" name="{{this.key}}" data-dtype="Boolean" {{checked this.value}}/>
 
         {{else if this.isSelect}}
-        <select name="{{theme.name}}.{{this.key}}">
+        <select name="{{this.key}}">
             {{#select this.value}}
             {{#each this.choices as |name k|}}
             <option value="{{k}}">{{localize name}}</option>
@@ -32,26 +35,24 @@
         </select>
 
         {{else if this.isRange}}
-        <input type="range" name="{{theme.name}}.{{this.key}}" data-dtype="Number" value="{{ this.value }}"
+        <input type="range" name="{{this.key}}" data-dtype="Number" value="{{ this.value }}"
                min="{{ this.range.min }}" max="{{ this.range.max }}" step="{{ this.range.step }}"/>
         <span class="range-value">{{this.value}}</span>
 
         {{else}}
-        <input type="text" name="{{theme.name}}.{{this.key}}" value="{{this.value}}" data-dtype="{{this.type}}"/>
+        <input type="text" name="{{this.key}}" value="{{this.value}}" data-dtype="{{this.type}}"/>
         {{/if}}
     </div>
     {{/if}}
-
-    <p class="notes">{{localize this.hint}}</p>
 </div>
 {{/inline}}
 
 
 <form autocomplete="off" onsubmit="event.preventDefault();" class="{{theme.name}}">
 
-    <header class="sheet-header">
-        <img src="{{theme.img}}" title="{{theme.name}}" height="32" width="32"/>
-        <h1>{{theme.title}}</h1>
+    <header class="sheet-header flexrow">
+        <img src="{{theme.options.img}}" title="{{theme.name}}" height="48" width="48"/>
+        <h1>{{theme.options.title}}</h1>
     </header>
 
     <!-- Sheet Navigation Tabs -->

@@ -29,6 +29,12 @@
   margin: 0;
   color: #b5b3a4;
 }
+.theme-list .theme .theme-overview .theme-image {
+  width:50px;
+  height:50px;
+  flex: 0 0 50px;
+  margin: 0px 5px;
+}
 .theme-list .theme .theme-description {
   flex: 0 0 100%;
   margin: 3px 0;
@@ -103,25 +109,44 @@
 .theme-list .theme .tag.languages {
   background: #224224;
 }
-#WhetstoneConfig .expand {
+#WhetstoneCoreConfig .expand {
   flex: 0 0 32px;
   height: 30px;
   margin: -6px 0 0 6px;
   padding: 0;
 }
-#WhetstoneConfig .theme-list {
+
+#WhetstoneCoreConfig nav.tabs,
+#WhetstoneThemeConfigDialog nav.tabs {
+    flex: 0 0 32px;
+    line-height: 32px;
+    font-size: 16px;
+    border-bottom: 1px solid #000;
+}
+
+#WhetstoneCoreConfig .theme-list {
   margin-top: 5px;
   border-top: 1px solid #7a7971;
   height: 600px;
 }
-#WhetstoneConfig .theme-list .theme-metadata {
+#WhetstoneCoreConfig .theme-list .theme-metadata {
   flex: 0 0 100%;
 }
-#WhetstoneConfig .theme-list .theme-title {
+#WhetstoneCoreConfig .theme-list .theme-title {
   font-weight: bold;
 }
-#WhetstoneConfig .theme-list .theme-title,
-#WhetstoneConfig .theme-list .theme-metadata,
-#WhetstoneConfig .theme-list .theme-description {
+#WhetstoneCoreConfig .theme-list .theme-title,
+#WhetstoneCoreConfig .theme-list .theme-metadata,
+#WhetstoneCoreConfig .theme-list .theme-description {
   color: #191813;
+}
+
+#WhetstoneThemeConfigDialog .sheet-header img {
+  flex: 0 0 48px;
+  width: 48px;
+}
+
+form .form-group > .ws-color-input {
+    flex: 2;
+    flex-direction: column;
 }

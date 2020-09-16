@@ -19,11 +19,11 @@
          {{#each themes}}
          <li class="theme package flexcol" data-theme-name="{{this.name}}">
             <div class="theme-overview package-overview flexrow">
-                <img class="theme-image package-image" src="{{this.img}}" style="width:50px;height:50px;flex: 0 0 50px;margin: 0px 5px;" />
+                <img class="theme-image package-image" src="{{this.img}}" />
                 <div class="flexrow">
                     <label class="theme-title package-title checkbox">
                         <input type="checkbox" class="active" name="{{this.name}}" data-dtype="Boolean" {{checked this.active}}>
-                        {{~this.title~}}
+                        {{this.title}}
                     </label>
                     {{#if ../expanded}}
 

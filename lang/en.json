@@ -9,6 +9,10 @@
     "WHETSTONE.ThemeSettingsTab": "Settings",
     "WHETSTONE.SubstylesTab": "Substyles",
 
+
+    "WHETSTONE.AddMenuButton": "Add Menu Button",
+    "WHETSTONE.AddMenuButtonHint": "Adds a button the to sidebar settings menu for quick access to the Whetstone config.",
+
     "WHETSTONE.ThemeEntry": "Whetstone Theme",
 
     "WHETSTONE.ConfigureTheme": "Configure Theme",
