@@ -130,7 +130,7 @@ class WhetstoneThemes extends EntityCollection {
 		let themedata = this.get(themeid);
 		if(!themedata) throw new Error('Whetstone | Cannot activate theme: '+themeid);
 
-		themedata.update({active: true});
+		themedata.data.active = true;
 
 		let corestyles = this.getCoreStyles(themeid);
 		let systemstyles = this.getSubStyles(themeid, game.system.id, game.system.data.version);
@@ -164,7 +164,7 @@ class WhetstoneThemes extends EntityCollection {
 		let themedata = this.get(themeid);
 		if(!themedata) throw new Error('Whetstone | Cannot deactivate theme: '+themeid);
 
-		themedata.update({active: false});
+		themedata.data.active = false;
 
 		let corestyles = this.getCoreStyles(themeid);
 		let systemstyles = this.getSubStyles(themeid);
@@ -253,39 +253,11 @@ class WhetstoneThemes extends EntityCollection {
 	* @return {WetstoneTheme}
 	*/
 	get active() {
-		return this.find(t => t.data.active);
+		return this.filter(t => t.data.active);
 	}
 
 	static get instance() {
 		return game.Whetstone.themes;
-	}
-
-	async removeStyle(path) {
-		/*await SocketInterface.dispatch("modifyDocument", {
-			type: "WhetstoneThemes",
-			action: "remove",
-			data: {path}
-		});*/
-		this._removeStyle(path);
-	}
-
-	async _removeStyle(path) {
-		let element = $('head link[href="'+path+'"]');
-		if (element) element.remove();
-	}
-
-	async addStyle(path) {
-		/*await SocketInterface.dispatch("modifyDocument", {
-			type: "WhetstoneThemes",
-			action: "add",
-			data: {path}
-		});*/
-		this._addStyle(path);
-	}
-
-	async _addStyle(path) {
-		game.Whetstone.themes.removeStyle(path);
-		$('<link href="'+path+'" rel="stylesheet" type="text/css" media="all">').appendTo($('head'));
 	}
 
 	static writeColor(settingData, value) {
@@ -403,23 +375,14 @@ class WhetstoneThemes extends EntityCollection {
 		}
 	}
 
-	/**
-	* Handle changes to a Setting document to apply them to the world setting storage
-	*/
-	static socketListeners(socket) {
-		socket.on('modifyDocument', response => {
-			const { request, path } = response;
-			if (request.type !== 'WhetstoneThemes') return;
-			
-			switch ( request.action ) {
-				case "add":
-					game.Whetstone.themes._addStyle(path);
-					break;
-				case "remove":
-					game.Whetstone.themes._removeStyle(path);
-				break;
-			}
-		});
+	removeStyle(path) {
+		let element = $('head link[href="'+path+'"]');
+		if (element) element.remove();
+	}
+
+	addStyle(path) {
+		game.Whetstone.themes.removeStyle(path);
+		$('<link href="'+path+'" rel="stylesheet" type="text/css" media="all">').appendTo($('head'));
 	}
 }
 
@@ -637,7 +600,7 @@ class WhetstoneThemeSettings {
 
 	// Broadcast the setting change to others
 	if ( setting.scope === 'world' ) {
-	  await SocketInterface.dispatch('modifyDocument', {
+	  await game.socket.emit('module.Whetstone', {
 		type: 'Setting',
 		action: 'update',
 		data: {key, value: json}
@@ -671,7 +634,7 @@ class WhetstoneThemeSettings {
    * Handle changes to a Setting document to apply them to the world setting storage
    */
   static socketListeners(socket) {
-	socket.on('modifyDocument', response => {
+	socket.on('module.Whetstone', response => {
 	  const { request, result } = response;
 	  if (request.type !== 'Setting') return;
 	  const {key, value} = result;
@@ -740,7 +703,7 @@ Hooks.once('ready', () => {
 		settings: new WhetstoneThemeSettings(game.settings.get('Whetstone', 'settings') || [])
 	};
 
-	WhetstoneThemes.socketListeners(game.socket);
+	WhetstoneThemeSettings.socketListeners(game.socket);
 	Hooks.callAll('WhetstoneReady');
 	WhetstoneCoreConfig.apply(game.settings.get('Whetstone', 'settings'));
 });
@@ -1204,36 +1167,19 @@ class WhetstoneThemeConfigDialog extends FormApplication {
         }
     }
 
-  /* -------------------------------------------- */
+	async _onClickSubmenu(event) {
+		event.preventDefault();
+		const menu = await game.settings.menus.get(event.currentTarget.dataset.key);
+		if ( !menu ) return ui.notifications.error('No submenu found for the provided key');
+		const app = new menu.type();
+		return app.render(true);
+	}
 
-  /**
-   * Handle activating the button to configure User Role permissions
-   * @param event {Event}   The initial button click event
-   * @private
-   */
-  async _onClickSubmenu(event) {
-	event.preventDefault();
-	const menu = await game.settings.menus.get(event.currentTarget.dataset.key);
-	if ( !menu ) return ui.notifications.error('No submenu found for the provided key');
-	const app = new menu.type();
-	return app.render(true);
-  }
+	_onResetDefaults(event) {
+		this.reset = true;
+		this.render();
+	}
 
-  /* -------------------------------------------- */
-
-  /**
-   * Handle button click to reset default settings
-   * @param event {Event}   The initial button click event
-   * @private
-   */
-  _onResetDefaults(event) {
-    this.reset = true;
-    this.render();
-  }
-
-  /* -------------------------------------------- */
-
-  /** @override */
 	async _updateObject(event, formData) {
 		for ( let [k, v] of Object.entries(formData) ) {
 
