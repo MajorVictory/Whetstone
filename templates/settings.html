@@ -1,7 +1,56 @@
+{{#*inline "settingPartial"}}
+<div class="form-group">
+    <div class="flexcol">
+        <label>{{localize this.name}}</label>
+        {{#if this.hint}}
+        <p class="notes">{{localize this.hint}}</p>
+        {{/if}}
+    </div>
+    {{#if this.isColor}}
+    <div class="form-fields ws-color-input">
+        <select class="ws-color-value">
+            <option value="custom">{{localize "WHETSTONE.ColorOptionCustom"}}</option>
+            {{#each this.choices as |name k|}}
+            <option value="{{k}}">{{localize name}}</option>
+            {{/each}}
+        </select>
+        <div class="flexrow" style="margin-top: 5px;">
+            <input type="text" name="{{this.key}}" class="ws-color-value" value="{{this.value}}" data-dtype="String"/>
+            <input type="color" class="ws-color-value" value="{{this.value}}" data-edit="{{this.key}}"/>
+        </div>
+    </div>
+    {{else}}
+    <div class="form-fields">
+
+        {{#if this.isCheckbox}}
+        <input type="checkbox" name="{{this.key}}" data-dtype="Boolean" {{checked this.value}}/>
+
+        {{else if this.isSelect}}
+        <select name="{{this.key}}">
+            {{#select this.value}}
+            {{#each this.choices as |name k|}}
+            <option value="{{k}}">{{localize name}}</option>
+            {{/each}}
+            {{/select}}
+        </select>
+
+        {{else if this.isRange}}
+        <input type="range" name="{{this.key}}" data-dtype="Number" value="{{ this.value }}"
+               min="{{ this.range.min }}" max="{{ this.range.max }}" step="{{ this.range.step }}"/>
+        <span class="range-value">{{this.value}}</span>
+
+        {{else}}
+        <input type="text" name="{{this.key}}" value="{{this.value}}" data-dtype="{{this.type}}"/>
+        {{/if}}
+    </div>
+    {{/if}}
+</div>
+{{/inline}}
+
 <form autocomplete="off" onsubmit="event.preventDefault();" class="Whetstone">
 
     <!-- Sheet Navigation Tabs -->
-    <nav class="sheet-tabs tabs">
+    <nav class="sheet-tabs tabs" data-group="sections">
         <a class="item" data-tab="themeselect">
             <i class="fas fa-paint-brush"></i> {{localize "WHETSTONE.ThemeSelectTab"}}
         </a>
@@ -87,7 +136,14 @@
     </div>
 
     <!-- Global Options Tab -->
-    <div class="tab" data-tab="globaloptions">
+    <div class="tab" data-tab="globaloptions" data-group="sections">
+        <div class="settings-list">
+            {{#each globaloptions}}
+            {{> settingPartial}}
+            {{else}}
+            <p class="notes">{{localize 'SETTINGS.None'}}</p>
+            {{/each}}
+        </div>
     </div>
 
     <!-- Footer -->

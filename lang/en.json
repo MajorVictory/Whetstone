@@ -9,7 +9,6 @@
     "WHETSTONE.ThemeSettingsTab": "Settings",
     "WHETSTONE.SubstylesTab": "Substyles",
 
-
     "WHETSTONE.AddMenuButton": "Add Menu Button",
     "WHETSTONE.AddMenuButtonHint": "Adds a button the to sidebar settings menu for quick access to the Whetstone config.",
 
@@ -42,5 +41,17 @@
     "WHETSTONE.Edit": "Edit",
     "WHETSTONE.Reset": "Reset",
     "WHETSTONE.Save": "Save",
-    "WHETSTONE.SaveMessage": "Theme Settings Applied"
+    "WHETSTONE.SaveMessage": "Theme Settings Applied",
+
+    "OCEANBLUES.SubstyleHotbar": "Hotbar Substyle",
+    "OCEANBLUES.SubstyleHotbarHint": "Activates themeing for the hotbar at the bottom.",
+
+    "OCEANBLUES.SubstyleToolbar": "Toolbar Substyle",
+    "OCEANBLUES.SubstyleToolbarHint": "Activates themeing for the toolbar at the top left.",
+
+    "OCEANBLUES.SubstyleSceneButtons": "Scene Buttons Substyle",
+    "OCEANBLUES.SubstyleSceneButtonsHint": "Activates themeing for the scene buttons at the top.",
+
+    "OCEANBLUES.SubstyleSceneButtonsSmaller": "Smaller Scene Buttons Substyle",
+    "OCEANBLUES.SubstyleSceneButtonsSmallerHint": "Makes the scene buttons smaller."
 }

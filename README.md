@@ -26,7 +26,6 @@
  * *FoundryVTT* 0.6.5-0.6.6
 
 **[Known Issues]**
- * Substyles don't work yet
  * Changing styles produces some console errors, but works fine >_>
  * [Report Problems](https://github.com/MajorVictory/Whetstone/issues)
 

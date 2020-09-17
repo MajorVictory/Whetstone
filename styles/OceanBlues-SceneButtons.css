@@ -1,0 +1,27 @@
+#navigation #nav-toggle {
+     background: var(--OceanBlues-bg-color);
+}
+
+#navigation .nav-item {
+     border: 1px solid var(--OceanBlues-border-color); 
+     box-shadow: 0 0 5px var(--OceanBlues-border-color) inset;
+}
+
+#navigation #scene-list .scene {
+     background: var(--OceanBlues-bg-color);
+}
+
+#navigation #scene-list .scene.active {
+     border: 1px solid var(--OceanBlues-highlight-color);
+     box-shadow: 0 0 5px var(--OceanBlues-highlight-color) inset;
+}
+
+#navigation #scene-list .scene.gm {
+     background: var(--OceanBlues-border-color);
+     border: 1px solid var(--OceanBlues-highlight-color);
+}
+
+#navigation #scene-list .scene.gm.active {
+     background: var(--OceanBlues-highlight-color);
+     border: 1px solid var(--OceanBlues-highlight-color);
+}

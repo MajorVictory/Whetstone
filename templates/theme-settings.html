@@ -15,7 +15,7 @@
             {{/each}}
         </select>
         <div class="flexrow" style="margin-top: 5px;">
-            <input type="text" name="{{this.key}}" class="ws-color-value" value="{{this.value}}" data-dtype="String"/>
+            <input type="text" name="{{this.tab}}/{{this.key}}" class="ws-color-value" value="{{this.value}}" data-dtype="String"/>
             <input type="color" class="ws-color-value" value="{{this.value}}" data-edit="{{this.key}}"/>
         </div>
     </div>
@@ -23,10 +23,10 @@
     <div class="form-fields">
 
         {{#if this.isCheckbox}}
-        <input type="checkbox" name="{{this.key}}" data-dtype="Boolean" {{checked this.value}}/>
+        <input type="checkbox" name="{{this.tab}}/{{this.key}}" data-dtype="Boolean" {{checked this.value}}/>
 
         {{else if this.isSelect}}
-        <select name="{{this.key}}">
+        <select name="{{this.tab}}/{{this.key}}">
             {{#select this.value}}
             {{#each this.choices as |name k|}}
             <option value="{{k}}">{{localize name}}</option>
@@ -35,12 +35,12 @@
         </select>
 
         {{else if this.isRange}}
-        <input type="range" name="{{this.key}}" data-dtype="Number" value="{{ this.value }}"
+        <input type="range" name="{{this.tab}}/{{this.key}}" data-dtype="Number" value="{{ this.value }}"
                min="{{ this.range.min }}" max="{{ this.range.max }}" step="{{ this.range.step }}"/>
         <span class="range-value">{{this.value}}</span>
 
         {{else}}
-        <input type="text" name="{{this.key}}" value="{{this.value}}" data-dtype="{{this.type}}"/>
+        <input type="text" name="{{this.tab}}/{{this.key}}" value="{{this.value}}" data-dtype="{{this.type}}"/>
         {{/if}}
     </div>
     {{/if}}
@@ -57,13 +57,13 @@
 
     <!-- Sheet Navigation Tabs -->
     <nav class="sheet-tabs tabs" data-group="sections">
-        <a class="item" data-tab="themecolors">
+        <a class="item" data-tab="themevariables">
             <i class="fas fa-paint-brush"></i> {{localize "WHETSTONE.ThemeColorsTab"}}
         </a>
         <a class="item" data-tab="themesettings">
             <i class="fas fa-tasks"></i> {{localize "WHETSTONE.ThemeSettingsTab"}}
         </a>
-        <a class="item" data-tab="substyles">
+        <a class="item" data-tab="themesubstyles">
             <i class="fas fa-tasks"></i> {{localize "WHETSTONE.SubstylesTab"}}
         </a>
     </nav>
@@ -72,9 +72,9 @@
     <section id="config-tabs" class="content">
 
         <!-- Theme Colors Tab -->
-        <div class="tab" data-tab="themecolors" data-group="sections">
+        <div class="tab" data-tab="themevariables" data-group="sections">
             <div class="settings-list">
-                {{#each settings.colors}}
+                {{#each settings.variables}}
                 {{> settingPartial}}
                 {{else}}
                 <p class="notes">{{localize 'SETTINGS.None'}}</p>
@@ -94,9 +94,9 @@
         </div>
 
         <!-- Substyles Tab -->
-        <div class="tab" data-tab="substyles" data-group="sections">
+        <div class="tab" data-tab="themesubstyles" data-group="sections">
             <div class="settings-list">
-                {{#each settings.sybstyles}}
+                {{#each settings.substyles}}
                 {{> settingPartial}}
                 {{else}}
                 <p class="notes">{{localize 'SETTINGS.None'}}</p>

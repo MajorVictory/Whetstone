@@ -126,7 +126,7 @@ input[type="range"] + .range-value {
 
 #context-menu {
   background: var(--OceanBlues-bg-color);
-  color: var(--OceanBlues-text-dark-color);
+  color: var(--OceanBlues-text-light-color);
 }
 
 #context-menu li.context-item:hover {

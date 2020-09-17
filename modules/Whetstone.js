@@ -38,60 +38,87 @@ class WhetstoneThemes extends EntityCollection {
 			authors: moduledata.data.authors,
 			active: false, priority: 1,
 			dialog: '', config: '',
-			styles: [], substyles: [],
-			variables: [], presets: [],
+			styles: [], presets: [],
+			variables: [], settings: [], substyles: {},
 			systems: {}, dependencies: {},
 			compatible: {}, conflicts: {}
 		}, data);
 
-		console.log('Whetstone | moduledata: ', moduledata);
-		console.log('Whetstone | data: ', data);
-		console.log('Whetstone | themedata: ', themedata);
-
-
 		if (themedata.variables) {
 			for (let i=0, len=themedata.variables.length; i < len; ++i) {
-				let cssVar = themedata.variables[i];
+				this._registerVariable(themedata, themedata.variables[i]);
+			}
+		}
 
-				let varData = {
-					name: cssVar.name,
-					title: game.i18n.localize(cssVar.title || cssVar.name),
-					hint: game.i18n.localize(cssVar.hint),
-					theme: themedata.name,
-					scope: 'client',
-					tab: 'colors',
-					default: cssVar.value,
-					color: cssVar.type,
-					type: String,
-					config: true
-				}
-
-				let presets = themedata.presets[cssVar.presets];
-				if (presets) varData.choices = presets;
-
-				game.Whetstone.settings.register(themedata.name, 'variable_'+cssVar.name, varData);
+		if (themedata.settings) {
+			for (let i=0, len=themedata.settings.length; i < len; ++i) {
+				this._registerSetting(themedata, themedata.settings[i]);
 			}
 		}
 
 		if (themedata.substyles) {
-			for (let i=0, len=themedata.substyles.length; i < len; ++i) {
-				let substyle = themedata.substyles[i];				
-
-				game.Whetstone.settings.register(themedata.name, 'substyle_'+substyle.name, {
-					name: substyle.name,
-					title: game.i18n.localize(substyle.title || substyle.name),
-					hint: game.i18n.localize(substyle.hint),
-					theme: themedata.name,
-					scope: 'client',
-					tab: 'substyle',
-					default: substyle.active,
-					type: Boolean,
-					config: true
-				});
+			for (let substylename in themedata.substyles) {
+				this._registerSubstyle(themedata, themedata.substyles[substylename]);
 			}
 		}
 
 		this.insert(new WhetstoneTheme(themedata, themedata));
+	}
+
+	registerVariable(themeid, data) {
+		this._registerVariable(game.Whetstone.get(themeid), data);
+	}
+
+	_registerVariable(themedata, data) {
+		let varData = {
+			name: data.name,
+			title: game.i18n.localize(data.title || data.name),
+			hint: game.i18n.localize(data.hint),
+			theme: themedata.name,
+			tab: 'variables',
+			scope: 'client',
+			default: data.value,
+			color: data.type,
+			type: String,
+			config: true
+		}
+
+		let presets = themedata.presets[data.presets];
+		if (presets) varData.choices = presets;
+
+		game.Whetstone.settings.register(themedata.name+'.variables', data.name, varData);
+	}
+
+	registerSetting(themeid, data) {
+		this._registerSetting(game.Whetstone.get(themeid), data);
+	}
+
+	_registerSetting(themedata, data) {
+
+		let settingData = mergeObject({
+			theme: themedata.name,
+			tab: 'settings',
+		}, data);
+
+		game.Whetstone.settings.register(themedata.name+'.settings', settingData.name, settingData);
+	}
+
+	registerSubstyle(themeid, data) {
+		this._registerSubstyle(game.Whetstone.get(themeid), data);
+	}
+
+	_registerSubstyle(themedata, data) {
+		game.Whetstone.settings.register(themedata.name+'.substyles', data.name, {
+			name: data.name,
+			title: game.i18n.localize(data.title || data.name),
+			hint: game.i18n.localize(data.hint),
+			theme: themedata.name,
+			tab: 'substyles',
+			scope: 'client',
+			default: data.active,
+			type: Boolean,
+			config: true
+		});
 	}
 
 	/**
@@ -114,9 +141,9 @@ class WhetstoneThemes extends EntityCollection {
 
 			if (setting.theme != themedata.name) continue;
 
-			let current = game.Whetstone.settings.get(themedata.name, setting.key);
+			let current = game.Whetstone.settings.get(themedata.name+'.'+setting.tab, setting.key);
 
-			if (['color','shades'].includes(setting.color)) {
+			if (setting.tab == 'variables') {
 				if (setting.default == current) {
 					//erase custom entry is value == default
 					WhetstoneThemes.writeColor(setting.name, '');
@@ -130,10 +157,6 @@ class WhetstoneThemes extends EntityCollection {
 		for (let i=0, len=allstyles.length; i < len; ++i) {
 			game.Whetstone.themes.addStyle(allstyles[i]);
 		}
-
-		// add substyles
-
-
 	}
 
 	deactivate(themeid) {
@@ -144,7 +167,7 @@ class WhetstoneThemes extends EntityCollection {
 		themedata.update({active: false});
 
 		let corestyles = this.getCoreStyles(themeid);
-		let systemstyles = this.getSubStyles(themeid, game.system.id, game.system.data.version);
+		let systemstyles = this.getSubStyles(themeid);
 		let allstyles = corestyles.concat(systemstyles);
 
 		// remove theme specific css vars
@@ -152,7 +175,7 @@ class WhetstoneThemes extends EntityCollection {
 
 			if (setting.theme != themedata.name) continue;
 
-			if (['color','shades'].includes(setting.color)) {
+			if (setting.tab == 'variables') {
 				WhetstoneThemes.writeColor(setting.name, '');
 			}
 		}
@@ -174,47 +197,43 @@ class WhetstoneThemes extends EntityCollection {
 	/**
 	* Get an array of stylesheets to load
 	* @param {string} themeid  theme id
-	* @param {string} system    system id
+	* @param {string} system    (optional) system id
 	* @param {string} version   (optional) specific version
 	* @return {Array.<String>} a list of stylesheet paths
+	* If neither system nor version are specified, all substyles are returned
 	**/
 	getSubStyles(themeid, system = '', version = '') {
 
-		let moduledata = this.get(themeid);
-		if(!moduledata) throw new Error("Whetstone | Cannot find theme: "+themeid);
+		let themedata = this.get(themeid);
+		if(!themedata) throw new Error("Whetstone | Cannot find theme: "+themeid);
 
-		let styles = [];
 		let matches = [];
+		for (let substylename in themedata.data.substyles) {
+			let substyle = themedata.data.substyles[substylename];
 
-		if (system && version) {
-			console.log('Whetstone | system && version', system, version);
-			matches = moduledata.data.substyles.filter(
-				substyle => substyle.system == system && (substyle.version == version || isNewerVersion(version, substyle.version))
-			);
-			console.log('Whetstone | filter', matches);
+			let enabled = game.Whetstone.settings.get(themedata.name+'.substyles', substylename);
 
-			matches = matches ? matches.filter(substyle => substyle.activate == 'auto' || substyle.active) : [];
+			if (!system && !version) {
+				matches.push(substyle);
 
+			} else if (substyle.system == system && (substyle.version == version || isNewerVersion(version, substyle.version))
+				&& (substyle.activate == 'auto' || enabled)) {
+				console.log('Whetstone | '+substylename+' | system && version', system, version);
+				matches.push(substyle);
 
-		} else if (system && !version) {
-			console.log('Whetstone | system && !version', system, version);
-			matches = moduledata.data.substyles.filter(substyle => substyle.system == system && !substyle.version);
+			} else if (substyle.system == system && !substyle.version
+				&& (substyle.activate == 'auto' || enabled)) {
+				console.log('Whetstone | '+substylename+' | system only', system, version);
+				matches.push(substyle);
 
-			console.log('Whetstone | filter', matches);
-			matches = matches ? matches.filter(substyle => substyle.activate == 'auto' || substyle.active) : [];
-
-
-		} else {
-			console.log('Whetstone | !system && !version', system, version);
-			matches = moduledata.data.substyles.filter(substyle => !substyle.system && !substyle.version);
-
-			console.log('Whetstone | filter', matches);
-			matches = matches ? matches.filter(substyle => substyle.activate == 'manual' && substyle.active) : [];
-
+			} else if (!substyle.system && !substyle.version
+				&& (substyle.activate == 'auto' || enabled)) {
+				console.log('Whetstone | '+substylename+' | auto', system, version);
+				matches.push(substyle);
+			}
 		}
 
-		console.log('Whetstone | getSubStyles', matches);
-
+		let styles = [];
 		if (matches) {
 			for (let i=0, len=matches.length; i < len; ++i) {
 				styles = styles.concat(matches[i].styles);
@@ -661,6 +680,48 @@ Hooks.once('WhetstoneReady', () => {
 		version: '1.0.0',
 		authors: [{ name: 'MajorVictory', contact: 'https://github.com/MajorVictory', url: 'https://github.com/MajorVictory' }],
 		styles: ['modules/Whetstone/styles/OceanBlues.css'],
+		substyles: {
+			'OceanBlues-Hotbar': {
+                name: 'OceanBlues-Hotbar',
+                title: 'OCEANBLUES.SubstyleHotbar',
+                hint: 'OCEANBLUES.SubstyleHotbarHint',
+                activate: 'manual',
+                active: true,
+                styles: [
+                    'modules/Whetstone/styles/OceanBlues-Hotbar.css'
+                ]
+            },
+            'OceanBlues-Toolbar': {
+                name: 'OceanBlues-Toolbar',
+                title: 'OCEANBLUES.SubstyleToolbar',
+                hint: 'OCEANBLUES.SubstyleToolbarHint',
+                activate: 'manual',
+                active: true,
+                styles: [
+                    'modules/Whetstone/styles/OceanBlues-Toolbar.css'
+                ]
+            },
+            'OceanBlues-SceneButtons': {
+                name: 'OceanBlues-SceneButtons',
+                title: 'OCEANBLUES.SubstyleSceneButtons',
+                hint: 'OCEANBLUES.SubstyleSceneButtonsHint',
+                activate: 'manual',
+                active: true,
+                styles: [
+                    'modules/Whetstone/styles/OceanBlues-SceneButtons.css'
+                ]
+            },
+            'OceanBlues-SceneButtonsSmaller': {
+                name: 'OceanBlues-SceneButtonsSmaller',
+                title: 'OCEANBLUES.SubstyleSceneButtonsSmaller',
+                hint: 'OCEANBLUES.SubstyleSceneButtonsSmallerHint',
+                activate: 'manual',
+                active: false,
+                styles: [
+                    'modules/Whetstone/styles/OceanBlues-SceneButtonsSmaller.css'
+                ]
+            }
+        },
 		variables: [
 			{
 				name: '--OceanBlues-bg-color',
@@ -741,19 +802,6 @@ Hooks.once('WhetstoneReady', () => {
 		type: WhetstoneThemeConfigDialog,
 		restricted: false
 	});
-
-	// Register that this theme's config storage value
-	// WhetstoneThemeConfig is provided by Whetstone core
-	game.Whetstone.settings.register('Whetstone', 'OceanBlues', {
-		name: game.i18n.localize('WHETSTONE.Config'),
-		scope: 'client',
-		default: WhetstoneThemeConfig.getDefaults,
-		type: Object,
-		config: false,
-		onChange: settings => {
-			WhetstoneThemeConfig.apply(settings);
-		}
-	});
 });
 
 Hooks.once('renderSettings', () => {
@@ -782,13 +830,13 @@ class WhetstoneCoreConfigDialog extends FormApplication {
 	getData(options) {
 		let storedOptions = game.settings.get('Whetstone', 'settings');
 		let defaultOptions = WhetstoneCoreConfig.getDefaults;
-		let settings = this.reset ? defaultOptions : mergeObject(defaultOptions, storedOptions);
+    	const canConfigure =  game.user.can("SETTINGS_MODIFY");
 
 		const counts = {all: game.Whetstone.themes.length, active: 0, inactive: 0};
 
 		// Prepare themes
 		const themes = game.Whetstone.themes.reduce((arr, m) => {
-			const isActive = settings[m.name] === true;
+			const isActive = storedOptions[m.name] === true;
 			if ( isActive ) counts.active++;
 			else counts.inactive++;
 
@@ -797,10 +845,36 @@ class WhetstoneCoreConfigDialog extends FormApplication {
 			return arr.concat([theme]);
 		}, []);
 
-		settings.counts = counts;
-		settings.themes = themes;
-		settings.expanded = this._expanded;
-		return settings;
+		storedOptions.counts = counts;
+		storedOptions.themes = themes;
+		storedOptions.expanded = this._expanded;
+
+		// prepare core settings
+		storedOptions.globaloptions = [];
+
+		// load up all Whetstone core settings
+		for ( let setting of game.settings.settings.values() ) {
+
+		  // Exclude settings the user cannot change
+		  if (!setting.config || (!canConfigure && (setting.scope !== "client"))) continue;
+		  if (setting.module !== 'Whetstone') continue;
+
+		  // Update setting data
+		  const s = duplicate(setting);
+		  s.value = this.reset ? s.default : game.settings.get('Whetstone', s.key);
+		  s.isColor = (['color', 'shades'].includes(s.color));
+		  s.type = setting.type instanceof Function ? setting.type.name : "String";
+		  s.isCheckbox = setting.type === Boolean;
+		  s.isSelect = s.choices !== undefined;
+		  s.isRange = (setting.type === Number) && s.range;
+		  s.name = s.title || s.name;
+
+		  switch (s.tab) {
+		  	case 'globaloptions': default: storedOptions.globaloptions.push(s); break;
+		  }
+		}
+
+		return this.reset ? defaultOptions : mergeObject(defaultOptions, storedOptions);
 	}
 
 	activateListeners(html) {
@@ -833,7 +907,8 @@ class WhetstoneCoreConfigDialog extends FormApplication {
 		event.preventDefault();
 
 		let moduleid = $(event.target).val();
-		let theme = game.Whetstone.themes.get(moduleid);
+		let theme = await game.Whetstone.themes.get(moduleid);
+		if (!theme) console.log('Whetstone | Theme not found: ', moduleid);
 		let menuname = theme.data.dialog || 'Whetstone.'+theme.name;
 
 		const menu = await game.Whetstone.settings.menus.get(menuname);
@@ -853,7 +928,7 @@ class WhetstoneCoreConfig {
 
 	static get getDefaults() {
 		return {
-
+			addMenuButton: true
 		};
 	}
 
@@ -877,6 +952,7 @@ class WhetstoneCoreConfig {
 
 			if (v) {
 				activate.push({name: k, priority: options[k+'_priority']});
+				deactivate.push(k);
 			} else {
 				deactivate.push(k);
 			}
@@ -938,7 +1014,7 @@ class WhetstoneThemeConfigDialog extends FormApplication {
 		const gs = game.Whetstone.settings;
 		const theme = game.Whetstone.themes.get(this._theme);
 		let settings = {
-			colors: [],
+			variables: [],
 			settings: [],
 			substyles: []
 		};
@@ -948,27 +1024,28 @@ class WhetstoneThemeConfigDialog extends FormApplication {
 		// Classify all settings
 		for ( let setting of gs.settings.values() ) {
 
-		  // Exclude settings the user cannot change
-		  if (!setting.config || setting.scope !== "client") continue;
-		  if (setting.theme !== theme.name) continue;
+			// Exclude settings the user cannot change
+			if (!setting.config || setting.scope !== "client") continue;
+			if (setting.theme !== theme.name) continue;
 
-		  // Update setting data
-		  const s = duplicate(setting);
-		  s.value = this.reset ? s.default : game.Whetstone.settings.get(s.theme, s.key);
-		  s.isColor = (['color', 'shades'].includes(s.color));
-		  s.type = setting.type instanceof Function ? setting.type.name : "String";
-		  s.isCheckbox = setting.type === Boolean;
-		  s.isSelect = s.choices !== undefined;
-		  s.isRange = (setting.type === Number) && s.range;
-		  s.name = s.title || s.name;
+			// Update setting data
+			const s = duplicate(setting);
+			s.value = this.reset ? s.default : game.Whetstone.settings.get(s.theme+'.'+s.tab, s.key);
+			s.isColor = (['color', 'shades'].includes(s.color));
+			s.type = setting.type instanceof Function ? setting.type.name : "String";
+			s.isCheckbox = setting.type === Boolean;
+			s.isSelect = s.choices !== undefined;
+			s.isRange = (setting.type === Number) && s.range;
+			s.name = s.title || s.name;
 
-		  switch (s.tab) {
-		  	case 'colors': settings.colors.push(s); break;
-		  	case 'substyles': settings.substyles.push(s); break;
-		  	case 'settings': default: settings.settings.push(s); break;
-		  }
-		  currentdata[s.key] = s.value;
-		  defaultdata[s.key] = s.default;
+			if (settings[s.tab]) {
+				settings[s.tab].push(s);
+			} else {
+				settings[s.tab] = [s];
+			}
+
+			currentdata[s.tab+'/'+s.key] = s.value;
+			defaultdata[s.tab+'/'+s.key] = s.default;
 		}
 
 		let returndata = this.reset ? defaultdata : mergeObject(defaultdata, currentdata);
@@ -1084,74 +1161,19 @@ class WhetstoneThemeConfigDialog extends FormApplication {
   /* -------------------------------------------- */
 
   /** @override */
-  async _updateObject(event, formData) {
-	for ( let [k, v] of Object.entries(formData) ) {
-	  let s = game.Whetstone.settings.settings.get(this._theme+'.'+k);
-	  if (!s) continue;
-	  let current = game.Whetstone.settings.get(s.theme, s.key);
-	  if ( v !== current ) {
-		await game.Whetstone.settings.set(s.theme, s.key, v);
+	async _updateObject(event, formData) {
+		for ( let [k, v] of Object.entries(formData) ) {
 
-		if (['color','shades'].includes(s.color)) {
-			WhetstoneThemes.writeColor(s.name, v);
-		}
-	  }
-	}
-  }
-}
+			let s = game.Whetstone.settings.settings.get(this._theme+'.'+k.split('/').join('.'));
+			if (!s) continue;
 
+			let current = game.Whetstone.settings.get(s.theme+'.'+s.tab, s.key);
+			if ( v !== current ) {
+				await game.Whetstone.settings.set(s.theme+'.'+s.tab, s.key, v);
 
-class WhetstoneThemeConfig {
-
-	static get getDefaults() {
-
-		return {
-
-		};
-	}
-
-	static get getOptions() {
-		return mergeObject(WhetstoneCoreConfig.getDefaults, game.settings.get("Whetstone", "settings"));
-	}
-
-	static apply(options) {
-
-		console.log('Whetstone | WhetstoneCoreConfig.apply()', options);
-
-		let activate = [];
-		let deactivate = [];
-
-		for (let k in options) {
-			let v = options[k];
-
-			let theme = game.Whetstone.themes.get(k);
-
-			if (!theme) continue;
-
-			if (v) {
-				activate.push({name: k, priority: options[k+'_priority']});
-			} else {
-				deactivate.push(k);
-			}
-		}
-
-		// sort by priority first, then name in alphabetical
-		if (activate.length > 0) {
-			activate.sort((a, b) => (a.priority > b.priority) ? 1 : (a.priority === b.priority) ? ((a.name > b.name) ? 1 : -1) : -1);
-		}
-
-		console.log('Whetstone | activate', activate);
-		console.log('Whetstone | deactivate', deactivate);
-
-		if (deactivate.length > 0) {
-			for (let i=0, len=deactivate.length; i < len; ++i) {
-				game.Whetstone.themes.deactivate(deactivate[i]);
-			}
-		}
-
-		if (activate.length > 0) {
-			for (let i=0, len=activate.length; i < len; ++i) {
-				game.Whetstone.themes.activate(activate[i].name);
+				if (s.tab == 'variables') {
+					WhetstoneThemes.writeColor(s.name, v);
+				}
 			}
 		}
 	}
