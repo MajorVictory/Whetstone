@@ -37,7 +37,7 @@ class WhetstoneThemes extends EntityCollection {
 			author: moduledata.data.author,
 			authors: moduledata.data.authors,
 			active: false, priority: 1,
-			dialog: '', config: '',
+			dialog: '',
 			styles: [], presets: [],
 			variables: [], settings: [], substyles: {},
 			systems: {}, dependencies: {},
@@ -312,9 +312,9 @@ class WhetstoneThemes extends EntityCollection {
 
         if (settingData.color == 'color') {
 	        if (value != null && value != '') {
-	        	document.documentElement.style.setProperty(name, value);
+	        	document.documentElement.style.setProperty(settingData.name, value);
 	        } else {
-	            document.documentElement.style.removeProperty(name);
+	            document.documentElement.style.removeProperty(settingData.name);
 	        }
 	    }
     }
@@ -985,15 +985,15 @@ class WhetstoneCoreConfigDialog extends FormApplication {
 		this.render();
 	}
 
-	async _onOpenConfig(event) {
+	_onOpenConfig(event) {
 		event.preventDefault();
 
 		let moduleid = $(event.target).val();
-		let theme = await game.Whetstone.themes.get(moduleid);
-		if (!theme) console.log('Whetstone | Theme not found: ', moduleid);
+		if (!moduleid) moduleid = $(event.target).parent().val();
+		let theme = game.Whetstone.themes.get(moduleid);
 		let menuname = theme.data.dialog || moduleid+'.'+theme.name;
 
-		const menu = await game.Whetstone.settings.menus.get(menuname);
+		const menu = game.Whetstone.settings.menus.get(menuname);
 		if ( !menu ) return ui.notifications.error('No submenu found for the provided key');
 		const app = new menu.type({theme: theme.name});
 		return app.render(true);
@@ -1229,18 +1229,6 @@ class WhetstoneThemeConfigDialog extends FormApplication {
   _onResetDefaults(event) {
     this.reset = true;
     this.render();
-    /*
-	event.preventDefault();
-	const button = event.target;
-	const form = button.form;
-	for ( let [k, v] of game.Whetstone.settings.settings.entries() ) {
-	  if ( v.config ) {
-		let input = form[k];
-		if (!input) continue;
-		if (input.type === "checkbox") input.checked = v.default;
-		else if (input) input.value = v.default;
-	  }
-	}*/
   }
 
   /* -------------------------------------------- */
