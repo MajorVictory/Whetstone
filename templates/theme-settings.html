@@ -1,9 +1,9 @@
 {{#*inline "settingPartial"}}
 <div class="form-group">
     <div class="flexcol">
-        <label>{{localize this.name}}</label>
+        <label>{{{localize this.name}}}</label>
         {{#if this.hint}}
-        <p class="notes">{{localize this.hint}}</p>
+        <p class="notes">{{{localize this.hint}}}</p>
         {{/if}}
     </div>
     {{#if this.isColor}}

@@ -16,12 +16,12 @@ class WhetstoneThemes extends EntityCollection {
 |                                                     |
 +=====================================================+`);
 
-		this.settings = game.settings.get("Whetstone", 'settings');
+		this.settings = game.settings.get('Whetstone', 'settings');
 	}
 
 	register(module, data) {
 
-		if ( !module ) throw new Error("Whetstone | You must specify module");
+		if ( !module ) throw new Error('Whetstone | You must specify module');
 
 		let moduledata = game.modules.get(module);
 
@@ -128,7 +128,7 @@ class WhetstoneThemes extends EntityCollection {
 	activate(themeid) {
 
 		let themedata = this.get(themeid);
-		if(!themedata) throw new Error("Whetstone | Cannot activate theme: "+themeid);
+		if(!themedata) throw new Error('Whetstone | Cannot activate theme: '+themeid);
 
 		themedata.update({active: true});
 
@@ -146,9 +146,9 @@ class WhetstoneThemes extends EntityCollection {
 			if (setting.tab == 'variables') {
 				if (setting.default == current) {
 					//erase custom entry is value == default
-					WhetstoneThemes.writeColor(setting.name, '');
+					WhetstoneThemes.writeColor(setting, '');
 				} else {
-					WhetstoneThemes.writeColor(setting.name, current);
+					WhetstoneThemes.writeColor(setting, current);
 				}
 			}
 		}
@@ -162,7 +162,7 @@ class WhetstoneThemes extends EntityCollection {
 	deactivate(themeid) {
 
 		let themedata = this.get(themeid);
-		if(!themedata) throw new Error("Whetstone | Cannot deactivate theme: "+themeid);
+		if(!themedata) throw new Error('Whetstone | Cannot deactivate theme: '+themeid);
 
 		themedata.update({active: false});
 
@@ -176,7 +176,7 @@ class WhetstoneThemes extends EntityCollection {
 			if (setting.theme != themedata.name) continue;
 
 			if (setting.tab == 'variables') {
-				WhetstoneThemes.writeColor(setting.name, '');
+				WhetstoneThemes.writeColor(setting, '');
 			}
 		}
 
@@ -190,7 +190,7 @@ class WhetstoneThemes extends EntityCollection {
 
 	getCoreStyles(themeid) {
 		let moduledata = this.get(themeid);
-		if(!moduledata) throw new Error("Whetstone | Cannot find theme: "+themeid);
+		if(!moduledata) throw new Error('Whetstone | Cannot find theme: '+themeid);
 		return moduledata.data.styles;
 	}
 
@@ -205,7 +205,7 @@ class WhetstoneThemes extends EntityCollection {
 	getSubStyles(themeid, system = '', version = '') {
 
 		let themedata = this.get(themeid);
-		if(!themedata) throw new Error("Whetstone | Cannot find theme: "+themeid);
+		if(!themedata) throw new Error('Whetstone | Cannot find theme: '+themeid);
 
 		let matches = [];
 		for (let substylename in themedata.data.substyles) {
@@ -216,19 +216,16 @@ class WhetstoneThemes extends EntityCollection {
 			if (!system && !version) {
 				matches.push(substyle);
 
-			} else if (substyle.system == system && (substyle.version == version || isNewerVersion(version, substyle.version))
-				&& (substyle.activate == 'auto' || enabled)) {
-				console.log('Whetstone | '+substylename+' | system && version', system, version);
+			} else if (substyle.system == system && (substyle.version == version || isNewerVersion(version, substyle.version)) && enabled) {
+				console.log('Whetstone | '+substylename+' | system && version: ', system, version);
 				matches.push(substyle);
 
-			} else if (substyle.system == system && !substyle.version
-				&& (substyle.activate == 'auto' || enabled)) {
-				console.log('Whetstone | '+substylename+' | system only', system, version);
+			} else if (substyle.system == system && !substyle.version && enabled) {
+				console.log('Whetstone | '+substylename+' | system only: ', system, version);
 				matches.push(substyle);
 
-			} else if (!substyle.system && !substyle.version
-				&& (substyle.activate == 'auto' || enabled)) {
-				console.log('Whetstone | '+substylename+' | auto', system, version);
+			} else if (!substyle.system && !substyle.version && enabled) {
+				console.log('Whetstone | '+substylename+': ', system, version);
 				matches.push(substyle);
 			}
 		}
@@ -291,23 +288,101 @@ class WhetstoneThemes extends EntityCollection {
 		$('<link href="'+path+'" rel="stylesheet" type="text/css" media="all">').appendTo($('head'));
 	}
 
-	static writeColor(name, value) {
+	static writeColor(settingData, value) {
 
-        if (Array.isArray(name)) {
-            for (let i = 0; i < name.length; i++) {
+        if (Array.isArray(settingData)) {
+            for (let i = 0; i < settingData.length; i++) {
                 if (Array.isArray(value)) {
-                    WhetstoneThemes.writeColor(name[i], value[i]);
+                    WhetstoneThemes.writeColor(settingData[i], value[i]);
                 } else {
-                    WhetstoneThemes.writeColor(name[i], value);
+                    WhetstoneThemes.writeColor(settingData[i], value);
                 }
             }
             return;
         }
 
-        if (value != null && value != '') {
-            document.documentElement.style.setProperty(name, value);
-        } else {
-            document.documentElement.style.removeProperty(name);
+        // this will remove custom definitions
+        if (settingData.default == value) {
+        	value = '';
+        }
+
+        if (settingData.color == 'shades') {
+			WhetstoneThemes.writeShades(settingData, value);
+        }
+
+        if (settingData.color == 'color') {
+	        if (value != null && value != '') {
+	        	document.documentElement.style.setProperty(name, value);
+	        } else {
+	            document.documentElement.style.removeProperty(name);
+	        }
+	    }
+    }
+
+    static writeShades(settingData, value) {
+
+    	let colors = {
+            value: '',
+            quarter: '',
+            half: '',
+            threequarter: '',
+            shadow: '',
+            dark: '',
+            light: '',
+            darker: '',
+            lighter: ''
+        };
+
+        if (value) {
+			let result = /^#?([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})$/i.exec(value);
+
+	        let r = parseInt(result[1], 16);
+	        let g = parseInt(result[2], 16);
+	        let b = parseInt(result[3], 16);
+
+	        r /= 255, g /= 255, b /= 255;
+	        let max = Math.max(r, g, b), min = Math.min(r, g, b);
+	        let h, s, l = (max + min) / 2;
+
+	        if(max == min){
+	            h = s = 0; // achromatic
+	        } else {
+	            let d = max - min;
+	            s = l > 0.5 ? d / (2 - max - min) : d / (max + min);
+	            switch(max) {
+	                case r: h = (g - b) / d + (g < b ? 6 : 0); break;
+	                case g: h = (b - r) / d + 2; break;
+	                case b: h = (r - g) / d + 4; break;
+	            }
+	            h /= 6;
+	        }
+	        s = Math.round(s * 100);
+	        l = Math.round(l * 100);
+	        h = Math.round(h * 360);
+	        let a = 1;
+
+	        colors = {
+	            value: 'hsla(' + h + ', ' + s + '%, ' + l + '%, ' + a + ')',
+	            quarter: 'hsla(' + h + ', ' + s + '%, ' + l + '%, 0.25)',
+	            half: 'hsla(' + h + ', ' + s + '%, ' + l + '%, 0.5)',
+	            threequarter: 'hsla(' + h + ', ' + s + '%, ' + l + '%, 0.75)',
+	            shadow: 'hsla(' + h + ', ' + s + '%, 25%, ' + a + ')',
+	            dark: 'hsla(' + h + ', ' + s + '%, 25%, 0.5)',
+	            light: 'hsla(' + h + ', 100%, 50%, ' + a + ')',
+	            darker: 'hsla(' + h + ', ' + s + '%, ' + Math.max(0, (l - 10)) + '%, ' + a + ')',
+	            lighter: 'hsla(' + h + ', ' + s + '%, ' + Math.min(100, (l + 10)) + '%, ' + a + ')'
+	        }
+	    }
+
+        for (let colortype in colors) {
+            let value = colors[colortype];
+            let propname = settingData.name+(colortype != 'value' ? '-'+colortype : '');
+
+            if (value != null && value != '') {
+	            document.documentElement.style.setProperty(propname, value);
+	        } else {
+	            document.documentElement.style.removeProperty(propname);
+	        }
         }
     }
 
@@ -334,7 +409,7 @@ class WhetstoneThemes extends EntityCollection {
 	static socketListeners(socket) {
 		socket.on('modifyDocument', response => {
 			const { request, path } = response;
-			if (request.type !== "WhetstoneThemes") return;
+			if (request.type !== 'WhetstoneThemes') return;
 			
 			switch ( request.action ) {
 				case "add":
@@ -361,7 +436,7 @@ class WhetstoneTheme extends Entity {
 			baseEntity: WhetstoneTheme,
 			collection: game.Whetstone.themes,
 			embeddedEntities: {},
-			label: "WHETSTONE.ThemeEntry",
+			label: 'WHETSTONE.ThemeEntry',
 			permissions: {}
 		};
 	}
@@ -408,8 +483,8 @@ class WhetstoneThemeSettings {
 	 * Each storage interface shares the same API as window.localStorage
 	 */
 	this.storage = new Map([
-	  ["client", window.localStorage],
-	  ["world", new WorldSettingsStorage([])]
+	  ['client', window.localStorage],
+	  ['world', new WorldSettingsStorage([])]
 	]);
   }
 
@@ -471,10 +546,10 @@ class WhetstoneThemeSettings {
    * });
    */
   register(module, key, data) {
-	if ( !module || !key ) throw new Error("You must specify both module and key portions of the setting");
-	data["key"] = key;
-	data["module"] = module;
-	data["scope"] = ["client", "world"].includes(data.scope) ? data.scope : "client";
+	if ( !module || !key ) throw new Error('You must specify both module and key portions of the setting');
+	data['key'] = key;
+	data['module'] = module;
+	data['scope'] = ['client', 'world'].includes(data.scope) ? data.scope : 'client';
 	this.settings.set(`${module}.${key}`, data);
   }
 
@@ -499,11 +574,12 @@ class WhetstoneThemeSettings {
    * });
    */
   registerMenu(module, key, data) {
-	if ( !module || !key ) throw new Error("You must specify both module and key portions of the menu");
+	if ( !module || !key ) throw new Error('You must specify both module and key portions of the menu');
 	data.key = `${module}.${key}`;
 	data.module = module;
-	if ( !data.type || !(data.type.prototype instanceof FormApplication) ) {
-	  throw new Error("You must provide a menu type that is FormApplication instance or subclass");
+	if (!data.type) data.type = WhetstoneThemeConfigDialog;
+	if (!data.type || !(data.type.prototype instanceof FormApplication) ) {
+	  throw new Error('You must provide a menu type that is FormApplication instance or subclass');
 	}
 	this.menus.set(data.key, data);
   }
@@ -521,9 +597,9 @@ class WhetstoneThemeSettings {
    * game.settings.get("myModule", "myClientSetting");
    */
   get(module, key) {
-	if ( !module || !key ) throw new Error("You must specify both module and key portions of the setting");
+	if ( !module || !key ) throw new Error('You must specify both module and key portions of the setting');
 	key = `${module}.${key}`;
-	if ( !this.settings.has(key) ) throw new Error("This is not a registered game setting");
+	if ( !this.settings.has(key) ) throw new Error('This is not a registered game setting');
 
 	// Get the setting and the correct storage interface
 	const setting = this.settings.get(key);
@@ -551,19 +627,19 @@ class WhetstoneThemeSettings {
    * game.settings.set("myModule", "myClientSetting", "b");
    */
   async set(module, key, value) {
-	if ( !module || !key ) throw new Error("You must specify both module and key portions of the setting");
+	if ( !module || !key ) throw new Error('You must specify both module and key portions of the setting');
 	key = `${module}.${key}`;
-	if ( !this.settings.has(key) ) throw new Error("This is not a registered game setting");
+	if ( !this.settings.has(key) ) throw new Error('This is not a registered game setting');
 
 	// Obtain the setting data and serialize the value
 	const setting = this.settings.get(key);
 	const json = JSON.stringify(value);
 
 	// Broadcast the setting change to others
-	if ( setting.scope === "world" ) {
-	  await SocketInterface.dispatch("modifyDocument", {
-		type: "Setting",
-		action: "update",
+	if ( setting.scope === 'world' ) {
+	  await SocketInterface.dispatch('modifyDocument', {
+		type: 'Setting',
+		action: 'update',
 		data: {key, value: json}
 	  });
 	}
@@ -597,15 +673,15 @@ class WhetstoneThemeSettings {
   static socketListeners(socket) {
 	socket.on('modifyDocument', response => {
 	  const { request, result } = response;
-	  if (request.type !== "Setting") return;
+	  if (request.type !== 'Setting') return;
 	  const {key, value} = result;
 	  const setting = game.settings.settings.get(key);
 	  switch ( request.action ) {
-		case "create":
-		case "update":
+		case 'create':
+		case 'update':
 		  game.settings._update(setting, key, value);
 		  break;
-		case "delete":
+		case 'delete':
 		  const storage = game.settings.storage.get(setting.scope);
 		  delete storage.data[key];
 		  break;
@@ -642,10 +718,10 @@ Hooks.once('init', () => {
 	});
 
 	// add menu button
-    game.settings.register("Whetstone", "addMenuButton", {
-		name: "WHETSTONE.AddMenuButton",
-		hint: "WHETSTONE.AddMenuButtonHint",
-		scope: "world",
+    game.settings.register('Whetstone', 'addMenuButton', {
+		name: 'WHETSTONE.AddMenuButton',
+		hint: 'WHETSTONE.AddMenuButtonHint',
+		scope: 'world',
 		config: true,
 		default: true,
 		type: Boolean,
@@ -685,7 +761,6 @@ Hooks.once('WhetstoneReady', () => {
                 name: 'OceanBlues-Hotbar',
                 title: 'OCEANBLUES.SubstyleHotbar',
                 hint: 'OCEANBLUES.SubstyleHotbarHint',
-                activate: 'manual',
                 active: true,
                 styles: [
                     'modules/Whetstone/styles/OceanBlues-Hotbar.css'
@@ -695,7 +770,6 @@ Hooks.once('WhetstoneReady', () => {
                 name: 'OceanBlues-Toolbar',
                 title: 'OCEANBLUES.SubstyleToolbar',
                 hint: 'OCEANBLUES.SubstyleToolbarHint',
-                activate: 'manual',
                 active: true,
                 styles: [
                     'modules/Whetstone/styles/OceanBlues-Toolbar.css'
@@ -705,7 +779,6 @@ Hooks.once('WhetstoneReady', () => {
                 name: 'OceanBlues-SceneButtons',
                 title: 'OCEANBLUES.SubstyleSceneButtons',
                 hint: 'OCEANBLUES.SubstyleSceneButtonsHint',
-                activate: 'manual',
                 active: true,
                 styles: [
                     'modules/Whetstone/styles/OceanBlues-SceneButtons.css'
@@ -715,7 +788,6 @@ Hooks.once('WhetstoneReady', () => {
                 name: 'OceanBlues-SceneButtonsSmaller',
                 title: 'OCEANBLUES.SubstyleSceneButtonsSmaller',
                 hint: 'OCEANBLUES.SubstyleSceneButtonsSmallerHint',
-                activate: 'manual',
                 active: false,
                 styles: [
                     'modules/Whetstone/styles/OceanBlues-SceneButtonsSmaller.css'
@@ -728,48 +800,44 @@ Hooks.once('WhetstoneReady', () => {
 				title: 'Background Color',
 				hint: 'Used in sheet headers, tinges the background.',
 				value: '#3d5a80', type: 'color', presets: 'palette'
-			},
-			{
+			}, {
 				name: '--OceanBlues-text-light-color',
 				title: 'Text Color - Light',
 				hint: 'Used for text on dark background.',
-				value: '#98c1d9', type: 'color', presets: 'palette'},
-			{
+				value: '#98c1d9', type: 'color', presets: 'palette'
+			}, {
 				name: '--OceanBlues-text-dark-color',
 				title: 'Text Color - Dark',
 				hint: 'Used for text on light backgrounds.',
-				value: '#102632', type: 'color', presets: 'palette'},
-			{
+				value: '#102632', type: 'color', presets: 'palette'
+			}, {
 				name: '--OceanBlues-text-highlight-color',
 				title: 'Text Highlight Color',
 				hint: '',
-				value: '#72b9d5', type: 'color', presets: 'palette'},
-			{
+				value: '#72b9d5', type: 'color', presets: 'palette'
+			}, {
 				name: '--OceanBlues-text-selection-color',
 				title: 'Text Selection Color',
 				hint: '',
-				value: '#b0c2bd', type: 'color', presets: 'palette'},
-			{
+				value: '#b0c2bd', type: 'color', presets: 'palette'
+			}, {
 				name: '--OceanBlues-fg-color',
 				title: 'Foreground Color',
 				hint: 'Used for textboxes and input fields',
-				value: '#e0fbfc', type: 'color', presets: 'palette'},
-			{
+				value: '#e0fbfc', type: 'color', presets: 'palette'
+			}, {
 				name: '--OceanBlues-highlight-color',
 				title: 'Highlight Color',
 				hint: 'Used for highlighter colro when hovering over hyperlinks or interface elements.',
-				value: '#ee6c4d', type: 'color', presets: 'palette'},
-			{
+				value: '#ee6c4d', type: 'color', presets: 'palette'
+			}, {
 				name: '--OceanBlues-border-color',
 				title: 'Border Color',
 				hint: '',
-				value: '#293241', type: 'color', presets: 'palette'},
-			{
-				name: '--OceanBlues-padding',
-				title: 'Text Value Entry',
-				hint: 'This option is used to text the text value input control',
-				value: '4px', type: String}
+				value: '#293241', type: 'color', presets: 'palette'
+			}
 		],
+ 
 		presets: {
 			palette: {
 				'#3d5a80': 'Bdazzled Blue',
@@ -780,7 +848,21 @@ Hooks.once('WhetstoneReady', () => {
 				'#e0fbfc': 'Light Cyan',
 				'#ee6c4d': 'Burnt Sienna',
 				'#293241': 'Gunmetal'
-			}
+			},
+            sheetColorPresets: {
+                "#fffbce": "Standard Tan",
+                "#ff9d9d": "Trainer Red",
+                "#e4a089": "Rocky Brown",
+                "#f4ce88": "Mousy Yellow",
+                "#68c098": "Misty Green",
+                "#b5dc92": "Buggy Green",
+                "#58d0d0": "Trainer Blue",
+                "#c0a5da": "Trainer Purple",
+                "#eee6dd": "Eggy Shell White",
+                "#f0ace6": "Balloon Pink",
+                "#c0c0c0": "Steely Grey",
+                "#525252": "Edgy Black"
+            }
 		},
 		dialog: '',
 		config: '',
@@ -794,7 +876,7 @@ Hooks.once('WhetstoneReady', () => {
 
 	// Register that this theme has a menu
 	// WhetstoneThemeConfigDialog is provided by Whetstone core
-	game.Whetstone.settings.registerMenu('Whetstone', 'OceanBlues', {
+	game.Whetstone.settings.registerMenu('OceanBlues', 'OceanBlues', {
 		name: game.i18n.localize('WHETSTONE.Config'),
 		label: game.i18n.localize('WHETSTONE.ConfigTitle'),
 		hint: game.i18n.localize('WHETSTONE.ConfigHint'),
@@ -830,7 +912,7 @@ class WhetstoneCoreConfigDialog extends FormApplication {
 	getData(options) {
 		let storedOptions = game.settings.get('Whetstone', 'settings');
 		let defaultOptions = WhetstoneCoreConfig.getDefaults;
-    	const canConfigure =  game.user.can("SETTINGS_MODIFY");
+    	const canConfigure =  game.user.can('SETTINGS_MODIFY');
 
 		const counts = {all: game.Whetstone.themes.length, active: 0, inactive: 0};
 
@@ -856,14 +938,14 @@ class WhetstoneCoreConfigDialog extends FormApplication {
 		for ( let setting of game.settings.settings.values() ) {
 
 		  // Exclude settings the user cannot change
-		  if (!setting.config || (!canConfigure && (setting.scope !== "client"))) continue;
+		  if (!setting.config || (!canConfigure && (setting.scope !== 'client'))) continue;
 		  if (setting.module !== 'Whetstone') continue;
 
 		  // Update setting data
 		  const s = duplicate(setting);
 		  s.value = this.reset ? s.default : game.settings.get('Whetstone', s.key);
 		  s.isColor = (['color', 'shades'].includes(s.color));
-		  s.type = setting.type instanceof Function ? setting.type.name : "String";
+		  s.type = setting.type instanceof Function ? setting.type.name : 'String';
 		  s.isCheckbox = setting.type === Boolean;
 		  s.isSelect = s.choices !== undefined;
 		  s.isRange = (setting.type === Number) && s.range;
@@ -909,7 +991,7 @@ class WhetstoneCoreConfigDialog extends FormApplication {
 		let moduleid = $(event.target).val();
 		let theme = await game.Whetstone.themes.get(moduleid);
 		if (!theme) console.log('Whetstone | Theme not found: ', moduleid);
-		let menuname = theme.data.dialog || 'Whetstone.'+theme.name;
+		let menuname = theme.data.dialog || moduleid+'.'+theme.name;
 
 		const menu = await game.Whetstone.settings.menus.get(menuname);
 		if ( !menu ) return ui.notifications.error('No submenu found for the provided key');
@@ -919,7 +1001,7 @@ class WhetstoneCoreConfigDialog extends FormApplication {
 
 	async _updateObject(event, formData) {
 		await game.settings.set('Whetstone', 'settings', formData);
-		ui.notifications.info(game.i18n.localize("WHETSTONE.SaveMessage"));
+		ui.notifications.info(game.i18n.localize('WHETSTONE.SaveMessage'));
 	}
 }
 
@@ -933,7 +1015,7 @@ class WhetstoneCoreConfig {
 	}
 
 	static get getOptions() {
-		return mergeObject(WhetstoneCoreConfig.getDefaults, game.settings.get("Whetstone", "settings"));
+		return mergeObject(WhetstoneCoreConfig.getDefaults, game.settings.get('Whetstone', 'settings'));
 	}
 
 	static apply(options) {
@@ -996,13 +1078,13 @@ class WhetstoneThemeConfigDialog extends FormApplication {
 	/** @override */
 	static get defaultOptions() {
 		return mergeObject(super.defaultOptions, {
-			title: game.i18n.localize("WHETSTONE.ConfigTitle"),
-			id: "WhetstoneThemeConfigDialog",
-			template: "modules/Whetstone/templates/theme-settings.html",
+			title: game.i18n.localize('WHETSTONE.ConfigTitle'),
+			id: 'WhetstoneThemeConfigDialog',
+			template: 'modules/Whetstone/templates/theme-settings.html',
 			width: 530,
-			height: "auto",
+			height: 'auto',
 			tabs: [
-				{navSelector: ".tabs", contentSelector: ".content", initial: "themecolors"}
+				{navSelector: '.tabs', contentSelector: '.content', initial: 'themecolors'}
 			]
 		});
 	}
@@ -1025,14 +1107,14 @@ class WhetstoneThemeConfigDialog extends FormApplication {
 		for ( let setting of gs.settings.values() ) {
 
 			// Exclude settings the user cannot change
-			if (!setting.config || setting.scope !== "client") continue;
+			if (!setting.config || setting.scope !== 'client') continue;
 			if (setting.theme !== theme.name) continue;
 
 			// Update setting data
 			const s = duplicate(setting);
 			s.value = this.reset ? s.default : game.Whetstone.settings.get(s.theme+'.'+s.tab, s.key);
 			s.isColor = (['color', 'shades'].includes(s.color));
-			s.type = setting.type instanceof Function ? setting.type.name : "String";
+			s.type = setting.type instanceof Function ? setting.type.name : 'String';
 			s.isCheckbox = setting.type === Boolean;
 			s.isSelect = s.choices !== undefined;
 			s.isRange = (setting.type === Number) && s.range;
@@ -1129,7 +1211,7 @@ class WhetstoneThemeConfigDialog extends FormApplication {
   async _onClickSubmenu(event) {
 	event.preventDefault();
 	const menu = await game.settings.menus.get(event.currentTarget.dataset.key);
-	if ( !menu ) return ui.notifications.error("No submenu found for the provided key");
+	if ( !menu ) return ui.notifications.error('No submenu found for the provided key');
 	const app = new menu.type();
 	return app.render(true);
   }
@@ -1172,7 +1254,7 @@ class WhetstoneThemeConfigDialog extends FormApplication {
 				await game.Whetstone.settings.set(s.theme+'.'+s.tab, s.key, v);
 
 				if (s.tab == 'variables') {
-					WhetstoneThemes.writeColor(s.name, v);
+					WhetstoneThemes.writeColor(s, v);
 				}
 			}
 		}
