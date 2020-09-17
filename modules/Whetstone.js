@@ -1022,6 +1022,9 @@ class WhetstoneCoreConfig {
 
 		console.log('Whetstone | WhetstoneCoreConfig.apply()', options);
 
+		WhetstoneThemes.toggleConfigButton(options.addMenuButton);
+		game.settings.set('Whetstone', 'addMenuButton', options.addMenuButton);
+
 		let activate = [];
 		let deactivate = [];
 
