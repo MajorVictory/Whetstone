@@ -1,11 +1,11 @@
 {
   "name": "Whetstone",
   "title": "Whetstone - Foundry Theme Manager",
-  "description": "A theme manager for Foundry",
+  "description": "A robust theme manager for Foundry",
   "version": "0.0.1",
   "author": "MajorVictory",
   "esmodules": [
-    "modules/Whetstone.js"
+    "Whetstone.js"
   ],
   "styles": [
     "styles/Whetstone-core.css"
