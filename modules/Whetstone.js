@@ -19,6 +19,12 @@ class WhetstoneThemes extends EntityCollection {
 		this.settings = game.settings.get('Whetstone', 'settings');
 	}
 
+	/**
+	 * register a new theme with Whetstone
+	 * @param  {String} module module id to associate with them and to pull some information from
+	 * @param  {Object} data   properties and settings for new theme
+	 * @return {WhetstoneThemes}        global object used for managing WhetstoneWhemes
+	 */
 	register(module, data) {
 
 		if ( !module ) throw new Error('Whetstone | You must specify module');
@@ -65,6 +71,7 @@ class WhetstoneThemes extends EntityCollection {
 		this.insert(new WhetstoneTheme(themedata, themedata));
 	}
 
+	
 	registerVariable(themeid, data) {
 		this._registerVariable(game.Whetstone.get(themeid), data);
 	}
@@ -77,11 +84,11 @@ class WhetstoneThemes extends EntityCollection {
 			theme: themedata.name,
 			tab: 'variables',
 			scope: 'client',
-			default: data.value,
+			default: (data.default || data.value),
 			color: data.type,
 			type: String,
 			config: true
-		}
+		};
 
 		let presets = themedata.presets[data.presets];
 		if (presets) varData.choices = presets;
@@ -711,7 +718,7 @@ Hooks.once('ready', () => {
 Hooks.once('WhetstoneReady', () => {
 	console.log('Whetstone | Ready');
 
-	 game.Whetstone.themes.register('Whetstone', {
+	game.Whetstone.themes.register('Whetstone', {
 		id: 'OceanBlues',
 		name: 'OceanBlues',
 		title: 'Ocean Blues',
@@ -747,57 +754,57 @@ Hooks.once('WhetstoneReady', () => {
                     'modules/Whetstone/styles/OceanBlues-SceneButtons.css'
                 ]
             },
-            'OceanBlues-SceneButtonsSmaller': {
-                name: 'OceanBlues-SceneButtonsSmaller',
-                title: 'OCEANBLUES.SubstyleSceneButtonsSmaller',
-                hint: 'OCEANBLUES.SubstyleSceneButtonsSmallerHint',
-                active: false,
-                styles: [
-                    'modules/Whetstone/styles/OceanBlues-SceneButtonsSmaller.css'
-                ]
-            }
+			'OceanBlues-SceneButtonsSmaller': {
+				name: 'OceanBlues-SceneButtonsSmaller',
+				title: 'OCEANBLUES.SubstyleSceneButtonsSmaller',
+				hint: 'OCEANBLUES.SubstyleSceneButtonsSmallerHint',
+				active: false,
+				styles: [
+					'modules/Whetstone/styles/OceanBlues-SceneButtonsSmaller.css'
+				]
+			}
         },
 		variables: [
 			{
 				name: '--OceanBlues-bg-color',
 				title: 'Background Color',
 				hint: 'Used in sheet headers, tinges the background.',
-				value: '#3d5a80', type: 'color', presets: 'palette'
+				default: '#3d5a80', type: 'color', presets: 'palette'
 			}, {
 				name: '--OceanBlues-text-light-color',
 				title: 'Text Color - Light',
 				hint: 'Used for text on dark background.',
-				value: '#98c1d9', type: 'color', presets: 'palette'
+				default: '#98c1d9', type: 'color', presets: 'palette'
 			}, {
 				name: '--OceanBlues-text-dark-color',
 				title: 'Text Color - Dark',
 				hint: 'Used for text on light backgrounds.',
-				value: '#102632', type: 'color', presets: 'palette'
+				default: '#102632', type: 'color', presets: 'palette'
 			}, {
 				name: '--OceanBlues-text-highlight-color',
 				title: 'Text Highlight Color',
 				hint: '',
-				value: '#72b9d5', type: 'color', presets: 'palette'
+				default: '#72b9d5', type: 'color', presets: 'palette'
 			}, {
 				name: '--OceanBlues-text-selection-color',
 				title: 'Text Selection Color',
 				hint: '',
-				value: '#b0c2bd', type: 'color', presets: 'palette'
+				default: '#b0c2bd', type: 'color', presets: 'palette'
 			}, {
 				name: '--OceanBlues-fg-color',
 				title: 'Foreground Color',
 				hint: 'Used for textboxes and input fields',
-				value: '#e0fbfc', type: 'color', presets: 'palette'
+				default: '#e0fbfc', type: 'color', presets: 'palette'
 			}, {
 				name: '--OceanBlues-highlight-color',
 				title: 'Highlight Color',
 				hint: 'Used for highlighter colro when hovering over hyperlinks or interface elements.',
-				value: '#ee6c4d', type: 'color', presets: 'palette'
+				default: '#ee6c4d', type: 'color', presets: 'palette'
 			}, {
 				name: '--OceanBlues-border-color',
 				title: 'Border Color',
 				hint: '',
-				value: '#293241', type: 'color', presets: 'palette'
+				default: '#293241', type: 'color', presets: 'palette'
 			}
 		],
  
