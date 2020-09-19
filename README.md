@@ -29,16 +29,26 @@
 **[Known Issues]**
  * [Report Problems](https://github.com/MajorVictory/Whetstone/issues)
 
-### Latest Release: **None** *Alpha testers only*
+### Latest Release
 
-This module is currently in **ACTIVE DEVELOPMENT** and is only meant for alpha feedback and testing.
-Documentation will be written eventually, but for now, there's tons of comments in the code.
-
-You can download the module in it's current state by pasting the following manifest url into Foundry.
+You can download the module in it's current state by pasting the following manifest url into Foundry or search for `Whetstone` in the module browser.
 
 > https://raw.githubusercontent.com/MajorVictory/Whetstone/master/module.json
 
 ![](readme/Install-7-31-2020.png)
+
+## More Themes !?
+
+### Theme Authors
+
+Themes can be published as normal modules with a depedency listed for Whetstone. Users install your theme through the module browser as normal and enable them via Whetstone's config.
+
+### List of Themes
+
+[I will maintain a short list of themes in the wiki.](https://github.com/MajorVictory/Whetstone/wiki/List-of-Themes#-list-of-whetstone-themes-)
+
+Contact me via discord, make a bug report, or submit a pull request if you want your theme listed there.
+
 
 ## Changelog
 
