@@ -46,16 +46,14 @@ export class WhetstoneCoreConfig {
 			}
 			deactivate.push(k);
 		}
-
-		// sort by priority first, then name in alphabetical
-		if (activate.length > 0) {
-			activate.sort((a, b) => (a.priority > b.priority ? 1 : (a.priority === b.priority ? (a.name > b.name ? 1 : -1) : -1)));
-		}
-
+		
 		// deactivate all themes
 		for (let i = 0, len = deactivate.length; i < len; ++i) {
 			game.Whetstone.themes.deactivate(deactivate[i]);
 		}
+
+		// sort by priority first, then name in alphabetical
+		activate.sort((a, b) => (a.priority > b.priority ? 1 : (a.priority === b.priority ? (a.name > b.name ? 1 : -1) : -1)));
 
 		// activate all active themes
 		for (let i = 0, len = activate.length; i < len; ++i) {

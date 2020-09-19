@@ -68,20 +68,31 @@
          {{#each themes}}
          <li class="theme package flexcol" data-theme-name="{{this.name}}">
             <div class="theme-overview package-overview flexrow">
+                {{#if this.img}}
                 <img class="theme-image package-image" src="{{this.img}}" />
-                <div class="flexrow">
-                    <label class="theme-title package-title checkbox">
-                        <input type="checkbox" class="active" name="{{this.name}}" data-dtype="Boolean" {{checked this.active}}>
-                        {{this.title}}
-                    </label>
-                    {{#if ../expanded}}
-
-                    {{else}}
-                        {{#if this.systems}}
-                        {{#each this.systems as |version name|}}
-                        <span class="tag version">{{name}} {{version}}</span>
-                        {{/each}}
+                {{/if}}
+                <div class="flexcol">
+                    <div class="flexrow">
+                        <label class="theme-title package-title checkbox">
+                            <input type="checkbox" class="active" name="{{this.name}}" data-dtype="Boolean" {{checked this.active}}>
+                            {{this.title}}
+                        </label>
+                        {{#if ../expanded}}
+                        {{else}}
+                            {{#if this.systems}}
+                            {{#each this.systems as |version name|}}
+                            <span class="tag version">{{name}} {{version}}</span>
+                            {{/each}}
+                            {{/if}}
                         {{/if}}
+                    </div>
+                            
+                    {{#if this.authors}}
+                    <ul class="theme-authors">
+                    {{#each this.authors}}
+                        <li class="author"><strong>{{localize "WHETSTONE.Author"}}:</strong>{{this.name}} {{#if this.url}}<a href="{{this.url}}">{{this.contact}}</a>{{/if}}</span>
+                    {{/each}}
+                    </ul>
                     {{/if}}
                 </div>
             </div>
@@ -92,28 +103,28 @@
                     {{this.description}}
                     <ul class="theme-tags">
                         {{#if this.systems}}
-                        <li><strong>{{localize "Systems"}}:</strong>
+                        <li><strong>{{localize "WHETSTONE.Systems"}}:</strong>
                         {{#each this.systems as |version name|}}
                         <span class="tag version">{{name}} {{version}}</span>
                         {{/each}}
                         </li>
                         {{/if}}
                         {{#if this.dependencies}}
-                        <li><strong>{{localize "Dependencies"}}:</strong>
+                        <li><strong>{{localize "WHETSTONE.Dependencies"}}:</strong>
                         {{#each this.dependencies as |name version|}}
                         <span class="tag javascript">{{name}} {{version}}</span>
                         {{/each}}
                         </li>
                         {{/if}}
                         {{#if this.compatible}}
-                        <li><strong>{{localize "Compatible"}}:</strong>
+                        <li><strong>{{localize "WHETSTONE.Compatible"}}:</strong>
                         {{#each this.compatible as |name version|}}
                         <span class="tag languages">{{name}} {{version}}</span>
                         {{/each}}
                         </li>
                         {{/if}}
                         {{#if this.conflicts}}
-                        <li><strong>{{localize "Conflicts"}}:</strong>
+                        <li><strong>{{localize "WHETSTONE.Conflicts"}}:</strong>
                         {{#each this.conflicts as |name version|}}
                         <span class="tag unavailable">{{name}} {{version}}</span>
                         {{/each}}

@@ -13,6 +13,11 @@
     "WHETSTONE.AddMenuButtonHint": "Adds a button the to sidebar settings menu for quick access to the Whetstone config.",
 
     "WHETSTONE.ThemeEntry": "Whetstone Theme",
+    "WHETSTONE.Author": "Author",
+    "WHETSTONE.Systems": "Systems",
+    "WHETSTONE.Dependencies": "Dependencies",
+    "WHETSTONE.Compatible": "Compatible",
+    "WHETSTONE.Conflicts": "Conflicts",
 
     "WHETSTONE.ConfigureTheme": "Configure Theme",
 

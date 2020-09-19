@@ -52,26 +52,17 @@ export class WhetstoneThemes extends EntityCollection {
 			conflicts: {}
 		}, data);
 
-		if (themeData.variables) {
-			for (let i = 0, len = themeData.variables.length; i < len; ++i) {
-				this._registerVariable(themeData, themeData.variables[i]);
-			}
-		}
+		themeData.variables.forEach((variable, index) => {
+			this._registerVariable(themeData, variable);
+		});
 
-		if (themeData.settings) {
-			for (let i = 0, len = themeData.settings.length; i < len; ++i) {
-				this._registerSetting(themeData, themeData.settings[i]);
-			}
-		}
+		themeData.settings.forEach((variable, index) => {
+			this._registerSetting(themeData, variable);
+		});
 
-		if (themeData.substyles) {
-			for (const substyleName in themeData.substyles) {
-				this._registerSubstyle(
-					themeData,
-					themeData.substyles[substyleName]
-				);
-			}
-		}
+		Object.keys(themeData.substyles).forEach((substyleKey, index) => {
+			this._registerSubstyle(themeData, themeData.substyles[substyleKey]);
+		});
 
 		this.insert(new WhetstoneTheme(themeData, themeData));
 	}
@@ -287,8 +278,8 @@ export class WhetstoneThemes extends EntityCollection {
 	}
 
 	/**
-	 * The currently active WetstoneTheme instances
-	 * @return {WetstoneTheme}
+	 * The currently active WhetstoneTheme instances
+	 * @return {WhetstoneTheme}
 	 */
 	get active() {
 		return this.filter((t) => t.data.active);
