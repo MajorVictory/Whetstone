@@ -182,6 +182,9 @@ export class WhetstoneThemes extends EntityCollection {
 		if (!themedata)
 			throw new Error("Whetstone | Cannot activate theme: " + themeid);
 
+		const allowed = Hooks.call("onThemeActivate", themedata);
+		if (allowed === false) return;
+
 		themedata.data.active = true;
 
 		// write css vars first
@@ -213,6 +216,9 @@ export class WhetstoneThemes extends EntityCollection {
 		let themedata = this.get(themeid);
 		if (!themedata)
 			throw new Error("Whetstone | Cannot deactivate theme: " + themeid);
+
+		const allowed = Hooks.call("onThemeDeactivate", themedata);
+		if (allowed === false) return;
 
 		themedata.data.active = false;
 
@@ -310,7 +316,7 @@ export class WhetstoneThemes extends EntityCollection {
 
 	/**
 	 * Writes or erases a css variable to the main body element
-	 * @param  {WhetstoneSetting} settingData Settings data
+	 * @param  {Object} settingData Settings data
 	 * @param  {String} value       the value to write, use '' to erase instead
 	 * @return none
 	 */
@@ -343,7 +349,7 @@ export class WhetstoneThemes extends EntityCollection {
 	/**
 	 * Generates shades of a given color value and writes
 	 * or erases a css variable of each to the main body element
-	 * @param  {WhetstoneSetting} settingData Settings data
+	 * @param  {Object} settingData Settings data
 	 * @param  {String} value       the value to write, use '' to erase instead
 	 * @return none
 	 */

@@ -167,19 +167,23 @@ export class WhetstoneThemeConfigDialog extends FormApplication {
 
 	/** @override */
 	async _updateObject(event, formData) {
-		for (let [k, v] of Object.entries(formData)) {
-			let s = game.Whetstone.settings.settings.get( 
+		for (let [k, newValue] of Object.entries(formData)) {
+
+
+			let settingData = game.Whetstone.settings.settings.get( 
 				this._theme + "." + k.split("/").join(".")
 			);
-			if (!s) continue;
+			if (!settingData) continue;
 
-			let current = game.Whetstone.settings.get(s.theme + "." + s.tab, s.key);
-			if (v !== current) {
-				await game.Whetstone.settings.set(s.theme + "." + s.tab, s.key, v);
+			let themekey = settingData.theme + "." + settingData.tab
+			let current = game.Whetstone.settings.get(themekey, settingData.key);
+			if (newValue !== current) {
+				await game.Whetstone.settings.set(themekey, settingData.key, newValue);
 
-				if (s.tab === "variables") {
-					WhetstoneThemes.writeVariable(s, v);
+				if (settingData.tab === "variables") {
+					WhetstoneThemes.writeVariable(settingData, newValue);
 				}
+				Hooks.callAll(`update${settingData.theme}`, settingData, newValue, current);
 			}
 		}
 	}

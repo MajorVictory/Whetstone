@@ -14,7 +14,7 @@
     A robust theme manager for Foundry
     <br />
     <br />
-    <a href="https://github.com/MajorVictory/Whetstone/issues">Report Bug / Request Feature</a>
+    <a href="https://github.com/MajorVictory/Whetstone/issues">Report Bug / Request Feature</a> | <a href="https://github.com/MajorVictory/Whetstone/wiki">How to use Whetstone</a>
   </p>
 </p>
 
@@ -26,7 +26,6 @@
  * *FoundryVTT* 0.6.5-0.6.6
 
 **[Known Issues]**
- * Changing styles produces some console errors, but works fine >_>
  * [Report Problems](https://github.com/MajorVictory/Whetstone/issues)
 
 ### Latest Release: **None** *Alpha testers only*
