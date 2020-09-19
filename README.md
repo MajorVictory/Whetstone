@@ -13,8 +13,9 @@
   <p align="center">
     A robust theme manager for Foundry
     <br />
+    <a href="https://github.com/MajorVictory/Whetstone/wiki/Whetstone:-FoundryVTT-Theme-Manager">How to use Whetstone</a>
     <br />
-    <a href="https://github.com/MajorVictory/Whetstone/issues">Report Bug / Request Feature</a> | <a href="https://github.com/MajorVictory/Whetstone/wiki">How to use Whetstone</a>
+    <a href="https://github.com/MajorVictory/Whetstone/issues">Report Bug / Request Feature</a>
   </p>
 </p>
 
