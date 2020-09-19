@@ -256,7 +256,7 @@ export class WhetstoneThemes extends EntityCollection {
 			const enabled = checkEnabled ? game.Whetstone.settings.get(`${themeData.name}.substyles`, substyleName) : true;
 
 			if ((substyle.system === system || system === 'all')
-				&& (substyle.version === version || isNewerVersion(version, substyle.version) || version === 'all')
+				&& (substyle.version === String(version) || isNewerVersion(version, substyle.version) || version === 'all')
 				&& enabled) {
 				styles = styles.concat(substyle.styles);
 			} else if (substyle.system === system && !substyle.version && enabled) {
