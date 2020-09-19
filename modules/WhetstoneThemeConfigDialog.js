@@ -36,8 +36,8 @@ export class WhetstoneThemeConfigDialog extends FormApplication {
 			settings: [],
 			substyles: []
 		};
-		const currentdata = [];
-		const defaultdata = [];
+		const currentData = [];
+		const defaultData = [];
 
 		// Classify all settings
 		for (const setting of game.Whetstone.settings.settings.values()) {
@@ -61,13 +61,13 @@ export class WhetstoneThemeConfigDialog extends FormApplication {
 				settings[s.tab] = [s];
 			}
 
-			currentdata[`${s.tab}/${s.key}`] = s.value;
-			defaultdata[`${s.tab}/${s.key}`] = s.default;
+			currentData[`${s.tab}/${s.key}`] = s.value;
+			defaultData[`${s.tab}/${s.key}`] = s.default;
 		}
 
 		const returndata = this.reset
-			? defaultdata
-			: mergeObject(defaultdata, currentdata);
+			? defaultData
+			: mergeObject(defaultData, currentData);
 
 		returndata.theme = theme;
 		returndata.settings = settings;
@@ -100,9 +100,9 @@ export class WhetstoneThemeConfigDialog extends FormApplication {
 
 		// validate manual color
 		if (control.attr('type') === 'text') {
-			const colortest = /^#[0-9A-F]{6}$/i.test(control.val());
+			const colorTest = /^#[0-9A-F]{6}$/i.test(control.val());
 
-			if (!colortest) {
+			if (!colorTest) {
 				ui.notifications.warn(
 					game.i18n.localize('WHETSTONE.InvalidColorFormat')
 				);
@@ -111,12 +111,12 @@ export class WhetstoneThemeConfigDialog extends FormApplication {
 		}
 
 		const parentGroup = $(control.parents('.ws-color-input')[0]);
-		const colorgroup = parentGroup.find('.ws-color-value');
+		const colorGroup = parentGroup.find('.ws-color-value');
 
 		// loop through 'brother' elements and attempt to set their value
 		// invalid values either become 'custom' or '#000000'
-		for (let el = colorgroup.length - 1; el >= 0; el--) {
-			const brother = $(colorgroup[el]);
+		for (let el = colorGroup.length - 1; el >= 0; el--) {
+			const brother = $(colorGroup[el]);
 
 			// skip if setting myself
 			if (brother.prop('tagName') === control.prop('tagName')) continue;
@@ -170,10 +170,10 @@ export class WhetstoneThemeConfigDialog extends FormApplication {
 			);
 			if (!settingData) continue;
 
-			const themekey = `${settingData.theme}.${settingData.tab}`;
-			const current = game.Whetstone.settings.get(themekey, settingData.key);
+			const themeKey = `${settingData.theme}.${settingData.tab}`;
+			const current = game.Whetstone.settings.get(themeKey, settingData.key);
 			if (newValue !== current) {
-				game.Whetstone.settings.set(themekey, settingData.key, newValue);
+				game.Whetstone.settings.set(themeKey, settingData.key, newValue);
 
 				if (settingData.tab === 'variables') {
 					WhetstoneThemes.writeVariable(settingData, newValue);

@@ -42,7 +42,7 @@ export class WhetstoneCoreConfigDialog extends FormApplication {
 
 		// Prepare themes
 		const themes = game.Whetstone.themes.reduce((arr, m) => {
-			const isActive = storedOptions[m.name] === true;
+			const isActive = (this.reset ? defaultOptions[m.name] : storedOptions[m.name]) === true;
 			if (isActive) counts.active += 1;
 			else counts.inactive += 1;
 
@@ -56,7 +56,7 @@ export class WhetstoneCoreConfigDialog extends FormApplication {
 		storedOptions.expanded = this._expanded;
 
 		// prepare core settings
-		storedOptions.globaloptions = [];
+		storedOptions.globalOptions = [];
 
 		// load up all Whetstone core settings
 		for (const setting of game.settings.settings.values()) {
@@ -76,11 +76,11 @@ export class WhetstoneCoreConfigDialog extends FormApplication {
 
 			switch (s.tab) {
 				case 'globaloptions':
-				default: storedOptions.globaloptions.push(s); break;
+				default: storedOptions.globalOptions.push(s); break;
 			}
 		}
 
-		return this.reset ? defaultOptions : mergeObject(defaultOptions, storedOptions);
+		return mergeObject(defaultOptions, storedOptions);
 	}
 
 	/**

@@ -53,17 +53,13 @@ export class WhetstoneCoreConfig {
 		}
 
 		// deactivate all themes
-		if (deactivate.length > 0) {
-			for (let i = 0, len = deactivate.length; i < len; ++i) {
-				game.Whetstone.themes.deactivate(deactivate[i]);
-			}
+		for (let i = 0, len = deactivate.length; i < len; ++i) {
+			game.Whetstone.themes.deactivate(deactivate[i]);
 		}
 
 		// activate all active themes
-		if (activate.length > 0) {
-			for (let i = 0, len = activate.length; i < len; ++i) {
-				game.Whetstone.themes.activate(activate[i].name);
-			}
+		for (let i = 0, len = activate.length; i < len; ++i) {
+			game.Whetstone.themes.activate(activate[i].name);
 		}
 	}
 }
