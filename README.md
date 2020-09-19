@@ -11,11 +11,17 @@
   </a>
   <h3 align="center">Whetstone - Foundry Theme Manager</h3>
   <p align="center">
-    A robust theme manager for Foundry
+    A module designed to make applying and customizing themes easier for users and theme authors.
+  </p>
+  <p align="center">
+    Users can apply multiple themes at once, configure colors, and any theme related settings.
+  </p>
+  <p align="center">
+    Theme authors can create everything from simple fixes for specific elements, to entire UI overhauls with system-dependant styles.
+  </p>
+  <p align="center">
     <br />
-    <a href="https://github.com/MajorVictory/Whetstone/wiki/Whetstone:-FoundryVTT-Theme-Manager">How to use Whetstone</a>
-    <br />
-    <a href="https://github.com/MajorVictory/Whetstone/issues">Report Bug / Request Feature</a>
+    <a href="https://github.com/MajorVictory/Whetstone/wiki/Whetstone:-FoundryVTT-Theme-Manager">Read the Whetstone Wiki</a> | <a href="https://github.com/MajorVictory/Whetstone/issues">Report Bugs / Request Features</a>
   </p>
 </p>
 
