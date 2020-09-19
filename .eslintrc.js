@@ -20,15 +20,14 @@ module.exports = {
       exceptMethods: ['getData', '_updateObject', '_onClickSubmenu', '_updateColor'],
     }],
     // Personal Preference for project
-    'indent': [
-        'error',
-        'tab'
-    ],
+    'indent': ['error', 'tab'],
+    'prefer-const': 'warn',
     'max-len': ['error', 140],
     'eol-last': ['error', 'never'],
     'linebreak-style': 'off',
     'no-tabs': 'off',
     'no-continue': 'off',
+    'no-restricted-syntax': 'off',
     'object-curly-spacing': ['error', 'never'],
     'import/prefer-default-export': 'off',
     'no-mixed-spaces-and-tabs': 'error',
@@ -36,11 +35,9 @@ module.exports = {
     'no-mixed-operators': 'off',
     'no-param-reassign': 'off',
     'comma-dangle': ['error', 'never'],
-    'brace-style': [
-      'error',
-      '1tbs',
-      {'allowSingleLine': true},
-    ],
+    'no-plusplus': ['error', { 'allowForLoopAfterthoughts': true }],
+    'brace-style': ['error', '1tbs', {'allowSingleLine': true}],
+    'new-cap': ['error', { 'properties': false }]
   },
   globals: {
     AudioHelper: 'readonly',

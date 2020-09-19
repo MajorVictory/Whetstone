@@ -13,40 +13,38 @@ export class WhetstoneCoreConfigDialog extends FormApplication {
 	/** @overrride */
 	static get defaultOptions() {
 		return mergeObject(super.defaultOptions, {
-			title: game.i18n.localize("WHETSTONE.Config"),
-			id: "WhetstoneCoreConfig",
-			template: "modules/Whetstone/templates/settings.html",
+			title: game.i18n.localize('WHETSTONE.Config'),
+			id: 'WhetstoneCoreConfig',
+			template: 'modules/Whetstone/templates/settings.html',
 			width: 680,
-			height: "auto",
+			height: 'auto',
 			closeOnSubmit: true,
-			scrollY: [".theme-list"],
-			tabs: [
-				{
-					navSelector: ".tabs",
-					contentSelector: "form",
-					initial: "themeselect",
-				},
-			],
+			scrollY: ['.theme-list'],
+			tabs: [{
+				navSelector: '.tabs',
+				contentSelector: 'form',
+				initial: 'themeselect'
+			}]
 		});
 	}
 
 	/** @override */
-	getData(options) {
-		let storedOptions = game.settings.get("Whetstone", "settings");
-		let defaultOptions = WhetstoneCoreConfig.getDefaults;
-		const canConfigure = game.user.can("SETTINGS_MODIFY");
+	getData() {
+		const storedOptions = game.settings.get('Whetstone', 'settings');
+		const defaultOptions = WhetstoneCoreConfig.getDefaults;
+		const canConfigure = game.user.can('SETTINGS_MODIFY');
 
 		const counts = {
 			all: game.Whetstone.themes.length,
 			active: 0,
-			inactive: 0,
+			inactive: 0
 		};
 
 		// Prepare themes
 		const themes = game.Whetstone.themes.reduce((arr, m) => {
 			const isActive = storedOptions[m.name] === true;
-			if (isActive) counts.active++;
-			else counts.inactive++;
+			if (isActive) counts.active += 1;
+			else counts.inactive += 1;
 
 			const theme = duplicate(m.options);
 			theme.active = isActive;
@@ -61,39 +59,28 @@ export class WhetstoneCoreConfigDialog extends FormApplication {
 		storedOptions.globaloptions = [];
 
 		// load up all Whetstone core settings
-		for (let setting of game.settings.settings.values()) {
+		for (const setting of game.settings.settings.values()) {
 			// Exclude settings the user cannot change
-			if (
-				!setting.config ||
-				(!canConfigure && setting.scope !== "client")
-			)
-				continue;
-			if (setting.module !== "Whetstone") continue;
+			if (!setting.config || (!canConfigure && setting.scope !== 'client')) continue;
+			if (setting.module !== 'Whetstone') continue;
 
 			// Update setting data
 			const s = duplicate(setting);
-			s.value = this.reset
-				? s.default
-				: game.settings.get("Whetstone", s.key);
-			s.isColor = ["color", "shades"].includes(s.color);
-			s.type =
-				setting.type instanceof Function ? setting.type.name : "String";
+			s.value = this.reset ? s.default : game.settings.get('Whetstone', s.key);
+			s.isColor = ['color', 'shades'].includes(s.color);
+			s.type = setting.type instanceof Function ? setting.type.name : 'String';
 			s.isCheckbox = setting.type === Boolean;
 			s.isSelect = s.choices !== undefined;
 			s.isRange = setting.type === Number && s.range;
 			s.name = s.title || s.name;
 
 			switch (s.tab) {
-				case "globaloptions":
-				default:
-					storedOptions.globaloptions.push(s);
-					break;
+				case 'globaloptions':
+				default: storedOptions.globaloptions.push(s); break;
 			}
 		}
 
-		return this.reset
-			? defaultOptions
-			: mergeObject(defaultOptions, storedOptions);
+		return this.reset ? defaultOptions : mergeObject(defaultOptions, storedOptions);
 	}
 
 	/**
@@ -102,11 +89,9 @@ export class WhetstoneCoreConfigDialog extends FormApplication {
 	*/
 	activateListeners(html) {
 		super.activateListeners(html);
-
 		html.find('button[name="reset"]').click(this._onResetDefaults.bind(this));
-		html.find("button.expand").click(this._onExpandCollapse.bind(this));
-		html.find("button.theme-configure").click(this._onOpenConfig.bind(this));
-
+		html.find('button.expand').click(this._onExpandCollapse.bind(this));
+		html.find('button.theme-configure').click(this._onOpenConfig.bind(this));
 		this.reset = false;
 	}
 
@@ -115,7 +100,7 @@ export class WhetstoneCoreConfigDialog extends FormApplication {
 	 * @param  {Event} event JQuery click event
 	 * @private
 	 */
-	_onResetDefaults(event) {
+	_onResetDefaults() {
 		this.reset = true;
 		this.render();
 	}
@@ -144,18 +129,18 @@ export class WhetstoneCoreConfigDialog extends FormApplication {
 		// this happens if the icon was clicked and sent the event
 		if (!moduleid) moduleid = $(event.target).parent().val();
 
-		let theme = game.Whetstone.themes.get(moduleid);
-		let menuname = theme.data.dialog || moduleid + "." + theme.name;
+		const theme = game.Whetstone.themes.get(moduleid);
+		const menuname = theme.data.dialog || `${moduleid}.${theme.name}`;
 
 		const menu = game.Whetstone.settings.menus.get(menuname);
-		if (!menu) return ui.notifications.error("No submenu found for the provided key");
-		const app = new menu.type({ theme: theme.name });
+		if (!menu) return ui.notifications.error('No submenu found for the provided key');
+		const app = new menu.type({theme: theme.name});
 		return app.render(true);
 	}
 
 	/** @override */
 	async _updateObject(event, formData) {
-		await game.settings.set("Whetstone", "settings", formData);
-		ui.notifications.info(game.i18n.localize("WHETSTONE.SaveMessage"));
+		await game.settings.set('Whetstone', 'settings', formData);
+		ui.notifications.info(game.i18n.localize('WHETSTONE.SaveMessage'));
 	}
 }

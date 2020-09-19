@@ -10,7 +10,7 @@ export class WhetstoneCoreConfig {
 	 */
 	static get getDefaults() {
 		return {
-			addMenuButton: true,
+			addMenuButton: true
 		};
 	}
 
@@ -22,7 +22,7 @@ export class WhetstoneCoreConfig {
 	static get getOptions() {
 		return mergeObject(
 			WhetstoneCoreConfig.getDefaults,
-			game.settings.get("Whetstone", "settings")
+			game.settings.get('Whetstone', 'settings')
 		);
 	}
 
@@ -32,26 +32,24 @@ export class WhetstoneCoreConfig {
 	 */
 	static apply(options) {
 		WhetstoneThemes.toggleConfigButton(options.addMenuButton);
-		game.settings.set("Whetstone", "addMenuButton", options.addMenuButton);
+		game.settings.set('Whetstone', 'addMenuButton', options.addMenuButton);
 
-		let activate = [];
-		let deactivate = [];
+		const activate = [];
+		const deactivate = [];
 
 		// loop options and grab the ones that are theme ids
-		for (let k in options) {
+		for (const k in options) {
 			if (!game.Whetstone.themes.get(k)) continue;
 
 			if (options[k]) {
-				activate.push({ name: k, priority: options[k + "_priority"] || 1 });
+				activate.push({name: k, priority: options[`${k}_priority`] || 1});
 			}
 			deactivate.push(k);
 		}
 
 		// sort by priority first, then name in alphabetical
 		if (activate.length > 0) {
-			activate.sort((a, b) => 
-				a.priority > b.priority ? 1 : (a.priority === b.priority ? (a.name > b.name ? 1 : -1) : -1)
-			);
+			activate.sort((a, b) => (a.priority > b.priority ? 1 : (a.priority === b.priority ? (a.name > b.name ? 1 : -1) : -1)));
 		}
 
 		// deactivate all themes

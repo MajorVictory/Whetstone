@@ -29,7 +29,7 @@ export class WhetstoneThemeConfigDialog extends FormApplication {
 	}
 
 	/** @override */
-	getData(options) {
+	getData() {
 		const theme = game.Whetstone.themes.get(this._theme);
 		const settings = {
 			variables: [],
@@ -47,7 +47,7 @@ export class WhetstoneThemeConfigDialog extends FormApplication {
 
 			// Update setting data
 			const s = duplicate(setting);
-			s.value = this.reset ? s.default : game.Whetstone.settings.get(s.theme + '.' + s.tab, s.key);
+			s.value = this.reset ? s.default : game.Whetstone.settings.get(`${s.theme}.${s.tab}`, s.key);
 			s.isColor = ['color', 'shades'].includes(s.color);
 			s.type = setting.type instanceof Function ? setting.type.name : 'String';
 			s.isCheckbox = setting.type === Boolean;
@@ -61,8 +61,8 @@ export class WhetstoneThemeConfigDialog extends FormApplication {
 				settings[s.tab] = [s];
 			}
 
-			currentdata[s.tab + '/' + s.key] = s.value;
-			defaultdata[s.tab + '/' + s.key] = s.default;
+			currentdata[`${s.tab}/${s.key}`] = s.value;
+			defaultdata[`${s.tab}/${s.key}`] = s.default;
 		}
 
 		const returndata = this.reset
@@ -155,10 +155,9 @@ export class WhetstoneThemeConfigDialog extends FormApplication {
 
 	/**
 	 * Flags the form for a data reset and triggers a redraw
-	 * @param  {Event} event JQuery click event
 	 * @private
 	 */
-	_onResetDefaults(event) {
+	_onResetDefaults() {
 		this.reset = true;
 		this.render();
 	}
@@ -167,14 +166,14 @@ export class WhetstoneThemeConfigDialog extends FormApplication {
 	async _updateObject(event, formData) {
 		for (const [k, newValue] of Object.entries(formData)) {
 			const settingData = game.Whetstone.settings.settings.get(
-				this._theme + '.' + k.split('/').join('.')
+				`${this._theme}.${k.split('/').join('.')}`
 			);
 			if (!settingData) continue;
 
-			const themekey = settingData.theme + '.' + settingData.tab;
+			const themekey = `${settingData.theme}.${settingData.tab}`;
 			const current = game.Whetstone.settings.get(themekey, settingData.key);
 			if (newValue !== current) {
-				await game.Whetstone.settings.set(themekey, settingData.key, newValue);
+				game.Whetstone.settings.set(themekey, settingData.key, newValue);
 
 				if (settingData.tab === 'variables') {
 					WhetstoneThemes.writeVariable(settingData, newValue);

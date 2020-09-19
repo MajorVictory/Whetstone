@@ -25,9 +25,9 @@ export class WhetstoneThemes extends EntityCollection {
 	register(module, data) {
 		if (!module) throw new Error('Whetstone | You must specify module');
 
-		let moduledata = game.modules.get(module);
+		const moduledata = game.modules.get(module);
 
-		let themedata = mergeObject({
+		const themedata = mergeObject({
 			name: moduledata.data.name,
 			id: data.name || moduledata.data.name,
 			_id: data.name || moduledata.data.name,
@@ -65,7 +65,7 @@ export class WhetstoneThemes extends EntityCollection {
 		}
 
 		if (themedata.substyles) {
-			for (let substylename in themedata.substyles) {
+			for (const substylename in themedata.substyles) {
 				this._registerSubstyle(
 					themedata,
 					themedata.substyles[substylename]
@@ -91,7 +91,7 @@ export class WhetstoneThemes extends EntityCollection {
 	 * @param  {Object} data    data for setting
 	 */
 	_registerVariable(themedata, data) {
-		let varData = {
+		const varData = {
 			name: data.name,
 			title: game.i18n.localize(data.title || data.name),
 			hint: game.i18n.localize(data.hint),
@@ -104,11 +104,11 @@ export class WhetstoneThemes extends EntityCollection {
 			config: true
 		};
 
-		let presets = themedata.presets[data.presets];
+		const presets = themedata.presets[data.presets];
 		if (presets) varData.choices = presets;
 
 		game.Whetstone.settings.register(
-			themedata.name + '.variables',
+			`${themedata.name}.variables`,
 			data.name,
 			varData
 		);
@@ -129,13 +129,13 @@ export class WhetstoneThemes extends EntityCollection {
 	 * @param  {Object} data    data for setting
 	 */
 	_registerSetting(themedata, data) {
-		let settingData = mergeObject({
+		const settingData = mergeObject({
 			theme: themedata.name,
 			tab: 'settings'
 		}, data);
 
 		game.Whetstone.settings.register(
-			themedata.name + '.settings',
+			`${themedata.name}.settings`,
 			settingData.name,
 			settingData
 		);
@@ -157,7 +157,7 @@ export class WhetstoneThemes extends EntityCollection {
 	 */
 	_registerSubstyle(themedata, data) {
 		game.Whetstone.settings.register(
-			themedata.name + '.substyles',
+			`${themedata.name}.substyles`,
 			data.name,
 			{
 				name: data.name,
@@ -178,9 +178,8 @@ export class WhetstoneThemes extends EntityCollection {
 	 * @param {String} themeid    The theme's id
 	 */
 	activate(themeid) {
-		let themedata = this.get(themeid);
-		if (!themedata)
-			throw new Error('Whetstone | Cannot activate theme: ' + themeid);
+		const themedata = this.get(themeid);
+		if (!themedata) { throw new Error(`Whetstone | Cannot activate theme: ${themeid}`); }
 
 		const allowed = Hooks.call('onThemeActivate', themedata);
 		if (allowed === false) return;
@@ -188,19 +187,19 @@ export class WhetstoneThemes extends EntityCollection {
 		themedata.data.active = true;
 
 		// write css vars first
-		for (let setting of game.Whetstone.settings.settings.values()) {
-			if (setting.theme != themedata.name) continue;
+		for (const setting of game.Whetstone.settings.settings.values()) {
+			if (setting.theme !== themedata.name) continue;
 
-			let current = game.Whetstone.settings.get(themedata.name + '.' + setting.tab, setting.key);
+			const current = game.Whetstone.settings.get(`${themedata.name}.${setting.tab}`, setting.key);
 
-			if (setting.tab == 'variables') {
+			if (setting.tab === 'variables') {
 				WhetstoneThemes.writeVariable(setting, current);
 			}
 		}
 
-		let corestyles = this.getCoreStyles(themeid);
-		let systemstyles = this.getSubStyles(themeid, game.system.id, game.system.data.version);
-		let allstyles = corestyles.concat(systemstyles);
+		const corestyles = this.getCoreStyles(themeid);
+		const systemstyles = this.getSubStyles(themeid, game.system.id, game.system.data.version);
+		const allstyles = corestyles.concat(systemstyles);
 
 		// add stylesheet
 		for (let i = 0, len = allstyles.length; i < len; ++i) {
@@ -213,9 +212,8 @@ export class WhetstoneThemes extends EntityCollection {
 	 * @param {String} themeid    The theme's id
 	 */
 	deactivate(themeid) {
-		let themedata = this.get(themeid);
-		if (!themedata)
-			throw new Error('Whetstone | Cannot deactivate theme: ' + themeid);
+		const themedata = this.get(themeid);
+		if (!themedata) { throw new Error(`Whetstone | Cannot deactivate theme: ${themeid}`); }
 
 		const allowed = Hooks.call('onThemeDeactivate', themedata);
 		if (allowed === false) return;
@@ -223,17 +221,17 @@ export class WhetstoneThemes extends EntityCollection {
 		themedata.data.active = false;
 
 		// remove theme specific css vars
-		for (let setting of game.Whetstone.settings.settings.values()) {
-			if (setting.theme != themedata.name) continue;
+		for (const setting of game.Whetstone.settings.settings.values()) {
+			if (setting.theme !== themedata.name) continue;
 
-			if (setting.tab == 'variables') {
+			if (setting.tab === 'variables') {
 				WhetstoneThemes.writeVariable(setting, '');
 			}
 		}
 
-		let corestyles = this.getCoreStyles(themeid);
-		let systemstyles = this.getSubStyles(themeid, 'all', 'all', false);
-		let allstyles = corestyles.concat(systemstyles);
+		const corestyles = this.getCoreStyles(themeid);
+		const systemstyles = this.getSubStyles(themeid, 'all', 'all', false);
+		const allstyles = corestyles.concat(systemstyles);
 
 		// remove stylsheets
 		for (let i = 0, len = allstyles.length; i < len; ++i) {
@@ -247,9 +245,8 @@ export class WhetstoneThemes extends EntityCollection {
 	 * @return {Array.String}         An array of stylsheet filenames
 	 */
 	getCoreStyles(themeid) {
-		let moduledata = this.get(themeid);
-		if (!moduledata)
-			throw new Error('Whetstone | Cannot find theme: ' + themeid);
+		const moduledata = this.get(themeid);
+		if (!moduledata) { throw new Error(`Whetstone | Cannot find theme: ${themeid}`); }
 		return moduledata.data.styles;
 	}
 
@@ -263,24 +260,21 @@ export class WhetstoneThemes extends EntityCollection {
 	 * If neither system nor version are specified, all substyles are returned
 	 **/
 	getSubStyles(themeid, system = '', version = '', checkEnabled = true) {
-		let themedata = this.get(themeid);
-		if (!themedata)
-			throw new Error('Whetstone | Cannot find theme: ' + themeid);
+		const themedata = this.get(themeid);
+		if (!themedata) { throw new Error(`Whetstone | Cannot find theme: ${themeid}`); }
 
 		let styles = [];
-		for (let substylename in themedata.data.substyles) {
-			let substyle = themedata.data.substyles[substylename];
+		for (const substylename in themedata.data.substyles) {
+			const substyle = themedata.data.substyles[substylename];
 
-			let enabled = checkEnabled ? game.Whetstone.settings.get(themedata.name + '.substyles', substylename) : true;
+			const enabled = checkEnabled ? game.Whetstone.settings.get(`${themedata.name}.substyles`, substylename) : true;
 
-			if ( (substyle.system === system || system === 'all')
+			if ((substyle.system === system || system === 'all')
 				&& (substyle.version === version || isNewerVersion(version, substyle.version) || version === 'all')
 				&& enabled) {
 				styles = styles.concat(substyle.styles);
-
-			} else if (substyle.system == system && !substyle.version && enabled) {
+			} else if (substyle.system === system && !substyle.version && enabled) {
 				styles = styles.concat(substyle.styles);
-
 			} else if (!substyle.system && !substyle.version && enabled) {
 				styles = styles.concat(substyle.styles);
 			}
@@ -333,12 +327,12 @@ export class WhetstoneThemes extends EntityCollection {
 		}
 
 		// this will remove custom definitions
-		value = (settingData.default == value) ? value : '';
+		value = (settingData.default === value) ? '' : value;
 
-		if (settingData.color == 'shades') {
+		if (settingData.color === 'shades') {
 			WhetstoneThemes.writeShades(settingData, value);
 		} else {
-			if (value != null && value != '') {
+			if (value != null && value !== '') {
 				document.documentElement.style.setProperty(settingData.name, value);
 			} else {
 				document.documentElement.style.removeProperty(settingData.name);
@@ -367,53 +361,32 @@ export class WhetstoneThemes extends EntityCollection {
 		};
 
 		if (value) {
-			let result = /^#?([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})$/i.exec(value);
+			const [r, g, b] = hexToRGB(colorStringToHex(value));
+			let [h, s, v] = rgbToHsv(r, g, b);
 
-			let r = parseInt(result[1], 16);
-			let g = parseInt(result[2], 16);
-			let b = parseInt(result[3], 16);
-
-			(r /= 255), (g /= 255), (b /= 255);
-			let max = Math.max(r, g, b),
-				min = Math.min(r, g, b);
-			let h, s, l = (max + min) / 2;
-
-			if (max == min) {
-				h = s = 0; // achromatic
-			} else {
-				let d = max - min;
-				s = l > 0.5 ? d / (2 - max - min) : d / (max + min);
-				switch (max) {
-					case r: h = (g - b) / d + (g < b ? 6 : 0); break;
-					case g: h = (b - r) / d + 2; break;
-					case b: h = (r - g) / d + 4; break;
-				}
-				h /= 6;
-			}
-			s = Math.round(s * 100);
-			l = Math.round(l * 100);
 			h = Math.round(h * 360);
-			let a = 1;
+			s = Math.round(s * 100);
+			v = Math.round(v * 100);
 
 			colors = {
-				value: 'hsla(' + h + ', ' + s + '%, ' + l + '%, ' + a + ')',
-				quarter: 'hsla(' + h + ', ' + s + '%, ' + l + '%, 0.25)',
-				half: 'hsla(' + h + ', ' + s + '%, ' + l + '%, 0.5)',
-				threequarter: 'hsla(' + h + ', ' + s + '%, ' + l + '%, 0.75)',
-				shadow: 'hsla(' + h + ', ' + s + '%, 25%, ' + a + ')',
-				dark: 'hsla(' + h + ', ' + s + '%, 25%, 0.5)',
-				light: 'hsla(' + h + ', 100%, 50%, ' + a + ')',
-				darker: 'hsla(' + h + ', ' + s + '%, ' + Math.max(0, l - 10) + '%, ' + a + ')',
-				lighter: 'hsla(' + h + ', ' + s + '%, ' + Math.min(100, l + 10) + '%, ' + a + ')'
+				value: `hsla(${h},${s}%,${v}%,1)`,
+				quarter: `hsla(${h},${s}%,${v}%,0.25)`,
+				half: `hsla(${h},${s}%,${v}%,0.5)`,
+				threequarter: `hsla(${h},${s}%,${v}%,0.75)`,
+				shadow: `hsla(${h},${s}%,25%,1)`,
+				dark: `hsla(${h},${s}%,25%,0.5)`,
+				light: `hsla(${h},100%,50%,1)`,
+				darker: `hsla(${h},${s}%,${Math.max(0, v - 10)}%,1)`,
+				lighter: `hsla(${h},${s}%,${Math.min(100, v + 10)}%,1)`
 			};
 		}
 
-		for (let colortype in colors) {
-			let value = colors[colortype];
-			let propname = settingData.name + (colortype != 'value' ? '-' + colortype : '');
+		for (const colortype in colors) {
+			const currentValue = colors[colortype];
+			const propname = settingData.name + (colortype !== 'value' ? `-${colortype}` : '');
 
-			if (value != null && value != '') {
-				document.documentElement.style.setProperty(propname, value);
+			if (currentValue != null && currentValue !== '') {
+				document.documentElement.style.setProperty(propname, currentValue);
 			} else {
 				document.documentElement.style.removeProperty(propname);
 			}
@@ -425,12 +398,11 @@ export class WhetstoneThemes extends EntityCollection {
 	 * @param  {Boolean} shown true to add, false to remove
 	 */
 	static toggleConfigButton(shown) {
-		let button = $('#WhetstoneOptionsButton');
+		const button = $('#WhetstoneOptionsButton');
 		if (button) button.remove();
 
 		if (shown) {
-
-			let title = game.i18n.localize('WHETSTONE.Config');
+			const title = game.i18n.localize('WHETSTONE.Config');
 
 			$(`<button id="WhetstoneOptionsButton" data-action="whetstone-config" title="${title}">
 				<i class="fas fa-paint-brush"></i> ${title}
@@ -438,8 +410,7 @@ export class WhetstoneThemes extends EntityCollection {
 				.insertAfter('button[data-action="configure"]')
 				.on('click', (event) => {
 					const menu = game.settings.menus.get('Whetstone.Whetstone');
-					if (!menu) 
-						return ui.notifications.error('No submenu found for the provided key');
+					if (!menu) return ui.notifications.error('No submenu found for the provided key');
 					const app = new menu.type();
 					return app.render(true);
 				});
@@ -451,7 +422,7 @@ export class WhetstoneThemes extends EntityCollection {
 	 * @param  {String} path the full stylesheet path to look for
 	 */
 	removeStyle(path) {
-		let element = $('head link[href="' + path + '"]');
+		const element = $(`head link[href="${path}"]`);
 		if (element) element.remove();
 	}
 
@@ -463,6 +434,6 @@ export class WhetstoneThemes extends EntityCollection {
 	 */
 	addStyle(path) {
 		game.Whetstone.themes.removeStyle(path);
-		$('<link href="' + path + '" rel="stylesheet" type="text/css" media="all">').appendTo($('head'));
+		$(`<link href="${path}" rel="stylesheet" type="text/css" media="all">`).appendTo($('head'));
 	}
 }
