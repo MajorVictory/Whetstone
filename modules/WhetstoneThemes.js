@@ -300,20 +300,20 @@ export class WhetstoneThemes extends EntityCollection {
 	 * @param  {String} value       the value to write, use '' to erase instead
 	 * @return none
 	 */
-	static writeVariable(settingData, value) {
+	static writeVariable(settingData, value, force = false) {
 		if (Array.isArray(settingData)) {
 			for (let i = 0; i < settingData.length; i++) {
 				if (Array.isArray(value)) {
-					WhetstoneThemes.writeVariable(settingData[i], value[i]);
+					WhetstoneThemes.writeVariable(settingData[i], value[i], force);
 				} else {
-					WhetstoneThemes.writeVariable(settingData[i], value);
+					WhetstoneThemes.writeVariable(settingData[i], value, force);
 				}
 			}
 			return;
 		}
 
 		// this will remove custom definitions
-		value = (settingData.default === value) ? '' : value;
+		value = (settingData.default === value && !force) ? '' : value;
 
 		if (settingData.color === 'shades') {
 			WhetstoneThemes.writeShades(settingData, value);

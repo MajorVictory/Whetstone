@@ -55,6 +55,25 @@ export class WhetstoneThemeConfigDialog extends FormApplication {
 			s.isRange = setting.type === Number && s.range;
 			s.name = s.title || s.name;
 
+			if (s.color === 'shades') {
+				let colorShades = [ 
+					'quarter',
+					'half',
+					'threequarter',
+					'shadow',
+					'dark',
+					'light',
+					'darker',
+					'lighter'
+				];
+
+				s.shades = [`<span class="ws-shade-item" style="background-color: var(${s.key});" title="${s.key}">&nbsp;</span>`];
+				colorShades.forEach((colorShade, i) => {
+					s.shades.push(`<span class="ws-shade-item" style="background-color: var(${s.key}-${colorShade});" title="${s.key}-${colorShade}">&nbsp;</span>`);
+				});
+				s.shades = s.shades.join('');
+			}
+
 			if (settings[s.tab]) {
 				settings[s.tab].push(s);
 			} else {
@@ -65,9 +84,7 @@ export class WhetstoneThemeConfigDialog extends FormApplication {
 			defaultData[`${s.tab}/${s.key}`] = s.default;
 		}
 
-		const returndata = this.reset
-			? defaultData
-			: mergeObject(defaultData, currentData);
+		const returndata = this.reset ? defaultData : mergeObject(defaultData, currentData);
 
 		returndata.theme = theme;
 		returndata.settings = settings;
@@ -134,10 +151,15 @@ export class WhetstoneThemeConfigDialog extends FormApplication {
 				} else {
 					brother.val(control.val());
 				}
+				const themeID = control.parents('form').attr('class');
+				const variableKey = brother.attr('name');
+				const settingsKey = `${themeID}.${variableKey.split('/').join('.')}`;
+				WhetstoneThemes.writeVariable(game.Whetstone.settings.settings.get(settingsKey), control.val(), true);
 			} else {
 				brother.val(control.val());
 			}
 		}
+		
 	}
 
 	/**

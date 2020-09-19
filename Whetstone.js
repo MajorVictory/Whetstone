@@ -225,43 +225,6 @@ Hooks.once('WhetstoneReady', () => {
 		icon: 'fas fa-paint-brush',
 		restricted: false
 	});
-
-    // register a theme
-    game.Whetstone.themes.register('SoundBoard', {
-        authors: [
-            { name: 'Blitzkraig', contact: 'Github', url: 'https://github.com/BlitzKraig/fvtt-SoundBoard' }
-        ],
-
-        variables: [
-            {name: '--SoundBoard-loop-bg-from', value: '#01701c', type: 'color', title: '', hint: ''},
-            {name: '--SoundBoard-loop-bg-to', value: '#1b291e', type: 'color', title: '', hint: ''},
-            {name: '--SoundBoard-loop-animation-time', value: '1s', type: String, title: '', hint: ''},
-            {name: '--SoundBoard-loop-active-icon-color', value: '#42e600', type: 'color', title: '', hint: ''},
-            {name: '--SoundBoard-loop-text-color', value: '#ffffff', type: 'color', title: '', hint: ''},
-            {name: '--SoundBoard-favorite-color', value: '#feeb20', type: 'color', title: '', hint: ''},
-            {name: '--SoundBoard-text-shadow', value: '0 0 2px #000', type: String, title: '', hint: ''},
-            {name: '--SoundBoard-more-button-active-color', value: '#969696', type: 'color', title: '', hint: ''},
-            {name: '--SoundBoard-more-button-inactive-color', value: 'rgba(0, 0, 0, 0)', type: String, title: '', hint: ''},
-            {name: '--SoundBoard-more-button-hover-color', value: '#dddddd', type: 'color', title: '', hint: ''},
-            {name: '--SoundBoard-extended-options-bg', value: 'rgba(100, 100, 120, 0.94)', type: String, title: '', hint: ''},
-            {name: '--SoundBoard-extended-options-icon-color', value: '#ffffff', type: 'color', title: '', hint: ''},
-            {name: '--SoundBoard-btn-text-size', value: '1rem', type: String, title: '', hint: ''},
-            {name: '--SoundBoard-volume-text-color', value: '#ffffff', type: 'color', title: '', hint: ''}
-        ],
-
-        img: 'modules/RetroUI-P5e/images/p5e-thumb.png',
-        preview: '',
-        systems: {'core': '0.6.6'}
-    });
-
-	// register a default menu with Whetstone for configuration
-    game.Whetstone.settings.registerMenu('SoundBoard', 'SoundBoard', {
-        name: game.i18n.localize('WHETSTONE.ConfigureTheme'),
-        label: game.i18n.localize('WHETSTONE.ConfigureTheme'),
-        hint: game.i18n.localize('WHETSTONE.ConfigHint'),
-        icon: 'fas fa-paint-brush',
-        restricted: false
-    });
 });
 
 // create/remove the quick access config button
