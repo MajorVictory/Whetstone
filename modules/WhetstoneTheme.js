@@ -1,7 +1,7 @@
 /**
  * The EntityCollection of Whetstone theme entities.
  * @extends {EntityCollection}
- * 
+ *
  * @example <caption>Retrieve an existing theme by its id</caption>
  * let theme = game.Whetstone.themes.get(themeid);
  */
@@ -18,7 +18,7 @@ export class WhetstoneTheme extends Entity {
 			baseEntity: WhetstoneTheme,
 			collection: game.Whetstone.themes,
 			embeddedEntities: {},
-			label: "WHETSTONE.ThemeEntry"
+			label: 'WHETSTONE.ThemeEntry'
 		};
 	}
 

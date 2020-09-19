@@ -46,7 +46,7 @@ You can download the module in it's current state by pasting the following manif
 
 ## Screenshots 
 
-![](images/OceanBlues-Preview.png)
+![](images/OceanBlues-Preview.jpg)
 
 
 ## License
