@@ -57,6 +57,18 @@
     "OCEANBLUES.SubstyleSceneButtons": "Scene Buttons Substyle",
     "OCEANBLUES.SubstyleSceneButtonsHint": "Activates themeing for the scene buttons at the top.",
 
+    "OCEANBLUES.SubstyleChat": "Chat Cards Substyle",
+    "OCEANBLUES.SubstyleChatHint": "Activates themeing for chat.",
+
+    "OCEANBLUES.SubstyleCompactSidebar": "Compact Sidebar Substyle",
+    "OCEANBLUES.SubstyleCompactSidebarHint": "Makes entries in the sidebar smaller vertically to fit more on screen at once.",
+
+    "OCEANBLUES.SubstylePF2eCRBStyle": "Override Pathfinder CRB Sheet Colors",
+    "OCEANBLUES.SubstylePF2eCRBStyleHint": "Allows you to changes the colros of the CRB style player sheets.",
+
+    "OCEANBLUES.SubstylePF2eSheetColors": "Override Pathfinder Sheet Colors",
+    "OCEANBLUES.SubstylePF2eSheetColorsHint": "Overrides the four background colors for Pathfinder 2e sheets",
+
     "OCEANBLUES.SubstyleSceneButtonsSmaller": "Smaller Scene Buttons Substyle",
     "OCEANBLUES.SubstyleSceneButtonsSmallerHint": "Makes the scene buttons smaller."
 }

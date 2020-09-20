@@ -98,18 +98,44 @@ Hooks.once('WhetstoneReady', () => {
 				title: 'OCEANBLUES.SubstyleSceneButtons',
 				hint: 'OCEANBLUES.SubstyleSceneButtonsHint',
 				active: true,
-				styles: [
-					'modules/Whetstone/styles/OceanBlues-SceneButtons.css'
-				]
+				styles: ['modules/Whetstone/styles/OceanBlues-SceneButtons.css']
+			},
+			'OceanBlues-Chat': {
+				name: 'OceanBlues-Chat',
+				title: 'OCEANBLUES.SubstyleChat',
+				hint: 'OCEANBLUES.SubstyleChatHint',
+				active: true,
+				styles: ['modules/Whetstone/styles/OceanBlues-Chat.css']
+			},
+			'OceanBlues-CompactSidebar': {
+				name: 'OceanBlues-CompactSidebar',
+				title: 'OCEANBLUES.SubstyleCompactSidebar',
+				hint: 'OCEANBLUES.SubstyleCompactSidebarHint',
+				active: false,
+				styles: ['modules/Whetstone/styles/OceanBlues-CompactSidebar.css']
 			},
 			'OceanBlues-SceneButtonsSmaller': {
 				name: 'OceanBlues-SceneButtonsSmaller',
 				title: 'OCEANBLUES.SubstyleSceneButtonsSmaller',
 				hint: 'OCEANBLUES.SubstyleSceneButtonsSmallerHint',
 				active: false,
-				styles: [
-					'modules/Whetstone/styles/OceanBlues-SceneButtonsSmaller.css'
-				]
+				styles: ['modules/Whetstone/styles/OceanBlues-SceneButtonsSmaller.css']
+			},
+			'OceanBlues-PF2e-CRBStyle': {
+				name: 'OceanBlues-PF2e-CRBStyle',
+				title: 'OCEANBLUES.SubstylePF2eCRBStyle',
+				hint: 'OCEANBLUES.SubstylePF2eCRBStyleHint',
+				system: 'pf2e',
+				active: true,
+				styles: ['modules/Whetstone/styles/OceanBlues-PF2e-CRBStyle.css']
+			},
+			'OceanBlues-PF2e-SheetColors': {
+				name: 'OceanBlues-PF2e-SheetColors',
+				title: 'OCEANBLUES.SubstylePF2eSheetColors',
+				hint: 'OCEANBLUES.SubstylePF2eSheetColorsHint',
+				system: 'pf2e',
+				active: true,
+				styles: ['modules/Whetstone/styles/OceanBlues-PF2e-SheetColors.css']
 			}
 		},
 		variables: [
@@ -119,7 +145,7 @@ Hooks.once('WhetstoneReady', () => {
 				hint: 'Used in sheet headers, tinges the background.',
 				default: '#3d5a80',
 				type: 'color',
-				presets: 'palette'
+				presets: 'oceanblues'
 			},
 			{
 				name: '--OceanBlues-text-light-color',
@@ -127,7 +153,7 @@ Hooks.once('WhetstoneReady', () => {
 				hint: 'Used for text on dark background.',
 				default: '#98c1d9',
 				type: 'color',
-				presets: 'palette'
+				presets: 'oceanblues'
 			},
 			{
 				name: '--OceanBlues-text-dark-color',
@@ -135,7 +161,7 @@ Hooks.once('WhetstoneReady', () => {
 				hint: 'Used for text on light backgrounds.',
 				default: '#102632',
 				type: 'color',
-				presets: 'palette'
+				presets: 'oceanblues'
 			},
 			{
 				name: '--OceanBlues-text-highlight-color',
@@ -143,7 +169,7 @@ Hooks.once('WhetstoneReady', () => {
 				hint: '',
 				default: '#72b9d5',
 				type: 'color',
-				presets: 'palette'
+				presets: 'oceanblues'
 			},
 			{
 				name: '--OceanBlues-text-selection-color',
@@ -151,7 +177,7 @@ Hooks.once('WhetstoneReady', () => {
 				hint: '',
 				default: '#b0c2bd',
 				type: 'color',
-				presets: 'palette'
+				presets: 'oceanblues'
 			},
 			{
 				name: '--OceanBlues-fg-color',
@@ -159,7 +185,7 @@ Hooks.once('WhetstoneReady', () => {
 				hint: 'Used for textboxes and input fields',
 				default: '#e0fbfc',
 				type: 'color',
-				presets: 'palette'
+				presets: 'oceanblues'
 			},
 			{
 				name: '--OceanBlues-highlight-color',
@@ -167,7 +193,7 @@ Hooks.once('WhetstoneReady', () => {
 				hint: 'Used for highlighter color when hovering over hyperlinks or interface elements.',
 				default: '#ee6c4d',
 				type: 'color',
-				presets: 'palette'
+				presets: 'oceanblues'
 			},
 			{
 				name: '--OceanBlues-border-color',
@@ -175,12 +201,12 @@ Hooks.once('WhetstoneReady', () => {
 				hint: '',
 				default: '#293241',
 				type: 'color',
-				presets: 'palette'
+				presets: 'oceanblues'
 			}
 		],
 
 		presets: {
-			palette: {
+			oceanblues: {
 				'#3d5a80': 'Bdazzled Blue',
 				'#98c1d9': 'Pale Cerulean',
 				'#102632': 'Charcoal',
@@ -190,19 +216,15 @@ Hooks.once('WhetstoneReady', () => {
 				'#ee6c4d': 'Burnt Sienna',
 				'#293241': 'Gunmetal'
 			},
-			sheetColorPresets: {
-				'#fffbce': 'Standard Tan',
-				'#ff9d9d': 'Trainer Red',
-				'#e4a089': 'Rocky Brown',
-				'#f4ce88': 'Mousy Yellow',
-				'#68c098': 'Misty Green',
-				'#b5dc92': 'Buggy Green',
-				'#58d0d0': 'Trainer Blue',
-				'#c0a5da': 'Trainer Purple',
-				'#eee6dd': 'Eggy Shell White',
-				'#f0ace6': 'Balloon Pink',
-				'#c0c0c0': 'Steely Grey',
-				'#525252': 'Edgy Black'
+			earthygreen: {
+				'#163216': 'Phthalo Green',
+				'#91c589': 'Dark Sea Green',
+				'#3e5a30': 'Hunter Green',
+				'#e9eed2': 'Beige',
+				'#d6b087': 'Tan',
+				'#defeb4': 'Tea Green',
+				'#00aa2b': 'Green Pantone',
+				'#804000': 'Chocolate Traditional'
 			}
 		},
 		dialog: '',

@@ -1,85 +1,101 @@
 :root {
-	--OceanBlues-bg-color: #3D5A80;
-	--OceanBlues-text-light-color: #98C1D9;
+	--OceanBlues-bg-color: #3d5a80;
+	--OceanBlues-text-light-color: #98c1d9;
 	--OceanBlues-text-dark-color: #102632;
-	--OceanBlues-text-highlight-color: #72B9D5;
-	--OceanBlues-text-selection-color: #B0C2BD;
-	--OceanBlues-fg-color: #E0FBFC;
-	--OceanBlues-highlight-color: #EE6C4D;
+	--OceanBlues-text-highlight-color: #72b9d5;
+	--OceanBlues-text-selection-color: #b0c2bd;
+	--OceanBlues-fg-color: #e0fbfc;
+	--OceanBlues-highlight-color: #ee6c4d;
 	--OceanBlues-border-color: #293241;
 }
 
-
 .banner {
-  background: goldenrod;
-  border: 1px solid var(--OceanBlues-border-color);
-  box-shadow: 0 0 10px var(--OceanBlues-highlight-color);
+	background: goldenrod;
+	border: 1px solid var(--OceanBlues-border-color);
+	box-shadow: 0 0 10px var(--OceanBlues-highlight-color);
 }
 
 h1 {
-  font-size: 2em;
-  border-bottom: 2px solid var(--OceanBlues-highlight-color);
+	font-size: 2em;
+	border-bottom: 2px solid var(--OceanBlues-highlight-color);
 }
 h2 {
-  font-size: 1.5em;
-  border-bottom: 1px solid var(--OceanBlues-highlight-color);
+	font-size: 1.5em;
+	border-bottom: 1px solid var(--OceanBlues-highlight-color);
 }
 
 .sidebar-tab .directory-list .directory-item h3,
 .sidebar-tab .directory-list .directory-item h4,
-li.folder.collapsed > .folder-header h3 {
+li.folder.collapsed > .folder-header h3,
+.window-app.sidebar-popout .sidebar-tab .directory-list .directory-item h4 {
 	color: var(--OceanBlues-text-light-color);
 }
 
+.window-app .sidebar-tab .directory-list .directory-item h4 {
+	color: var(--OceanBlues-text-dark-color);
+}
+
+.sidebar-tab .directory-list .directory-item.scene h3,
+#scenes .scene h3 {
+	color: var(--OceanBlues-text-dark-color);
+	text-shadow: 1px 1px 3px var(--OceanBlues-fg-color);
+}
+
 a[href] {
-  color: var(--OceanBlues-text-highlight-color);
+	color: var(--OceanBlues-highlight-color);
 }
 
 a.entity-link,
 a.inline-roll {
-  background: var(--OceanBlues-bg-color);
-  border: 1px solid var(--OceanBlues-border-color);
+	background: var(--OceanBlues-fg-color);
+	border: 1px solid var(--OceanBlues-border-color);
 }
 
 ::selection {
-  background: var(--OceanBlues-text-selection-color);
+	background: var(--OceanBlues-text-selection-color);
 }
 
 hr {
-  border-top: 1px solid var(--OceanBlues-border-color);
-  border-bottom: 1px solid var(--OceanBlues-border-color);
+	border-top: 1px solid var(--OceanBlues-border-color);
+	border-bottom: 1px solid var(--OceanBlues-border-color);
 }
 
 blockquote {
-  border-left: 3px solid var(--OceanBlues-border-color);
+	border-left: 3px solid var(--OceanBlues-border-color);
 }
 
 section.secret {
-  border-top: 1px solid var(--OceanBlues-border-color);
-  border-bottom: 1px solid var(--OceanBlues-border-color);
+	border-top: 1px solid var(--OceanBlues-border-color);
+	border-bottom: 1px solid var(--OceanBlues-border-color);
 }
 
 table {
-  border: 1px solid var(--OceanBlues-border-color);
+	border: 1px solid var(--OceanBlues-border-color);
 }
 
 form button {
-    background: var(--OceanBlues-text-light-color);
-    border: 2px groove var(--OceanBlues-border-color);
+	background: var(--OceanBlues-text-light-color);
+	border: 2px groove var(--OceanBlues-border-color);
 }
 
 button:hover {
-    background: var(--OceanBlues-text-dark-color);
-    color: var(--OceanBlues-highlight-color);
-    border: 2px groove var(--OceanBlues-border-color);
+	background: var(--OceanBlues-text-dark-color);
+	color: var(--OceanBlues-highlight-color);
+	border: 2px groove var(--OceanBlues-border-color);
 }
 
-select, button, textarea,
-input[type="text"], input[type="password"], input[type="color"][data-edit],
-input[type="datetime-local"], .dnd5e input[type="text"], .dnd5e select {
+select,
+button,
+textarea,
+input[type="text"],
+input[type="password"],
+input[type="color"][data-edit],
+input[type="datetime-local"],
+.dnd5e input[type="text"],
+.dnd5e select {
 	color: var(--OceanBlues-text-dark-color);
-    background: var(--OceanBlues-fg-color);
-    border: 1px solid var(--OceanBlues-border-color);
+	background: var(--OceanBlues-fg-color);
+	border: 1px solid var(--OceanBlues-border-color);
 }
 
 select:hover,
@@ -88,61 +104,68 @@ input[type="text"]:hover,
 input[type="text"]:focus,
 .dnd5e input[type="text"]:hover,
 .dnd5e input[type="text"]:focus {
-    box-shadow: 0px 0px 5px var(--OceanBlues-highlight-color), 0px 0px 5px var(--OceanBlues-highlight-color);
+	box-shadow: 0px 0px 5px var(--OceanBlues-highlight-color),
+		0px 0px 5px var(--OceanBlues-highlight-color);
 }
 
 input[type="range"] + .range-value {
-    background: var(--OceanBlues-text-light-color);
-    border: 1px solid var(--OceanBlues-border-color);
+	background: var(--OceanBlues-text-light-color);
+	border: 1px solid var(--OceanBlues-border-color);
 }
 
 ::-webkit-scrollbar-track {
-  box-shadow: 0 0 1px var(--OceanBlues-border-color) inset;
+	box-shadow: 0 0 1px var(--OceanBlues-border-color) inset;
 }
 ::-webkit-scrollbar-thumb {
-  background: var(--OceanBlues-bg-color);
-  border: 1px solid var(--OceanBlues-border-color);
+	background: var(--OceanBlues-bg-color);
+	border: 1px solid var(--OceanBlues-border-color);
 }
 :root {
-  scrollbar-color: var(--OceanBlues-bg-color) var(--OceanBlues-fg-color);
+	scrollbar-color: var(--OceanBlues-bg-color) var(--OceanBlues-fg-color);
 }
 
 .app {
-    color: var(--OceanBlues-text-light-color);
-    background-color: var(--OceanBlues-bg-color);
-    background-blend-mode: luminosity;
+	color: var(--OceanBlues-text-light-color);
+	background-color: var(--OceanBlues-bg-color);
+	background-blend-mode: luminosity;
 }
 
-.window-app .window-content, .dnd5e.sheet .window-content {
-    color: var(--OceanBlues-text-dark-color) !important;
-    background-blend-mode: luminosity;
-    background-color: var(--OceanBlues-bg-color) !important;
+.window-app .window-content,
+.dnd5e.sheet .window-content {
+	color: var(--OceanBlues-text-dark-color);
+	background-blend-mode: luminosity;
+	background-color: var(--OceanBlues-bg-color);
+}
+
+.app.sidebar-popout .window-content {
+	color: var(--OceanBlues-text-light-color);
 }
 
 .window-app .window-resizable-handle {
-  background: var(--OceanBlues-bg-color);
-  border: 1px solid var(--OceanBlues-border-color);
+	background: var(--OceanBlues-bg-color);
+	border: 1px solid var(--OceanBlues-border-color);
 }
 
 #context-menu {
-  background: var(--OceanBlues-bg-color);
-  color: var(--OceanBlues-text-light-color);
+	background: var(--OceanBlues-bg-color);
+	color: var(--OceanBlues-text-light-color);
 }
 
 #context-menu li.context-item:hover {
-  color: var(--OceanBlues-text-highlight-color-color);
-  text-shadow: 0 0 4px var(--OceanBlues-highlight-color);
+	color: var(--OceanBlues-text-highlight-color-color);
+	text-shadow: 0 0 4px var(--OceanBlues-highlight-color);
 }
 
 .dnd5e.sheet .sheet-navigation .item.active {
-    color: var(--OceanBlues-highlight-color);
-    border-bottom: 3px solid var(--OceanBlues-highlight-color);
+	color: var(--OceanBlues-highlight-color);
+	border-bottom: 3px solid var(--OceanBlues-highlight-color);
 }
 
 .tabs .item.active {
-    text-shadow: 0 0 10px var(--OceanBlues-highlight-color);
+	text-shadow: 0 0 10px var(--OceanBlues-highlight-color);
 }
 
-form .notes, form .hint {
+form .notes,
+form .hint {
 	color: var(--OceanBlues-bg-color);
 }
