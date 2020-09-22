@@ -30,7 +30,7 @@ export class WhetstoneThemeSettings {
 		 */
 		this.storage = new Map([
 			["client", window.localStorage],
-			["world", new WorldSettingsStorage([])],
+			["world", new WorldSettingsStorage(worldSettings || [])],
 		]);
 	}
 

@@ -4,8 +4,9 @@
     "WHETSTONE.ConfigHint": "Customize theme colors and settings.",
 
     "WHETSTONE.ThemeSelectTab": "Themes",
+    "WHETSTONE.GlobalVariablesTab": "Global Variables",
     "WHETSTONE.GlobalOptionsTab": "Global Options",
-    "WHETSTONE.ThemeColorsTab": "Colors",
+    "WHETSTONE.ThemeColorsTab": "Variables",
     "WHETSTONE.ThemeSettingsTab": "Settings",
     "WHETSTONE.SubstylesTab": "Substyles",
 
@@ -22,6 +23,7 @@
     "WHETSTONE.ConfigureTheme": "Configure Theme",
 
     "WHETSTONE.InvalidColorFormat": "Invalid Color Format! Must be in hexadecimal format '#rrggbb'",
+    "WHETSTONE.ColorThemeCustom": "Custom Theme",
     "WHETSTONE.ColorOptionCustom": "Custom Color",
 
     "WHETSTONE.BackgroundColor": "Background Color",
@@ -46,7 +48,13 @@
     "WHETSTONE.Edit": "Edit",
     "WHETSTONE.Reset": "Reset",
     "WHETSTONE.Save": "Save",
+    "WHETSTONE.Import": "Import",
+    "WHETSTONE.Export": "Export",
     "WHETSTONE.SaveMessage": "Theme Settings Applied",
+
+    "OCEANBLUES.ColorThemeDefault": "OceanBlues - Default Blue",
+    "OCEANBLUES.ColorThemeGreen": "OceanBlues - Earthy Green",
+    "OCEANBLUES.ColorThemeHacker": "OceanBlues - Hacker Space",
 
     "OCEANBLUES.SubstyleHotbar": "Hotbar Substyle",
     "OCEANBLUES.SubstyleHotbarHint": "Activates themeing for the hotbar at the bottom.",

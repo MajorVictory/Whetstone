@@ -1,3 +1,4 @@
+{{log this}}    
 {{#*inline "settingPartial"}}
 <div class="form-group">
     <div class="flexcol">
@@ -15,8 +16,12 @@
             {{/each}}
         </select>
         <div class="flexrow" style="margin-top: 5px;">
-            <input type="text" name="{{this.tab}}/{{this.key}}" class="ws-color-value" value="{{this.value}}" data-dtype="String"/>
+            <input type="text" name="{{this.tab}}/{{this.key}}" class="ws-color-value" value="{{this.value}}" data-dtype="String" data-shades="{{this.color}}"/>
             <input type="color" class="ws-color-value" value="{{this.value}}" data-edit="{{this.tab}}/{{this.key}}"/>
+        </div>
+        <div class="flexrow" style="margin-top: 5px;">
+            <input class="ws-color-value" type="range" data-dtype="Number" value="{{ this.alpha }}" min="0" max="255" step="1"/>
+            <span class="range-value">{{ this.alpha }}</span>
         </div>
         {{#if this.shades}}
         <div class="flexrow ws-shade-preview" style="margin-top: 5px;">
@@ -52,8 +57,7 @@
 </div>
 {{/inline}}
 
-
-<form autocomplete="off" onsubmit="event.preventDefault();" class="{{theme.name}}">
+<form autocomplete="off" onsubmit="event.preventDefault();" class="{{theme.name}}" data-theme="{{theme.name}}">
 
     <header class="sheet-header flexrow">
         <img src="{{theme.options.img}}" title="{{theme.name}}" height="48" width="48"/>
@@ -76,8 +80,25 @@
     <!-- Main Content Section -->
     <section id="config-tabs" class="content">
 
-        <!-- Theme Colors Tab -->
-        <div class="tab" data-tab="themevariables" data-group="sections">
+        <!-- Theme Variables Tab -->
+        <div class="tab theme-variables" data-tab="themevariables" data-group="sections">
+            <div class="form-group theme-presets">
+                <label>Theme Presets</label>
+                <select name="colorTheme">
+                    {{#select colorTheme}}
+                    <option value="custom">{{localize "WHETSTONE.ColorThemeCustom"}}</option>
+                    {{#each theme.data.colorThemes}}
+                    <option value="{{this.id}}">{{localize this.name}}</option>
+                    {{/each}}
+                    {{/select}}
+                </select>
+                <button type="button" class="theme-import" title="{{localize 'WHETSTONE.Import'}}">
+                    <i class="fas fa-file-import"></i>
+                </button>
+                <button type="button" class="theme-export" title="{{localize 'WHETSTONE.Export'}}">
+                    <i class="fas fa-file-export"></i>
+                </button>
+            </div>
             <div class="settings-list">
                 {{#each settings.variables}}
                 {{> settingPartial}}
@@ -88,7 +109,7 @@
         </div>
 
         <!-- Theme Settings Tab -->
-        <div class="tab" data-tab="themesettings" data-group="sections">
+        <div class="tab theme-settings" data-tab="themesettings" data-group="sections">
             <div class="settings-list">
                 {{#each settings.settings}}
                 {{> settingPartial}}
@@ -99,7 +120,7 @@
         </div>
 
         <!-- Substyles Tab -->
-        <div class="tab" data-tab="themesubstyles" data-group="sections">
+        <div class="tab theme-substyles" data-tab="themesubstyles" data-group="sections">
             <div class="settings-list">
                 {{#each settings.substyles}}
                 {{> settingPartial}}

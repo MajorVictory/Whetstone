@@ -34,22 +34,25 @@ export class WhetstoneThemes extends EntityCollection {
 			title: moduleData.data.title || data.name,
 			description: moduleData.data.description,
 			img: 'modules/Whetstone/images/Whetstone-thumb.png',
-			preview: data.img || 'modules/Whetstone/images/Whetstone-thumb.png',
+			preview: '',
 			version: moduleData.data.version,
 			author: moduleData.data.author,
 			authors: moduleData.data.authors,
 			active: false,
 			priority: 1,
-			dialog: '',
 			styles: [],
-			presets: [],
+			substyles: {},
 			variables: [],
 			settings: [],
-			substyles: {},
+			presets: {},
+			colorTheme: '',
+			colorThemes: [],
+			dialog: '',
 			systems: {},
 			dependencies: {},
 			compatible: {},
-			conflicts: {}
+			conflicts: {},
+			flags: {}
 		}, data);
 
 		themeData.variables.forEach((variable, index) => {
@@ -62,6 +65,21 @@ export class WhetstoneThemes extends EntityCollection {
 
 		Object.keys(themeData.substyles).forEach((substyleKey, index) => {
 			this._registerSubstyle(themeData, themeData.substyles[substyleKey]);
+		});
+
+		this._registerSetting(themeData, {
+			id: 'colorTheme',
+			name: 'colorTheme',
+			scope: 'client',
+			config: false,
+			default: themeData.colorTheme,
+			type: String,
+			onChange: (newColorTheme) => {
+				const theme = game.Whetstone.themes.get(themeData.name);
+				if (!theme) return;
+				theme.data.colorTheme = newColorTheme;
+				if(theme.data.active) theme.activate();
+			}
 		});
 
 		this.insert(new WhetstoneTheme(themeData, themeData));
@@ -91,7 +109,7 @@ export class WhetstoneThemes extends EntityCollection {
 			scope: 'client',
 			default: data.default || data.value,
 			color: data.type,
-			type: String,
+			type: (['color', 'shades'].includes(data.type)) ? String : data.type,
 			config: true
 		};
 
@@ -111,7 +129,7 @@ export class WhetstoneThemes extends EntityCollection {
 	 * @param  {Object} data    data for setting
 	 */
 	registerSetting(themeID, data) {
-		this._registerSetting(game.Whetstone.get(themeID), data);
+		this._registerSetting(game.Whetstone.themes.get(themeID), data);
 	}
 
 	/**
@@ -138,7 +156,7 @@ export class WhetstoneThemes extends EntityCollection {
 	 * @param  {Object} data    data for setting
 	 */
 	registerSubstyle(themeID, data) {
-		this._registerSubstyle(game.Whetstone.get(themeID), data);
+		this._registerSubstyle(game.Whetstone.themes.get(themeID), data);
 	}
 
 	/**
@@ -161,112 +179,31 @@ export class WhetstoneThemes extends EntityCollection {
 	}
 
 	/**
-	 * Enables a given theme by themeID
-	 * @param {String} themeID    The theme's id
+	 * register color theme preset via theme id
+	 * @param  {String} themeID theme id, acts as a key
+	 * @param  {Object} data    data for setting
 	 */
-	activate(themeID) {
-		const themeData = this.get(themeID);
-		if (!themeData) { throw new Error(`Whetstone | Cannot activate theme: ${themeID}`); }
-
-		const allowed = Hooks.call('onThemeActivate', themeData);
-		if (allowed === false) return;
-
-		themeData.data.active = true;
-
-		// write css vars first
-		for (const setting of game.Whetstone.settings.settings.values()) {
-			if (setting.theme !== themeData.name) continue;
-
-			const current = game.Whetstone.settings.get(`${themeData.name}.${setting.tab}`, setting.key);
-
-			if (setting.tab === 'variables') {
-				WhetstoneThemes.writeVariable(setting, current);
-			}
-		}
-
-		const coreStyles = this.getCoreStyles(themeID);
-		const systemStyles = this.getSubStyles(themeID, game.system.id, game.system.data.version);
-		const allStyles = coreStyles.concat(systemStyles);
-
-		// add stylesheet
-		for (let i = 0, len = allStyles.length; i < len; ++i) {
-			game.Whetstone.themes.addStyle(allStyles[i]);
-		}
+	registerPreset(themeID, data) {
+		this._registerPreset(game.Whetstone.themes.get(themeID), data);
 	}
 
 	/**
-	 * Disables a given theme by themeID
-	 * @param {String} themeID    The theme's id
+	 * register color theme preset via WhetstoneTheme object
+	 * @param  {WhetstoneTheme} themeData theme data to update
+	 * @param  {Object} data    data for setting
 	 */
-	deactivate(themeID) {
-		const themeData = this.get(themeID);
-		if (!themeData) { throw new Error(`Whetstone | Cannot deactivate theme: ${themeID}`); }
-
-		const allowed = Hooks.call('onThemeDeactivate', themeData);
-		if (allowed === false) return;
-
-		themeData.data.active = false;
-
-		// remove theme specific css vars
-		for (const setting of game.Whetstone.settings.settings.values()) {
-			if (setting.theme !== themeData.name) continue;
-
-			if (setting.tab === 'variables') {
-				WhetstoneThemes.writeVariable(setting, '');
-			}
-		}
-
-		const coreStyles = this.getCoreStyles(themeID);
-		const systemStyles = this.getSubStyles(themeID, 'all', 'all', false);
-		const allStyles = coreStyles.concat(systemStyles);
-
-		// remove stylsheets
-		for (let i = 0, len = allStyles.length; i < len; ++i) {
-			game.Whetstone.themes.removeStyle(allStyles[i]);
-		}
-	}
-
-	/**
-	 * Get an array of core styleshet filenames for a given theme
-	 * @param  {String} themeID The theme's id
-	 * @return {Array.String}         An array of stylsheet filenames
-	 */
-	getCoreStyles(themeID) {
-		const moduleData = this.get(themeID);
-		if (!moduleData) { throw new Error(`Whetstone | Cannot find theme: ${themeID}`); }
-		return moduleData.data.styles;
-	}
-
-	/**
-	 * Get an array of stylesheets to load
-	 * @param {String} themeID  theme id
-	 * @param {String} system    (optional) system id, can be 'all'
-	 * @param {String} version   (optional) specific version, can be 'all'
-	 * @param {Boolean} checkEnabled true: only return enabled styles, false: return all matching styles
-	 * @return {Array.<String>} a list of stylesheet paths
-	 **/
-	getSubStyles(themeID, system = '', version = '', checkEnabled = true) {
-		const themeData = this.get(themeID);
-		if (!themeData) { throw new Error(`Whetstone | Cannot find theme: ${themeID}`); }
-
-		let styles = [];
-		for (const substyleName in themeData.data.substyles) {
-			const substyle = themeData.data.substyles[substyleName];
-
-			const enabled = checkEnabled ? game.Whetstone.settings.get(`${themeData.name}.substyles`, substyleName) : true;
-
-			if ((substyle.system === system || system === 'all')
-				&& (substyle.version === String(version) || isNewerVersion(version, substyle.version) || version === 'all')
-				&& enabled) {
-				styles = styles.concat(substyle.styles);
-			} else if (substyle.system === system && !substyle.version && enabled) {
-				styles = styles.concat(substyle.styles);
-			} else if (!substyle.system && !substyle.version && enabled) {
-				styles = styles.concat(substyle.styles);
-			}
-		}
-
-		return styles;
+	_registerPreset(themeData, data) {
+		game.Whetstone.settings.register(`${themeData.name}.presets`, data.id, {
+			name: game.i18n.localize(data.name) || game.i18n.localize(data.id),
+			title: game.i18n.localize(data.title || data.name),
+			hint: game.i18n.localize(data.hint),
+			theme: themeData.name,
+			tab: 'presets',
+			scope: 'client',
+			default: data,
+			type: Object,
+			config: false
+		});
 	}
 
 	/**
@@ -300,42 +237,21 @@ export class WhetstoneThemes extends EntityCollection {
 	 * @param  {String} value       the value to write, use '' to erase instead
 	 * @return none
 	 */
-	static writeVariable(settingData, value, force = false) {
-		if (Array.isArray(settingData)) {
-			for (let i = 0; i < settingData.length; i++) {
-				if (Array.isArray(value)) {
-					WhetstoneThemes.writeVariable(settingData[i], value[i], force);
-				} else {
-					WhetstoneThemes.writeVariable(settingData[i], value, force);
-				}
-			}
-			return;
-		}
-
-		// this will remove custom definitions
-		value = (settingData.default === value && !force) ? '' : value;
-
-		if (settingData.color === 'shades') {
-			WhetstoneThemes.writeShades(settingData, value);
+	static writeVariable(key, value, force = false) {
+		if (value != null && value !== '') {
+			document.documentElement.style.setProperty(key, value);
 		} else {
-			if (value != null && value !== '') {
-				document.documentElement.style.setProperty(settingData.name, value);
-			} else {
-				document.documentElement.style.removeProperty(settingData.name);
-			}
+			document.documentElement.style.removeProperty(key);
 		}
 	}
 
 	/**
-	 * Generates shades of a given color value and writes
-	 * or erases a css variable of each to the main body element
-	 * @param  {Object} settingData Settings data
-	 * @param  {String} value       the value to write, use '' to erase instead
-	 * @return none
+	 * Generates shades of a given color value
+	 * @param  {String} value       the base color to generate from in '#rrggbb' or '#rrggbbaa' format
+	 * @return {Array.Object}	an array containing key:value pairs
 	 */
-	static writeShades(settingData, value) {
-		let colors = {
-			value: '',
+	static getShades(value = '') {
+		let shades = {
 			quarter: '',
 			half: '',
 			threequarter: '',
@@ -346,16 +262,18 @@ export class WhetstoneThemes extends EntityCollection {
 			lighter: ''
 		};
 
+		// 6 digit hex to 8 digit hex
+		if (value.length === 7) value = `${value}ff`;
+
 		if (value) {
-			const [r, g, b] = hexToRGB(colorStringToHex(value));
+			const [r, g, b, a] = WhetstoneThemes.hexToRGBA(colorStringToHex(value));
 			let [h, s, v] = rgbToHsv(r, g, b);
 
 			h = Math.round(h * 360);
 			s = Math.round(s * 100);
 			v = Math.round(v * 100);
 
-			colors = {
-				value: `hsla(${h},${s}%,${v}%,1)`,
+			shades = {
 				quarter: `hsla(${h},${s}%,${v}%,0.25)`,
 				half: `hsla(${h},${s}%,${v}%,0.5)`,
 				threequarter: `hsla(${h},${s}%,${v}%,0.75)`,
@@ -367,16 +285,40 @@ export class WhetstoneThemes extends EntityCollection {
 			};
 		}
 
-		for (const colortype in colors) {
-			const currentValue = colors[colortype];
-			const propname = settingData.name + (colortype !== 'value' ? `-${colortype}` : '');
+		return shades;
+	}
 
-			if (currentValue != null && currentValue !== '') {
-				document.documentElement.style.setProperty(propname, currentValue);
-			} else {
-				document.documentElement.style.removeProperty(propname);
-			}
+	static colorData(value, alpha) {
+
+		// 6 digit hex to 8 digit hex
+		if (value.length === 7) value = `${value}ff`;
+
+		let [r, g, b, a] = WhetstoneThemes.hexToRGBA(colorStringToHex(value));
+		a = alpha || a;
+
+		return {
+			color: WhetstoneThemes.rgbaToColorString([r, g, b]),
+			full: WhetstoneThemes.rgbaToColorString([r, g, b, a]),
+			alpha: Math.floor(a * 255)
 		}
+
+	}
+
+	static rgbaToColorString(rgba) {
+		let c = rgba.map(function(v) {
+			let hex = Math.floor(v*255).toString(16);
+			return hex.length === 1 ? `0${hex}` : hex;
+		});
+		return `#${c.join('')}`;
+	}
+
+	static hexToRGBA(hex) {
+		return [
+			((hex >> 24) & 0xFF) / 255,
+			((hex >> 16) & 0xFF) / 255,
+			((hex >> 8) & 0xFF) / 255,
+			(hex & 0xFF) / 255
+		];
 	}
 
 	/**
@@ -407,7 +349,7 @@ export class WhetstoneThemes extends EntityCollection {
 	 * removes a style element from the header with a given path
 	 * @param  {String} path the full stylesheet path to look for
 	 */
-	removeStyle(path) {
+	static removeStyle(path) {
 		const element = $(`head link[href="${path}"]`);
 		if (element) element.remove();
 	}
@@ -418,8 +360,8 @@ export class WhetstoneThemes extends EntityCollection {
 	 * the header when called.
 	 * @param  {String} path the full stylesheet path to add
 	 */
-	addStyle(path) {
-		game.Whetstone.themes.removeStyle(path);
+	static addStyle(path) {
+		WhetstoneThemes.removeStyle(path);
 		$(`<link href="${path}" rel="stylesheet" type="text/css" media="all">`).appendTo($('head'));
 	}
 }

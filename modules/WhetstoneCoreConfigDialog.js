@@ -48,8 +48,15 @@ export class WhetstoneCoreConfigDialog extends FormApplication {
 
 			const theme = duplicate(m.options);
 			theme.active = isActive;
+			theme.dependencies = Object.entries(theme.dependencies).length ? theme.dependencies : '';
+			theme.systems = Object.entries(theme.systems).length ? theme.systems : '';
+			theme.compatible = Object.entries(theme.compatible).length ? theme.compatible : '';
+			theme.conflicts = Object.entries(theme.conflicts).length ? theme.conflicts : '';
 			return arr.concat([theme]);
 		}, []);
+
+		// sort by priority first, then name in alphabetical
+		themes.sort((a, b) => (a.priority > b.priority ? 1 : (a.priority === b.priority ? (a.name > b.name ? 1 : -1) : -1)));
 
 		storedOptions.counts = counts;
 		storedOptions.themes = themes;
@@ -66,7 +73,7 @@ export class WhetstoneCoreConfigDialog extends FormApplication {
 
 			// Update setting data
 			const s = duplicate(setting);
-			s.value = this.reset ? s.default : game.settings.get('Whetstone', s.key);
+			s.value = this.reset ? s.default : JSON.parse(game.settings.get('Whetstone', s.key));
 			s.isColor = ['color', 'shades'].includes(s.color);
 			s.type = setting.type instanceof Function ? setting.type.name : 'String';
 			s.isCheckbox = setting.type === Boolean;
@@ -134,7 +141,7 @@ export class WhetstoneCoreConfigDialog extends FormApplication {
 
 		const menu = game.Whetstone.settings.menus.get(menuname);
 		if (!menu) return ui.notifications.error('No submenu found for the provided key');
-		const app = new menu.type({theme: theme.name});
+		const app = new menu.type({theme: theme.name, colorTheme: ''});
 		return app.render(true);
 	}
 

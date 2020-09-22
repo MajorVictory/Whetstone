@@ -1,4 +1,6 @@
 :root {
+	--OceanBlues-bg-window-blendmode: luminosity;
+	--OceanBlues-bg-sheet-blendmode: luminosity;
 	--OceanBlues-bg-color: #3d5a80;
 	--OceanBlues-text-light-color: #98c1d9;
 	--OceanBlues-text-dark-color: #102632;
@@ -74,7 +76,7 @@ table {
 }
 
 form button {
-	background: var(--OceanBlues-text-light-color);
+	background: var(--OceanBlues-fg-color);
 	border: 2px groove var(--OceanBlues-border-color);
 }
 
@@ -127,13 +129,13 @@ input[type="range"] + .range-value {
 .app {
 	color: var(--OceanBlues-text-light-color);
 	background-color: var(--OceanBlues-bg-color);
-	background-blend-mode: luminosity;
+	background-blend-mode: var(--OceanBlues-bg-window-blendmode);
 }
 
 .window-app .window-content,
 .dnd5e.sheet .window-content {
 	color: var(--OceanBlues-text-dark-color);
-	background-blend-mode: luminosity;
+	background-blend-mode: var(--OceanBlues-bg-sheet-blendmode);
 	background-color: var(--OceanBlues-bg-color);
 }
 
@@ -167,5 +169,5 @@ input[type="range"] + .range-value {
 
 form .notes,
 form .hint {
-	color: var(--OceanBlues-bg-color);
+	color: var(--OceanBlues-text-light-color);
 }

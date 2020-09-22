@@ -2,164 +2,182 @@
 /*  Theme Management                        */
 /* ----------------------------------------- */
 .theme-list {
-  list-style: none;
-  margin: 0;
-  padding: 0 5px 0 0;
-  overflow: hidden auto;
+	list-style: none;
+	margin: 0;
+	padding: 0 5px 0 0;
+	overflow: hidden auto;
 }
 .theme-list .theme {
-  padding: 4px 0;
-  border-top: none;
-  border-bottom: 1px solid #b5b3a4;
+	padding: 4px 0;
+	border-top: none;
+	border-bottom: 1px solid #b5b3a4;
 }
 .theme-list .theme:last-child {
-  border-bottom: none;
+	border-bottom: none;
 }
 .theme-list .theme.hidden {
-  display: none;
+	display: none;
 }
 .theme-list .theme .theme-overview {
-  flex: 0 0 100%;
-  justify-content: flex-end;
+	flex: 0 0 100%;
+	justify-content: flex-end;
 }
 .theme-list .theme .theme-overview .theme-title {
-  flex: 1;
-  text-decoration: underline;
-  font-size: 14px;
-  margin: 0;
-  color: #b5b3a4;
+	flex: 1;
+	text-decoration: underline;
+	font-size: 14px;
+	margin: 0;
+	color: #b5b3a4;
 }
 .theme-list .theme .theme-overview .theme-image {
-  width:50px;
-  height:50px;
-  flex: 0 0 50px;
-  margin: 0px 5px;
+	width:50px;
+	height:50px;
+	flex: 0 0 50px;
+	margin: 0px 5px;
 }
 .theme-list .theme .theme-description {
-  flex: 0 0 100%;
-  margin: 3px 0;
-  color: #b5b3a4;
-  font-size: 12px;
+	flex: 0 0 100%;
+	margin: 3px 0;
+	color: #b5b3a4;
+	font-size: 12px;
 }
 .theme-list .theme .theme-description > * {
-  margin: 0;
+	margin: 0;
 }
 .theme-list .theme .theme-metadata,
 .theme-list .theme .theme-controls {
-  margin: 0;
-  flex: 0 0 50%;
+	margin: 0;
+	flex: 0 0 50%;
 }
 .theme-list .theme .theme-metadata ul,
 .theme-list .theme .theme-controls ul {
-  margin: 0;
+	margin: 0;
 }
 .theme-list .theme .theme-metadata {
-  font-size: 12px;
-  padding: 0;
-  color: #b5b3a4;
+	font-size: 12px;
+	padding: 0;
+	color: #b5b3a4;
 }
 .theme-list .theme .theme-controls {
-  padding: 5px 0;
-  text-align: right;
+	padding: 5px 0;
+	text-align: right;
 }
 .theme-list .theme .theme-controls button {
-  display: inline;
-  width: 110px;
-  height: 25px;
-  font-size: 12px;
-  line-height: 24px;
-  border: 1px solid #111;
+	display: inline;
+	width: 110px;
+	height: 25px;
+	font-size: 12px;
+	line-height: 24px;
+	border: 1px solid #111;
 }
 .theme-list .theme .theme-url {
-  margin: 0.25em 0 0;
-  color: #CCC;
+	margin: 0.25em 0 0;
+	color: #CCC;
 }
 .theme-list .theme .theme-footer {
-  height: 32px;
-  padding: 5px 0 0;
+	height: 32px;
+	padding: 5px 0 0;
 }
 .theme-list .theme .tag {
-  flex: none;
-  height: 20px;
-  border: 1px solid #000;
-  border-radius: 3px;
-  padding: 0 3px;
-  margin: 0 0 0 2px;
-  font-size: 11px;
-  line-height: 18px;
-  text-decoration: none;
-  background: #333;
-  color: #f0f0e0;
+	flex: none;
+	height: 20px;
+	border: 1px solid #000;
+	border-radius: 3px;
+	padding: 0 3px;
+	margin: 0 0 0 2px;
+	font-size: 11px;
+	line-height: 18px;
+	text-decoration: none;
+	background: #333;
+	color: #f0f0e0;
 }
 .theme-list .theme .tag.javascript {
-  background: #803c62;
+	background: #803c62;
 }
 .theme-list .theme .tag.css {
-  background: #1e5c6f;
+	background: #1e5c6f;
 }
 .theme-list .theme .tag.compendium {
-  background: #3b3a80;
+	background: #3b3a80;
 }
 .theme-list .theme .tag.unavailable {
-  background: #750000;
+	background: #750000;
 }
 .theme-list .theme .tag.unknown {
-  background: #b07900;
+	background: #b07900;
 }
 .theme-list .theme .tag.languages {
-  background: #224224;
+	background: #224224;
 }
 #WhetstoneCoreConfig .expand {
-  flex: 0 0 32px;
-  height: 30px;
-  margin: -6px 0 0 6px;
-  padding: 0;
+	flex: 0 0 32px;
+	height: 30px;
+	margin: -6px 0 0 6px;
+	padding: 0;
 }
 
 #WhetstoneCoreConfig nav.tabs,
 #WhetstoneThemeConfigDialog nav.tabs {
-    flex: 0 0 32px;
-    line-height: 32px;
-    font-size: 16px;
-    border-bottom: 1px solid #000;
+	flex: 0 0 32px;
+	line-height: 32px;
+	font-size: 16px;
+	border-bottom: 1px solid #000;
 }
 
 #WhetstoneCoreConfig .theme-list {
-  margin-top: 5px;
-  border-top: 1px solid #7a7971;
-  height: 600px;
+	margin-top: 5px;
+	border-top: 1px solid #7a7971;
+	height: 600px;
 }
 #WhetstoneCoreConfig .theme-list .theme-metadata {
-  flex: 0 0 100%;
+	flex: 0 0 100%;
 }
 #WhetstoneCoreConfig .theme-list .theme-title {
-  font-weight: bold;
+	font-weight: bold;
 }
 #WhetstoneCoreConfig .theme-list .theme-title,
 #WhetstoneCoreConfig .theme-list .theme-metadata,
 #WhetstoneCoreConfig .theme-list .theme-description {
-  color: #191813;
+	color: #191813;
 }
 
 #WhetstoneThemeConfigDialog .sheet-header img {
-  flex: 0 0 48px;
-  width: 48px;
+	flex: 0 0 48px;
+	width: 48px;
 }
 
 form .form-group > .ws-color-input {
-    flex: 2;
-    flex-direction: column;
+	flex: 2;
+	flex-direction: column;
 }
 
 .ws-shade-preview .ws-shade-item {
-  flex: none;
-  height: 14px;
-  width: 18px;
-  border: 1px solid #000;
-  border-radius: 2px;
-  padding: 0px;
-  margin: 0 0 0 2px;
-  font-size: 11px;
-  line-height: 10px;
-  text-decoration: none;
+	flex: none;
+	height: 14px;
+	width: 18px;
+	border: 1px solid #000;
+	border-radius: 2px;
+	padding: 0px;
+	margin: 0 0 0 2px;
+	font-size: 11px;
+	line-height: 10px;
+	text-decoration: none;
+}
+
+.theme-presets {
+	border-bottom: 1px solid;
+	padding: 5px 0px;
+}
+
+.theme-presets label {
+	font-size: 1.2em;
+	font-weight: 500;
+}
+
+.theme-presets button {
+	flex: 0 0 32px;
+	width: 32px;
+	height: 32px;
+	line-height: 28px;
+	margin: -3px 0 0 6px;
 }
