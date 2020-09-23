@@ -252,12 +252,13 @@ export class WhetstoneThemes extends EntityCollection {
 	 */
 	static getShades(value = '') {
 		let shades = {
-			quarter: '',
+			contrast: '',
+			//quarter: '',
 			half: '',
-			threequarter: '',
-			shadow: '',
-			dark: '',
-			light: '',
+			//threequarter: '',
+			//shadow: '',
+			//dark: '',
+			//light: '',
 			darker: '',
 			lighter: ''
 		};
@@ -274,18 +275,24 @@ export class WhetstoneThemes extends EntityCollection {
 			v = Math.round(v * 100);
 
 			shades = {
-				quarter: `hsla(${h},${s}%,${v}%,0.25)`,
-				half: `hsla(${h},${s}%,${v}%,0.5)`,
-				threequarter: `hsla(${h},${s}%,${v}%,0.75)`,
-				shadow: `hsla(${h},${s}%,25%,1)`,
-				dark: `hsla(${h},${s}%,25%,0.5)`,
-				light: `hsla(${h},100%,50%,1)`,
-				darker: `hsla(${h},${s}%,${Math.max(0, v - 10)}%,1)`,
-				lighter: `hsla(${h},${s}%,${Math.min(100, v + 10)}%,1)`
+				contrast: WhetstoneThemes.getContrastYIQ((r*255), (g*255), (b*255)),
+				//quarter: `hsla(${h},${s}%,${v}%,0.25)`,
+				half: `hsla(${h},${s}%,${v}%,${a/2})`,
+				//threequarter: `hsla(${h},${s}%,${v}%,0.75)`,
+				//shadow: `hsla(${h},${s}%,25%,1)`,
+				//dark: `hsla(${h},${s}%,25%,0.5)`,
+				//light: `hsla(${h},100%,50%,1)`,
+				darker: `hsla(${h},${s}%,${Math.max(0, v - 10)}%,${a})`,
+				lighter: `hsla(${h},${s}%,${Math.min(100, v + 10)}%,${a})`
 			};
 		}
 
 		return shades;
+	}
+
+	static getContrastYIQ(r,g,b){
+		var yiq = ((r*299)+(g*587)+(b*114))/1000;
+		return (yiq >= 128) ? 'black' : 'white';
 	}
 
 	static colorData(value, alpha) {

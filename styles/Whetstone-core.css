@@ -161,14 +161,15 @@ form .form-group > .ws-color-input {
 .ws-shade-preview .ws-shade-item {
 	flex: none;
 	height: 14px;
-	width: 18px;
-	border: 1px solid #000;
+	width: 48px;
+	border: 1px solid;
 	border-radius: 2px;
 	padding: 0px;
 	margin: 0 0 0 2px;
-	font-size: 11px;
-	line-height: 10px;
+	font-size: 12px;
+	line-height: 13px;
 	text-decoration: none;
+	text-align: center;
 }
 
 .theme-presets {

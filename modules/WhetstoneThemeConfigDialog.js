@@ -72,9 +72,11 @@ export class WhetstoneThemeConfigDialog extends FormApplication {
 			if (s.color === 'shades') {
 				let colorShades = WhetstoneThemes.getShades();
 
-				s.shades = [`<span class="ws-shade-item" style="background-color: var(${s.key});" title="${s.key}">&nbsp;</span>`];
+				s.shades = [`<span class="ws-shade-item" style="background-color: var(${s.key});color: var(${s.key}-contrast);border-color: var(${s.key}-contrast);" title="${s.key}">&nbsp;</span>`];
 				Object.keys(colorShades).forEach((k) => {
-					s.shades.push(`<span class="ws-shade-item" style="background-color: var(${s.key}-${k});" title="${s.key}-${k}">&nbsp;</span>`);
+					if (k !== 'contrast') {
+						s.shades.push(`<span class="ws-shade-item" style="background-color: var(${s.key}-${k});color: var(${s.key}-contrast);border-color: var(${s.key}-contrast);" title="${s.key}-${k}">${k}</span>`);
+					}
 				});
 				s.shades = s.shades.join('');
 			}
