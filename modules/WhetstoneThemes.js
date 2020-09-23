@@ -290,11 +290,19 @@ export class WhetstoneThemes extends EntityCollection {
 
 	static colorData(value, alpha) {
 
-		// 6 digit hex to 8 digit hex
-		if (value.length === 7) value = `${value}ff`;
+		let newAlpha = (alpha !== undefined) ? parseInt(alpha).toString(16) : 'ff';
+		newAlpha = newAlpha.length === 1 ? `0${newAlpha}` : newAlpha;
 
+		// 8 digit hex and new alpha set, replace
+		if (value.length === 9 && alpha) {
+			value = `${value.slice(0,-2)}${newAlpha}`;
+		}
+
+		// 6 digit hex convert to 8 digit hex
+		if (value.length === 7) {
+			value = `${value}${newAlpha}`;
+		}
 		let [r, g, b, a] = WhetstoneThemes.hexToRGBA(colorStringToHex(value));
-		a = alpha || a;
 
 		return {
 			color: WhetstoneThemes.rgbaToColorString([r, g, b]),

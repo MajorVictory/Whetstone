@@ -98,7 +98,7 @@ Hooks.once('WhetstoneReady', () => {
 	].concat(CONFIG.fontFamilies);
 
 	let fontChoices = {};
-	fontList.map(f => fontChoices[f] = f);
+	fontList.map(f => fontChoices[`'${f}'`] = f);
 
 
 	// register example theme: OceanBlues
@@ -112,101 +112,108 @@ Hooks.once('WhetstoneReady', () => {
 		authors: [],
 		priority: Number.MIN_SAFE_INTEGER,
 		active: true,
+		styles: ['modules/Whetstone/styles/Whetstone-Global-Colors.css'],
 		variables: [
 			{
 				name: '--Whetstone-font-family-header',
 				hint: 'Font used for Headers and Labels.',
-				default: 'Modesto Condensed',
+				default: '\'Modesto Condensed\'',
 				presets: 'fontChoices'
 			},
 			{
 				name: '--Whetstone-font-family-body',
 				hint: 'Font used for regular text bodies.',
-				default: 'Signika',
+				default: '\'Signika\'',
 				presets: 'fontChoices'
 			},
 			{
 				name: '--Whetstone-font-family-mono',
 				hint: 'Font used for monospaced text like numbers or code.<hr>',
-				default: 'monospace',
+				default: '\'monospace\'',
 				presets: 'fontChoices'
 			},
 			{
 				name: '--Whetstone-bg-app',
 				hint: 'Background color for dialogues and windows.',
-				default: '#000000',
+				default: '#00000000',
 				type: 'shades'
 			},
 			{
 				name: '--Whetstone-bg-toolbar',
 				hint: 'Background color for toolbars and popouts.<hr>',
-				default: '#000000',
+				default: '#00000000',
 				type: 'shades'
 			},
 			{
 				name: '--Whetstone-bg-primary',
 				hint: 'Primary background color for content.',
-				default: '#000000',
+				default: '#00000000',
 				type: 'shades'
 			},
 			{
 				name: '--Whetstone-fg-primary',
-				hint: 'Main foreground color for text and elements. (Should contrast with bg-primary)<hr>',
-				default: '#000000',
+				hint: 'Main foreground color for headers and category elements. (Should contrast with bg-primary)<hr>',
+				default: '#191813',
 				type: 'shades'
 			},
 			{
 				name: '--Whetstone-bg-secondary',
 				hint: 'Secondary background color for content on top of primary background.',
-				default: '#000000',
+				default: '#0000000d',
 				type: 'shades'
 			},
 			{
 				name: '--Whetstone-fg-secondary',
-				hint: 'Secondary foreground color for text and elements. (Should contrast with bg-secondary)<hr>',
-				default: '#000000',
+				hint: 'Secondary foreground color for text and list elements. (Should contrast with bg-secondary)<hr>',
+				default: '#4b4a44',
 				type: 'shades'
 			},
 			{
 				name: '--Whetstone-bg-tertiary',
 				hint: 'Third background color for content on top of primary background.',
-				default: '#000000',
+				default: '#0000001a',
 				type: 'shades'
 			},
 			{
 				name: '--Whetstone-fg-tertiary',
-				hint: 'Third foreground color for text and elements. (Should contrast with bg-tertiary)<hr>',
-				default: '#000000',
+				hint: 'Alternate foreground color for text and list elements. (Should contrast with bg-tertiary)<hr>',
+				default: '#7a7971',
 				type: 'shades'
 			},
 			{
-				name: '--Whetstone-highlight',
-				hint: 'Color to indicate selected elements.',
-				default: '#ff0000',
+				name: '--Whetstone-text-highlight',
+				hint: 'Color to indicate active and selected elements.',
+				default: '#c53131',
 				type: 'shades'
 			},
 			{
 				name: '--Whetstone-accent-primary',
 				hint: 'Color to add visual notice or to draw attention.',
-				default: '#782e22',
+				default: '#ff0000',
 				type: 'shades'
 			},
 			{
 				name: '--Whetstone-accent-secondary',
 				hint: 'A second color to add visual notice or to draw attention.',
-				default: '#ff6400',
+				default: '#c53131',
 				type: 'shades'
 			},
 			{
 				name: '--Whetstone-border-primary',
 				hint: 'Border color for elements, buttons, and inputs.',
-				default: '#f0f0e0',
+				default: '#eeede0',
 				type: 'shades'
 			},
 			{
 				name: '--Whetstone-border-secondary',
-				hint: 'Borders color for spacing elements and dividers.',
-				default: '#f0f0e0',
+				hint: 'Border color for spacing elements and dividers.',
+				default: '#c9c7b8',
+				type: 'shades'
+			},
+			{
+				name: '--Whetstone-border-active',
+				hint: 'Border color active and selected form elements.',
+				default: '#c53131',
 				type: 'shades'
 			}
 		],
@@ -301,7 +308,7 @@ Hooks.once('WhetstoneReady', () => {
 				name: '--OceanBlues-bg-color',
 				title: 'Background Color',
 				hint: 'Used in sheet headers, tinges the background.',
-				default: '#3d5a80',
+				default: '#3e5c86e6',
 				type: 'color',
 				presets: 'oceanblues'
 			},
@@ -317,7 +324,7 @@ Hooks.once('WhetstoneReady', () => {
 				name: '--OceanBlues-bg-sheet-blendmode',
 				title: 'Sheet Background Blend Mode',
 				hint: 'Color blend for sheet backgrounds.',
-				default: 'luminosity',
+				default: 'color-burn',
 				type: String,
 				presets: 'blendmodes'
 			},
@@ -325,7 +332,7 @@ Hooks.once('WhetstoneReady', () => {
 				name: '--OceanBlues-text-light-color',
 				title: 'Text Color - Light',
 				hint: 'Used for text on dark background.',
-				default: '#98c1d9',
+				default: '#c6dceaff',
 				type: 'color',
 				presets: 'oceanblues'
 			},
@@ -333,7 +340,7 @@ Hooks.once('WhetstoneReady', () => {
 				name: '--OceanBlues-text-dark-color',
 				title: 'Text Color - Dark',
 				hint: 'Used for text on light backgrounds.',
-				default: '#102632',
+				default: '#102632ff',
 				type: 'color',
 				presets: 'oceanblues'
 			},
@@ -341,7 +348,7 @@ Hooks.once('WhetstoneReady', () => {
 				name: '--OceanBlues-text-highlight-color',
 				title: 'Text Highlight Color',
 				hint: '',
-				default: '#72b9d5',
+				default: '#72b9d5ff',
 				type: 'color',
 				presets: 'oceanblues'
 			},
@@ -349,7 +356,7 @@ Hooks.once('WhetstoneReady', () => {
 				name: '--OceanBlues-text-selection-color',
 				title: 'Text Selection Color',
 				hint: '',
-				default: '#b0c2bd',
+				default: '#9eb4d3ff',
 				type: 'color',
 				presets: 'oceanblues'
 			},
@@ -357,7 +364,7 @@ Hooks.once('WhetstoneReady', () => {
 				name: '--OceanBlues-fg-color',
 				title: 'Foreground Color',
 				hint: 'Used for textboxes and input fields',
-				default: '#e0fbfc',
+				default: '#9ef3f580',
 				type: 'color',
 				presets: 'oceanblues'
 			},
@@ -365,7 +372,7 @@ Hooks.once('WhetstoneReady', () => {
 				name: '--OceanBlues-highlight-color',
 				title: 'Highlight Color',
 				hint: 'Used for highlighter color when hovering over hyperlinks or interface elements.',
-				default: '#ee6c4d',
+				default: '#ee6c4dff',
 				type: 'color',
 				presets: 'oceanblues'
 			},
@@ -373,7 +380,7 @@ Hooks.once('WhetstoneReady', () => {
 				name: '--OceanBlues-border-color',
 				title: 'Border Color',
 				hint: '',
-				default: '#293241',
+				default: '#293241ff',
 				type: 'color',
 				presets: 'oceanblues'
 			}
@@ -381,34 +388,34 @@ Hooks.once('WhetstoneReady', () => {
 
 		presets: {
 			oceanblues: {
-				'#3d5a80': 'Bdazzled Blue',
-				'#98c1d9': 'Pale Cerulean',
-				'#102632': 'Charcoal',
-				'#72b9d5': 'Dark Sky Blue',
-				'#b0c2bd': 'Opal',
-				'#e0fbfc': 'Light Cyan',
-				'#ee6c4d': 'Burnt Sienna',
-				'#293241': 'Gunmetal'
+				'#3e5c86e6': 'East Bay',
+				'#c6dceaff': 'Periwinkle Gray',
+				'#102632ff': 'Firefly',
+				'#72b9d5ff': 'Downy',
+				'#9eb4d3ff': 'Rock Blue',
+				'#9ef3f580': 'Ice Cold',
+				'#ee6c4dff': 'Burnt Sienna',
+				'#293241ff': 'Ebony Clay'
 			},
 			earthygreen: {
-				'#163216': 'Phthalo Green',
-				'#91c589': 'Dark Sea Green',
-				'#3e5a30': 'Hunter Green',
-				'#e9eed2': 'Beige',
-				'#d6b087': 'Tan',
-				'#defeb4': 'Tea Green',
-				'#00aa2b': 'Green Pantone',
-				'#804000': 'Chocolate Traditional'
+				'#769d6a80': 'Highland',
+				'#593d31ff': 'Millbrook',
+				'#293d21ff': 'Green Kelp',
+				'#e9eed2ff': 'Aths Special',
+				'#a26f35ff': 'Copper',
+				'#b7a077ff': 'Mongoose',
+				'#4a3713ff': 'Punga',
+				'#804000ff': 'Cinnamon'
 			},
 			hackerspace: {
-				'#001500': 'Dark Jungle Green',
-				'#69e973': 'Light Green',
-				'#363636': 'Jet',
-				'#00ff00': 'Electric Green',
-				'#47ff47': 'Erin',
-				'#c8feb8': 'Tea Green',
-				'#00aa2b': 'Green Pantone',
-				'#00ff00': 'Electric Green'
+				'#032202ff': 'English Holly',
+				'#1caa29ff': 'Forest Green',
+				'#008000ff': 'Japanese Laurel',
+				'#2dff2dff': 'Harlequin',
+				'#47ff47ff': 'Screamin\' Green',
+				'#0f3d0180': 'Deep Fir',
+				'#00ca33ff': 'Green Pantone',
+				'#62ff62ff': 'Electric Green'
 			},
 			blendmodes: {
 				'normal': 'Normal',
@@ -439,16 +446,16 @@ Hooks.once('WhetstoneReady', () => {
 				name: 'OCEANBLUES.ColorThemeDefault',
 				presets: 'oceanblues',
 				values: {
-					'--OceanBlues-bg-color': '#3d5a80',
+					'--OceanBlues-bg-color': '#3e5c86e6',
 					'--OceanBlues-bg-window-blendmode': 'luminosity',
-					'--OceanBlues-bg-sheet-blendmode': 'luminosity',
-					'--OceanBlues-text-light-color': '#98c1d9',
-					'--OceanBlues-text-dark-color': '#102632',
-					'--OceanBlues-text-highlight-color': '#72b9d5',
-					'--OceanBlues-text-selection-color': '#b0c2bd',
-					'--OceanBlues-fg-color': '#e0fbfc',
-					'--OceanBlues-highlight-color': '#ee6c4d',
-					'--OceanBlues-border-color': '#293241'
+					'--OceanBlues-bg-sheet-blendmode': 'color-burn',
+					'--OceanBlues-text-light-color': '#c6dceaff',
+					'--OceanBlues-text-dark-color': '#102632ff',
+					'--OceanBlues-text-highlight-color': '#72b9d5ff',
+					'--OceanBlues-text-selection-color': '#9eb4d3ff',
+					'--OceanBlues-fg-color': '#9ef3f580',
+					'--OceanBlues-highlight-color': '#ee6c4dff',
+					'--OceanBlues-border-color': '#293241ff'
 				}
 			},
 			{
@@ -456,16 +463,16 @@ Hooks.once('WhetstoneReady', () => {
 				name: 'OCEANBLUES.ColorThemeGreen',
 				presets: 'earthygreen',
 				values: {
-					'--OceanBlues-bg-color': '#648859',
-					'--OceanBlues-bg-window-blendmode': 'lighten',
-					'--OceanBlues-bg-sheet-blendmode': 'luminosity',
-					'--OceanBlues-text-light-color': '#54392e',
-					'--OceanBlues-text-dark-color': '#25361d',
-					'--OceanBlues-text-highlight-color': '#e9eed2',
-					'--OceanBlues-text-selection-color': '#a26f35',
-					'--OceanBlues-fg-color': '#b7a077',
-					'--OceanBlues-highlight-color': '#4a3713',
-					'--OceanBlues-border-color': '#804000'
+					'--OceanBlues-bg-color': '#769d6a80',
+					'--OceanBlues-bg-window-blendmode': 'color-dodge',
+					'--OceanBlues-bg-sheet-blendmode': 'color-burn',
+					'--OceanBlues-text-light-color': '#593d31ff',
+					'--OceanBlues-text-dark-color': '#293d21ff',
+					'--OceanBlues-text-highlight-color': '#e9eed2ff',
+					'--OceanBlues-text-selection-color': '#a26f35ff',
+					'--OceanBlues-fg-color': '#b7a077ff',
+					'--OceanBlues-highlight-color': '#4a3713ff',
+					'--OceanBlues-border-color': '#804000ff'
 				}
 			},
 			{
@@ -473,16 +480,16 @@ Hooks.once('WhetstoneReady', () => {
 				name: 'OCEANBLUES.ColorThemeHacker',
 				presets: 'hackerspace',
 				values: {
-					'--OceanBlues-bg-color': '#001500',
-					'--OceanBlues-bg-window-blendmode': 'color',
-					'--OceanBlues-bg-sheet-blendmode': 'color-dodge',
-					'--OceanBlues-text-light-color': '#1caa29',
-					'--OceanBlues-text-dark-color': '#060606',
-					'--OceanBlues-text-highlight-color': '#2dff2d',
-					'--OceanBlues-text-selection-color': '#47ff47',
-					'--OceanBlues-fg-color': '#c8feb8',
-					'--OceanBlues-highlight-color': '#00ca33',
-					'--OceanBlues-border-color': '#62ff62'
+					'--OceanBlues-bg-color': '#032202ff',
+					'--OceanBlues-bg-window-blendmode': 'darken',
+					'--OceanBlues-bg-sheet-blendmode': 'multiply',
+					'--OceanBlues-text-light-color': '#1caa29ff',
+					'--OceanBlues-text-dark-color': '#008000ff',
+					'--OceanBlues-text-highlight-color': '#2dff2dff',
+					'--OceanBlues-text-selection-color': '#47ff47ff',
+					'--OceanBlues-fg-color': '#0f3d0180',
+					'--OceanBlues-highlight-color': '#00ca33ff',
+					'--OceanBlues-border-color': '#62ff62ff'
 				}
 			}
 		],

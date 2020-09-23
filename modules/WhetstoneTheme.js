@@ -120,27 +120,39 @@ export class WhetstoneTheme extends Entity {
 	}
 
 	getVariableValues(colorTheme = '', values = {}) {
-		colorTheme = colorTheme || game.Whetstone.settings.get(`${this.name}.settings`, 'colorTheme') || '';
-		const currentColorTheme = this.data.colorThemes.filter(t => t.id === (colorTheme || this.data.colorTheme))[0];
+
+		let selectedColorTheme = colorTheme || game.Whetstone.settings.get(`${this.name}.settings`, 'colorTheme') || this.data.colorTheme || '';
+
+		const currentColorTheme = this.data.colorThemes.filter(t => t.id === selectedColorTheme)[0];
 		const colorThemeValues = currentColorTheme ? currentColorTheme.values : {};
-		let returnValues = {};
+		let returnValues = {
+			'colorThemeData': currentColorTheme,
+			'colorThemeID': selectedColorTheme
+		};
 
 		this.data.variables.forEach((cssVar) => {
-
-			// get current value from storage
-			let currentValue = game.Whetstone.settings.get(this.name, `variables.${cssVar.name}`);
 			const themeSetting = game.Whetstone.settings.settings.get(`${this.name}.variables.${cssVar.name}`);
 
-			// check colortheme for newer value
-			const colorThemeValue = Object.keys(colorThemeValues).filter(k => k.includes(cssVar.name))[0];
-			if (colorThemeValue) currentValue = colorThemeValues[colorThemeValue];
+			// check `values` from arguments for further overrides
+			let overrideValue = Object.keys(values).filter(k => k.includes(cssVar.name))[0];
+			overrideValue = overrideValue ? values[overrideValue] : '';
 
-			// check `values` from argumetns for further overrides
-			const overrideKey = Object.keys(values).filter(k => k.includes(cssVar.name))[0];
-			if (overrideKey) currentValue = values[overrideKey];
+			// get current value from storage
+			const storedValue = game.Whetstone.settings.get(this.name, `variables.${cssVar.name}`) || '';
 
-			// make sure there is at least a value: specified -> default -> nothing
-			const writeValue = currentValue || themeSetting.default || '';
+			// get colortheme value
+			let colorThemeValue = Object.keys(colorThemeValues).filter(k => k.includes(cssVar.name))[0];
+			colorThemeValue = colorThemeValue ? colorThemeValues[colorThemeValue] : '';
+
+
+			let writeValue = '';
+			if (colorTheme) {
+				writeValue = overrideValue || colorThemeValue || storedValue || themeSetting.default || '';
+
+			// make sure there is at least a value: override -> stored -> preset -> default -> nothing
+			} else {
+				writeValue = overrideValue || storedValue || colorThemeValue || themeSetting.default || '';
+			}
 
 			returnValues[cssVar.name] = writeValue;
 
@@ -194,8 +206,8 @@ export class WhetstoneTheme extends Entity {
 
 		if (this.dialog) {
 			this.dialog._colorTheme = newID;
+			this._userValues = [];
 			this.dialog.render();
-			this.dialog = null;
 		}
 		return this;
 	}

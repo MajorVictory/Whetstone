@@ -141,6 +141,13 @@
 	color: #191813;
 }
 
+#WhetstoneCoreConfig .form-group,
+#WhetstoneThemeConfigDialog .form-group {
+	border-bottom: 2px groove;
+	margin-bottom: 5px;
+	padding-bottom: 5px;
+}
+
 #WhetstoneThemeConfigDialog .sheet-header img {
 	flex: 0 0 48px;
 	width: 48px;
