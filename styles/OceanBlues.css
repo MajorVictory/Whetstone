@@ -79,11 +79,15 @@ li.folder.collapsed > .folder-header h3,
 	text-shadow: 1px 1px 3px var(--OceanBlues-fg-color);
 }
 
-a[href], a:hover,
+a[href] {
+	color: var(--OceanBlues-highlight-color);
+}
+
+a:hover,
 .tabs .item.active,
 .dnd5e.chat-card .card-header h3:hover,
 .filepicker .directory > li:hover {
-	color: var(--OceanBlues-highlight-color);
+	color: var(--OceanBlues-text-highlight-color);
 }
 
 a.entity-link,
@@ -120,8 +124,8 @@ form button {
 }
 
 button:hover {
-	background: var(--OceanBlues-text-dark-color);
-	color: var(--OceanBlues-highlight-color);
+	background: var(--OceanBlues-highlight-color);
+	color: var(--OceanBlues-text-highlight-color);
 	border: 2px groove var(--OceanBlues-border-color);
 }
 

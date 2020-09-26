@@ -305,80 +305,80 @@ Hooks.once('WhetstoneReady', () => {
 		variables: [
 			{
 				name: '--OceanBlues-bg-color',
-				title: 'Background Color',
-				hint: 'Used in sheet headers, tinges the background.',
+				title: 'OCEANBLUES.OceanBlues-bg-color',
+				hint: 'OCEANBLUES.OceanBlues-bg-colorHint',
 				default: '#3e5c86e6',
 				type: 'color',
 				presets: 'oceanblues'
 			},
 			{
 				name: '--OceanBlues-bg-window-blendmode',
-				title: 'Window Background Blend Mode',
-				hint: 'Color blend for window titles and sidebar',
+				title: 'OCEANBLUES.OceanBlues-bg-window-blendmode',
+				hint: 'OCEANBLUES.OceanBlues-bg-window-blendmodeHint',
 				default: 'luminosity',
 				type: String,
 				presets: 'blendmodes'
 			},
 			{
 				name: '--OceanBlues-bg-sheet-blendmode',
-				title: 'Sheet Background Blend Mode',
-				hint: 'Color blend for sheet backgrounds.',
+				title: 'OCEANBLUES.OceanBlues-bg-sheet-blendmode',
+				hint: 'OCEANBLUES.OceanBlues-bg-sheet-blendmodeHint',
 				default: 'color-burn',
 				type: String,
 				presets: 'blendmodes'
 			},
 			{
 				name: '--OceanBlues-text-light-color',
-				title: 'Text Color - Light',
-				hint: 'Used for text on dark background.',
+				title: 'OCEANBLUES.OceanBlues-text-light-color',
+				hint: 'OCEANBLUES.OceanBlues-text-light-colorHint',
 				default: '#c6dceaff',
 				type: 'color',
 				presets: 'oceanblues'
 			},
 			{
 				name: '--OceanBlues-text-dark-color',
-				title: 'Text Color - Dark',
-				hint: 'Used for text on light backgrounds.',
+				title: 'OCEANBLUES.OceanBlues-text-dark-color',
+				hint: 'OCEANBLUES.OceanBlues-text-dark-colorHint',
 				default: '#8dbbdcff',
 				type: 'color',
 				presets: 'oceanblues'
 			},
 			{
 				name: '--OceanBlues-text-highlight-color',
-				title: 'Text Highlight Color',
-				hint: '',
+				title: 'OCEANBLUES.OceanBlues-text-highlight-color',
+				hint: 'OCEANBLUES.OceanBlues-text-highlight-colorHint',
 				default: '#72b9d5ff',
 				type: 'color',
 				presets: 'oceanblues'
 			},
 			{
 				name: '--OceanBlues-text-selection-color',
-				title: 'Text Selection Color',
-				hint: '',
+				title: 'OCEANBLUES.OceanBlues-text-selection-color',
+				hint: 'OCEANBLUES.OceanBlues-text-selection-colorHint',
 				default: '#9eb4d3ff',
 				type: 'color',
 				presets: 'oceanblues'
 			},
 			{
 				name: '--OceanBlues-fg-color',
-				title: 'Foreground Color',
-				hint: 'Used for textboxes and input fields',
+				title: 'OCEANBLUES.OceanBlues-fg-color',
+				hint: 'OCEANBLUES.OceanBlues-fg-colorHint',
 				default: '#0c5f76ff',
 				type: 'color',
 				presets: 'oceanblues'
 			},
 			{
 				name: '--OceanBlues-highlight-color',
-				title: 'Highlight Color',
-				hint: 'Used for highlighter color when hovering over hyperlinks or interface elements.',
+				title: 'OCEANBLUES.OceanBlues-highlight-color',
+				hint: 'OCEANBLUES.OceanBlues-highlight-colorHint',
 				default: '#ee6c4dff',
 				type: 'color',
 				presets: 'oceanblues'
 			},
 			{
 				name: '--OceanBlues-border-color',
-				title: 'Border Color',
-				hint: '',
+				title: 'OCEANBLUES.OceanBlues-border-color',
+				hint: 'OCEANBLUES.OceanBlues-border-colorHint',
 				default: '#293241ff',
 				type: 'color',
 				presets: 'oceanblues'
@@ -415,6 +415,16 @@ Hooks.once('WhetstoneReady', () => {
 				'#0f3d0180': 'Deep Fir',
 				'#00ca33ff': 'Green Pantone',
 				'#62ff62ff': 'Electric Green'
+			},
+			lavender_fields: {
+				'#b49dc880': 'Logan',
+				'#81273cff': 'Burnt Umber',
+				'#740104ff': 'Japanese Maple',
+				'#9b50abff': 'Wisteria',
+				'#fa3ffeff': 'Heliotrope',
+				'#b492c0ff': 'London Hue',
+				'#4d114dff': 'Loulou',
+				'#8f009bff': 'Purple'
 			},
 			blendmodes: {
 				'normal': 'Normal',
@@ -489,6 +499,23 @@ Hooks.once('WhetstoneReady', () => {
 					'--OceanBlues-fg-color': '#0f3d0180',
 					'--OceanBlues-highlight-color': '#00ca33ff',
 					'--OceanBlues-border-color': '#62ff62ff'
+				}
+			},
+			{
+				id: 'lavender_fields',
+				name: 'OCEANBLUES.ColorThemePurple',
+				presets: 'lavender_fields',
+				values: {
+					'--OceanBlues-bg-color': '#b49dc880',
+					'--OceanBlues-bg-window-blendmode': 'lighten',
+					'--OceanBlues-bg-sheet-blendmode': 'color-burn',
+					'--OceanBlues-text-light-color': '#81273cff',
+					'--OceanBlues-text-dark-color': '#740104ff',
+					'--OceanBlues-text-highlight-color': '#9b50abff',
+					'--OceanBlues-text-selection-color': '#fa3ffeff',
+					'--OceanBlues-fg-color': '#b492c0ff',
+					'--OceanBlues-highlight-color': '#4d114dff',
+					'--OceanBlues-border-color': '#8f009bff'
 				}
 			}
 		],
