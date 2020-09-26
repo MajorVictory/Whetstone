@@ -219,7 +219,8 @@ export class WhetstoneThemes extends EntityCollection {
 	 * @return {WhetstoneTheme}
 	 */
 	get active() {
-		return this.filter((t) => t.data.active);
+		let themes = this.filter((t) => t.data.active);
+		return themes.sort((a, b) => (a.priority > b.priority ? 1 : (a.priority === b.priority ? (a.name > b.name ? 1 : -1) : -1)));
 	}
 
 	/**

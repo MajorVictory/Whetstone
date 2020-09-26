@@ -1,4 +1,5 @@
 import {WhetstoneThemes} from './WhetstoneThemes.js';
+import {WhetstoneCoreConfig} from './WhetstoneCoreConfig.js';
 
 /**
  * The default whetstone theme settigns configuration application
@@ -55,11 +56,10 @@ export class WhetstoneThemeConfigDialog extends FormApplication {
 
 			// Update setting data
 			const s = duplicate(setting);
-			const currentValue = this._userValues[s.key] || variableValues[s.key] || game.Whetstone.settings.get(`${s.theme}.${s.tab}`, s.key) || s.default;
+			const currentValue = this._userValues[s.id] || variableValues[s.id] || game.Whetstone.settings.get(`${s.theme}.${s.tab}`, s.id) || s.default;
 			s.isColor = ['color', 'shades'].includes(s.color);
 			s.value = this.reset ? s.default : currentValue;
-			s.value = s.isColor ? WhetstoneThemes.colorData(s.value).full : s.value;
-			s.alpha = s.isColor ? WhetstoneThemes.colorData(s.value).alpha : 0;
+			s.colorData = s.isColor ? WhetstoneThemes.colorData(s.value) : null;
 			s.type = setting.type instanceof Function ? setting.type.name : 'String';
 			s.isCheckbox = setting.type === Boolean;
 			s.isRange = setting.type === Number && s.range;
@@ -72,10 +72,10 @@ export class WhetstoneThemeConfigDialog extends FormApplication {
 			if (s.color === 'shades') {
 				let colorShades = WhetstoneThemes.getShades();
 
-				s.shades = [`<span class="ws-shade-item" style="background-color: var(${s.key});color: var(${s.key}-contrast);border-color: var(${s.key}-contrast);" title="${s.key}">&nbsp;</span>`];
+				s.shades = [`<span class="ws-shade-item" style="background-color: var(${s.id});color: var(${s.id}-contrast);border-color: var(${s.id}-contrast);" title="${s.id}">&nbsp;</span>`];
 				Object.keys(colorShades).forEach((k) => {
 					if (k !== 'contrast') {
-						s.shades.push(`<span class="ws-shade-item" style="background-color: var(${s.key}-${k});color: var(${s.key}-contrast);border-color: var(${s.key}-contrast);" title="${s.key}-${k}">${k}</span>`);
+						s.shades.push(`<span class="ws-shade-item" style="background-color: var(${s.id}-${k});color: var(${s.id}-contrast);border-color: var(${s.id}-contrast);" title="${s.id}-${k}">${k}</span>`);
 					}
 				});
 				s.shades = s.shades.join('');
@@ -87,14 +87,15 @@ export class WhetstoneThemeConfigDialog extends FormApplication {
 				settings[s.tab] = [s];
 			}
 
-			currentData[`${s.tab}/${s.key}`] = s.value;
-			defaultData[`${s.tab}/${s.key}`] = s.default;
+			currentData[s.id] = s.value;
+			defaultData[s.id] = s.default;
 		}
 
 		const returndata = this.reset ? defaultData : mergeObject(defaultData, currentData);
 		returndata.theme = theme;
 		returndata.settings = settings;
 		returndata.colorTheme = this.reset ? theme.data.colorTheme : returndata.colorTheme;
+		returndata.colorThemeEdit = colorTheme && colorTheme.custom;
 		return returndata;
 	}
 
@@ -111,16 +112,42 @@ export class WhetstoneThemeConfigDialog extends FormApplication {
 		html.find('button[name="reset"]').click(this._onResetDefaults.bind(this));
 
 		// fix for typed colors not always triggering validation on dialog open
-		$('[name^="variables"]').change(this._updateVariable.bind(this));
+		$('[data-tab="variables"]').change(this._updateVariable.bind(this));
 
-		// theme import/export
+		// theme delete/import/export
+		html.find('button.theme-delete').click(this._themeDelete.bind(this));
 		html.find('button.theme-export').click(this._themeExport.bind(this));
 		html.find('button.theme-import').click(this._themeImport.bind(this));
 
 
-		$('[name^="variables"]').change();
+		$('[data-tab="variables"]').change();
 
 		this.reset = false;
+	}
+
+	_themeDelete(event) {
+		new Dialog({
+			title: game.i18n.localize('WHETSTONE.ColorThemeDeleteTitle'),
+			content: `<p>${game.i18n.localize('WHETSTONE.ColorThemeDeleteMessage')}</p>`,
+			buttons: {
+				no: {
+					icon: '<i class="fas fa-times"></i>',
+					label: game.i18n.localize('WHETSTONE.Cancel')
+				},
+				yes: {
+					icon: '<i class="fas fa-trash"></i>',
+					label: game.i18n.localize('WHETSTONE.Delete'),
+					callback: (html) => {
+						let themeData = game.Whetstone.themes.get(this._theme);
+						themeData.removeColorTheme($('[name="colorTheme"]').val());
+						this._colorTheme = '';
+						this._userValues = [];
+						this.render();
+					}
+				},
+			},
+			default: 'yes'
+		}).render(true);
 	}
 
 	_themeExport(event) {
@@ -131,28 +158,27 @@ export class WhetstoneThemeConfigDialog extends FormApplication {
 			values: {}
 		}
 
-		$('#WhetstoneThemeConfigDialog [name^="variables"]').each((k,v) => {
+		$('#WhetstoneThemeConfigDialog [data-tab="variables"]').each((k,v) => {
 			const control = $(v);
-			const keyName = control.attr('name').split('/')[1];
-			exportData.values[keyName] = control.val();
+			exportData.values[control.attr('name')] = control.val();
 		});			
 
-		let d = new Dialog({
-			title: 'Export Preset',
+		new Dialog({
+			title: game.i18n.localize('WHETSTONE.ExportPresetTitle'),
 			content: `<form class="flexcol">
 				<div class="form-group">
-					<label for="presetName">Enter Preset Name</label>
-					<input type="text" name="presetName" placeholder="Enter Preset Name" value="${game.i18n.localize(exportData.name)}">
+					<label for="presetName">${game.i18n.localize('WHETSTONE.ExportPresetLabel')}</label>
+					<input type="text" name="presetName" placeholder="${game.i18n.localize('WHETSTONE.ExportPresetLabel')}" value="${game.i18n.localize(exportData.name)}">
 				</div>
 			</form>`,
 			buttons: {
 				cancel: {
 					icon: '<i class="fas fa-times"></i>',
-					label: 'Cancel'
+					label: game.i18n.localize('WHETSTONE.Cancel')
 				},
 				export: {
 					icon: '<i class="fas fa-file-export"></i>',
-					label: 'Export',
+					label: game.i18n.localize('WHETSTONE.Export'),
 					callback: (html) => {
 						let presetName = html.find('input[name="presetName"]').val();
 
@@ -195,14 +221,14 @@ export class WhetstoneThemeConfigDialog extends FormApplication {
 		const variableKey = control.attr('name');
 		if (!variableKey) return;
 
-		this._userValues[`${variableKey.split('/')[1]}`] = control.val();
-		WhetstoneThemes.writeVariable(`${variableKey.split('/')[1]}`, control.val(), true);
+		this._userValues[variableKey] = control.val();
+		WhetstoneThemes.writeVariable(variableKey, control.val(), true);
 
 		if (control.data('shades') === 'shades') {
 			let colorShades = WhetstoneThemes.getShades(control.val());
 
 			Object.keys(colorShades).forEach((k) => {
-				WhetstoneThemes.writeVariable(`${variableKey.split('/')[1]}-${k}`, colorShades[k]);
+				WhetstoneThemes.writeVariable(`${variableKey}-${k}`, colorShades[k]);
 			});
 		}
 	}
@@ -249,9 +275,13 @@ export class WhetstoneThemeConfigDialog extends FormApplication {
 
 			if (brother.prop('tagName') === 'SELECT') {
 				brother.val(colorData.full);
-				// no color matches a preset, set to custom
+				// try to match full color in select choices
 				if (brother.val() == null) {
-					brother.val('custom');
+					//try again without alpha
+					brother.val(colorData.full);
+					if (brother.val() == null) {
+						brother.val('custom');
+					}
 				}
 			} else if (brother.prop('type') === 'text') {
 				// if custom, set to black at first
@@ -263,9 +293,10 @@ export class WhetstoneThemeConfigDialog extends FormApplication {
 				brother.change();
 			} else if (brother.prop('type') === 'range') {
 				brother.val(colorData.alpha);
-			} else {
-				// color picker only accepts '#rrggbb' values
+			} else if (brother.prop('type') === 'color') {
 				brother.val(colorData.color);
+			} else {
+				brother.val(colorData.full);
 			}
 		}
 		
@@ -299,18 +330,21 @@ export class WhetstoneThemeConfigDialog extends FormApplication {
 		game.Whetstone.settings.set(`${theme.name}.settings`,'colorTheme', formData.colorTheme);
 
 		for (const [k, newValue] of Object.entries(formData)) {
+
+			const tab = $(`[name="${k}"]`).data('tab');
+
 			const settingData = game.Whetstone.settings.settings.get(
-				`${this._theme}.${k.split('/').join('.')}`
+				`Whetstone.themes.${this._theme}.${tab}.${k}`
 			);
 			if (!settingData) continue;
 
 			const themeKey = `${settingData.theme}.${settingData.tab}`;
-			const current = game.Whetstone.settings.get(themeKey, settingData.key);
+			const current = game.Whetstone.settings.get(themeKey, settingData.id);
 			if (newValue !== current) {
-				game.Whetstone.settings.set(themeKey, settingData.key, newValue);
+				game.Whetstone.settings.set(themeKey, settingData.id, newValue);
 
 				if (settingData.tab === 'variables') {
-					WhetstoneThemes.writeVariable(`${themeKey}.${settingData.key}`, newValue);
+					WhetstoneThemes.writeVariable(`${settingData.id}`, newValue);
 				}
 				Hooks.callAll(`update${settingData.theme}`, settingData, newValue, current);
 			}
@@ -319,5 +353,18 @@ export class WhetstoneThemeConfigDialog extends FormApplication {
 		if (theme.data.active) {
 			theme.activate();
 		}
+	}
+
+	/** @override */
+	async close(options={}) {
+
+		let activeThemes = game.Whetstone.themes.active;
+
+		// activate all active themes
+		for (let i = 0, len = activeThemes.length; i < len; ++i) {
+			activeThemes[i].activate();
+		}
+
+		return super.close(options);
 	}
 }

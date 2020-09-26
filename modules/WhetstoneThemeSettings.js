@@ -58,10 +58,11 @@ export class WhetstoneThemeSettings {
 		if (!themeid || !key)
 			throw new Error("You must specify both themeid and key portions of the setting");
 
-		data.key = key;
+		data.key = `Whetstone.themes.${themeid}.${key}`;
+		data.id = key;
 		data.themeid = themeid;
 		data.scope = ["client", "world"].includes(data.scope) ? data.scope : "client";
-		this.settings.set(`${themeid}.${key}`, data);
+		this.settings.set(data.key, data);
 	}
 
 	/* -------------------------------------------- */
@@ -77,7 +78,8 @@ export class WhetstoneThemeSettings {
 		if (!themeid || !key)
 			throw new Error("You must specify both themeid and key portions of the menu");
 
-		data.key = `${themeid}.${key}`;
+		data.key = `Whetstone.menus.${themeid}.${key}`;
+		data.id = key;
 		data.themeid = themeid;
 		if (!data.type) data.type = WhetstoneThemeConfigDialog;
 		if (!data.type || !(data.type.prototype instanceof FormApplication)) {
@@ -102,7 +104,7 @@ export class WhetstoneThemeSettings {
 		if (!themeid || !key)
 			throw new Error("You must specify both themeid and key portions of the setting");
 
-		key = `${themeid}.${key}`;
+		key = `Whetstone.themes.${themeid}.${key}`;
 		if (!this.settings.has(key))
 			throw new Error("This is not a registered game setting");
 
@@ -135,7 +137,7 @@ export class WhetstoneThemeSettings {
 		if (!themeid || !key)
 			throw new Error("You must specify both themeid and key portions of the setting");
 		
-		key = `${themeid}.${key}`;
+		key = `Whetstone.themes.${themeid}.${key}`;
 		if (!this.settings.has(key))
 			throw new Error("This is not a registered game setting");
 

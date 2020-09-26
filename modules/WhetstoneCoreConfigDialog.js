@@ -139,7 +139,7 @@ export class WhetstoneCoreConfigDialog extends FormApplication {
 		const theme = game.Whetstone.themes.get(moduleid);
 		const menuname = theme.data.dialog || `${moduleid}.${theme.name}`;
 
-		const menu = game.Whetstone.settings.menus.get(menuname);
+		const menu = game.Whetstone.settings.menus.get(`Whetstone.menus.${menuname}`);
 		if (!menu) return ui.notifications.error('No submenu found for the provided key');
 		const app = new menu.type({theme: theme.name, colorTheme: ''});
 		return app.render(true);

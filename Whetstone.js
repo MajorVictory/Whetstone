@@ -69,7 +69,7 @@ Hooks.once('ready', () => {
 	Hooks.callAll('WhetstoneReady');
 
 	game.Whetstone.themes.entries.forEach((v, k) => {
-		v.loadColorThemePresets();
+		v.loadColorThemes();
 	});
 
 	WhetstoneCoreConfig.apply(game.settings.get('Whetstone', 'settings'));
@@ -128,7 +128,7 @@ Hooks.once('WhetstoneReady', () => {
 			},
 			{
 				name: '--Whetstone-font-family-mono',
-				hint: 'Font used for monospaced text like numbers or code.<hr>',
+				hint: 'Font used for monospaced text like numbers or code.',
 				default: '\'monospace\'',
 				presets: 'fontChoices'
 			},
@@ -140,7 +140,7 @@ Hooks.once('WhetstoneReady', () => {
 			},
 			{
 				name: '--Whetstone-bg-toolbar',
-				hint: 'Background color for toolbars and popouts.<hr>',
+				hint: 'Background color for toolbars and popouts.',
 				default: '#00000000',
 				type: 'shades'
 			},
@@ -152,7 +152,7 @@ Hooks.once('WhetstoneReady', () => {
 			},
 			{
 				name: '--Whetstone-fg-primary',
-				hint: 'Main foreground color for headers and category elements. (Should contrast with bg-primary)<hr>',
+				hint: 'Main foreground color for headers and category elements. (Should contrast with bg-primary)',
 				default: '#191813',
 				type: 'shades'
 			},
@@ -164,7 +164,7 @@ Hooks.once('WhetstoneReady', () => {
 			},
 			{
 				name: '--Whetstone-fg-secondary',
-				hint: 'Secondary foreground color for text and list elements. (Should contrast with bg-secondary)<hr>',
+				hint: 'Secondary foreground color for text and list elements. (Should contrast with bg-secondary)',
 				default: '#4b4a44',
 				type: 'shades'
 			},
@@ -176,7 +176,7 @@ Hooks.once('WhetstoneReady', () => {
 			},
 			{
 				name: '--Whetstone-fg-tertiary',
-				hint: 'Alternate foreground color for text and list elements. (Should contrast with bg-tertiary)<hr>',
+				hint: 'Alternate foreground color for text and list elements. (Should contrast with bg-tertiary)',
 				default: '#7a7971',
 				type: 'shades'
 			},
@@ -340,7 +340,7 @@ Hooks.once('WhetstoneReady', () => {
 				name: '--OceanBlues-text-dark-color',
 				title: 'Text Color - Dark',
 				hint: 'Used for text on light backgrounds.',
-				default: '#102632ff',
+				default: '#8dbbdcff',
 				type: 'color',
 				presets: 'oceanblues'
 			},
@@ -364,7 +364,7 @@ Hooks.once('WhetstoneReady', () => {
 				name: '--OceanBlues-fg-color',
 				title: 'Foreground Color',
 				hint: 'Used for textboxes and input fields',
-				default: '#9ef3f580',
+				default: '#0c5f76ff',
 				type: 'color',
 				presets: 'oceanblues'
 			},
@@ -390,10 +390,10 @@ Hooks.once('WhetstoneReady', () => {
 			oceanblues: {
 				'#3e5c86e6': 'East Bay',
 				'#c6dceaff': 'Periwinkle Gray',
-				'#102632ff': 'Firefly',
+				'#8dbbdcff': 'Morning Glory',
 				'#72b9d5ff': 'Downy',
 				'#9eb4d3ff': 'Rock Blue',
-				'#9ef3f580': 'Ice Cold',
+				'#0c5f76ff': 'Atoll',
 				'#ee6c4dff': 'Burnt Sienna',
 				'#293241ff': 'Ebony Clay'
 			},
@@ -450,10 +450,10 @@ Hooks.once('WhetstoneReady', () => {
 					'--OceanBlues-bg-window-blendmode': 'luminosity',
 					'--OceanBlues-bg-sheet-blendmode': 'color-burn',
 					'--OceanBlues-text-light-color': '#c6dceaff',
-					'--OceanBlues-text-dark-color': '#102632ff',
+					'--OceanBlues-text-dark-color': '#8dbbdcff',
 					'--OceanBlues-text-highlight-color': '#72b9d5ff',
 					'--OceanBlues-text-selection-color': '#9eb4d3ff',
-					'--OceanBlues-fg-color': '#9ef3f580',
+					'--OceanBlues-fg-color': '#0c5f76ff',
 					'--OceanBlues-highlight-color': '#ee6c4dff',
 					'--OceanBlues-border-color': '#293241ff'
 				}

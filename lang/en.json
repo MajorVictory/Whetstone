@@ -21,6 +21,11 @@
     "WHETSTONE.Conflicts": "Conflicts",
 
     "WHETSTONE.ConfigureTheme": "Configure Theme",
+    "WHETSTONE.ColorThemeDeleteTitle": "Confirm Delete",
+    "WHETSTONE.ColorThemeDeleteMessage": "Are you sure you wish to remove this color preset? This action cannot be undone.",
+
+    "WHETSTONE.ExportPresetTitle": "Export Preset",
+    "WHETSTONE.ExportPresetLabel": "Enter Preset Name",
 
     "WHETSTONE.InvalidColorFormat": "Invalid Color Format! Must be in hexadecimal format '#rrggbb'",
     "WHETSTONE.ColorThemeCustom": "Custom Theme",
@@ -50,6 +55,8 @@
     "WHETSTONE.Save": "Save",
     "WHETSTONE.Import": "Import",
     "WHETSTONE.Export": "Export",
+    "WHETSTONE.Delete": "Delete",
+    "WHETSTONE.Cancel": "Cancel",
     "WHETSTONE.SaveMessage": "Theme Settings Applied",
 
     "OCEANBLUES.ColorThemeDefault": "OceanBlues - Default Blue",

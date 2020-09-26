@@ -16,12 +16,12 @@
             {{/each}}
         </select>
         <div class="flexrow" style="margin-top: 5px;">
-            <input type="text" name="{{this.tab}}/{{this.key}}" class="ws-color-value" value="{{this.value}}" data-dtype="String" data-shades="{{this.color}}"/>
-            <input type="color" class="ws-color-value" value="{{this.value}}" data-edit="{{this.tab}}/{{this.key}}"/>
+            <input type="text" name="{{this.id}}" class="ws-color-value" value="{{this.colorData.full}}" data-dtype="String" data-shades="{{this.color}}" data-tab="{{this.tab}}"/>
+            <input type="color" class="ws-color-value" value="{{this.colorData.color}}" data-edit="{{this.id}}"/>
         </div>
         <div class="flexrow" style="margin-top: 5px;">
-            <input class="ws-color-value" type="range" data-dtype="Number" value="{{ this.alpha }}" min="0" max="255" step="1"/>
-            <span class="range-value">{{ this.alpha }}</span>
+            <input class="ws-color-value" type="range" data-dtype="Number" value="{{this.colorData.alpha}}" min="0" max="255" step="1"/>
+            <span class="range-value">{{this.colorData.alpha}}</span>
         </div>
         {{#if this.shades}}
         <div class="flexrow ws-shade-preview" style="margin-top: 5px;">
@@ -33,10 +33,10 @@
     <div class="form-fields">
 
         {{#if this.isCheckbox}}
-        <input type="checkbox" name="{{this.tab}}/{{this.key}}" data-dtype="Boolean" {{checked this.value}}/>
+        <input type="checkbox" name="{{this.id}}" data-dtype="Boolean" data-tab="{{this.tab}}" {{checked this.value}}/>
 
         {{else if this.isSelect}}
-        <select name="{{this.tab}}/{{this.key}}">
+        <select name="{{this.id}}" data-tab="{{this.tab}}">
             {{#select this.value}}
             {{#each this.choices as |name k|}}
             <option value="{{k}}">{{localize name}}</option>
@@ -45,12 +45,12 @@
         </select>
 
         {{else if this.isRange}}
-        <input type="range" name="{{this.tab}}/{{this.key}}" data-dtype="Number" value="{{ this.value }}"
-               min="{{ this.range.min }}" max="{{ this.range.max }}" step="{{ this.range.step }}"/>
+        <input type="range" name="{{this.id}}" data-dtype="Number" data-tab="{{this.tab}}" value="{{this.value}}"
+               min="{{this.range.min}}" max="{{this.range.max}}" step="{{this.range.step}}"/>
         <span class="range-value">{{this.value}}</span>
 
         {{else}}
-        <input type="text" name="{{this.tab}}/{{this.key}}" value="{{this.value}}" data-dtype="{{this.type}}"/>
+        <input type="text" name="{{this.id}}" value="{{this.value}}" data-dtype="{{this.type}}" data-tab="{{this.tab}}"/>
         {{/if}}
     </div>
     {{/if}}
@@ -92,11 +92,16 @@
                     {{/each}}
                     {{/select}}
                 </select>
+                {{#if colorThemeEdit}}
+                <button type="button" class="theme-delete" title="{{localize 'WHETSTONE.Delete'}}">
+                    <i class="fas fa-trash"></i>
+                </button>
+                {{/if}}
                 <button type="button" class="theme-import" title="{{localize 'WHETSTONE.Import'}}">
                     <i class="fas fa-file-import"></i>
                 </button>
                 <button type="button" class="theme-export" title="{{localize 'WHETSTONE.Export'}}">
-                    <i class="fas fa-file-export"></i>
+                    <i class="fas fa-download"></i>
                 </button>
             </div>
             <div class="settings-list">
