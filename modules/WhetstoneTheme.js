@@ -194,26 +194,24 @@ export class WhetstoneTheme extends Entity {
 
 	removeColorTheme(colorThemeID) {
 
-		let settings = game.Whetstone.settings.get('Whetstone', 'presets');
+		const settings = game.Whetstone.settings.get('Whetstone', 'presets');
 		// triggers if loading an old config <= v1.0.2
 		if (!settings) settings = {};
 
-		let keyname = `${this.name}.presets.${colorThemeID}`;
-
-		game.Whetstone.settings.storage.get("client").removeItem(`Whetstone.themes.Whetstone.presets.${keyname}`);
-
-		if (this.data.colorThemes) {
-			let newList = [];
-
-			for (var i = 0; i < this.data.colorThemes.length; i++) {
-				if (this.data.colorThemes[i].id !== colorThemeID) {
-					newList.push(this.data.colorThemes[i]);
-				}
+		// rebuild storage data
+		const keyname = `${this.name}.presets.${colorThemeID}`;
+		let newData = {};
+		Object.keys(settings).forEach((k) => {
+			if (k !== keyname || !settings[k].custom) {
+				newData[k] = settings[k];
 			}
+		});
+		game.Whetstone.settings.set('Whetstone', 'presets', newData);
 
-			this.data.colorThemes = newList;
-			this.data.colorTheme = '';
-		}
+		// rebuild local object data
+		const newList = this.data.colorThemes.filter(t => (t.id !== colorThemeID || !t.custom));
+		this.data.colorThemes = newList;
+		this.data.colorTheme = '';
 	}
 
 	/**

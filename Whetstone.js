@@ -48,7 +48,6 @@ Hooks.once('init', () => {
 });
 
 Hooks.once('ready', () => {
-
 	const settings = game.settings.get('Whetstone', 'settings');
 
 	// create game.Whetstone.settings and game.Whetstone.themes
