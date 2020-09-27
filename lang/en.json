@@ -4,8 +4,9 @@
     "WHETSTONE.ConfigHint": "Customize theme colors and settings.",
 
     "WHETSTONE.ThemeSelectTab": "Themes",
+    "WHETSTONE.GlobalVariablesTab": "Global Variables",
     "WHETSTONE.GlobalOptionsTab": "Global Options",
-    "WHETSTONE.ThemeColorsTab": "Colors",
+    "WHETSTONE.ThemeColorsTab": "Variables",
     "WHETSTONE.ThemeSettingsTab": "Settings",
     "WHETSTONE.SubstylesTab": "Substyles",
 
@@ -20,8 +21,13 @@
     "WHETSTONE.Conflicts": "Conflicts",
 
     "WHETSTONE.ConfigureTheme": "Configure Theme",
+    "WHETSTONE.ExportPresetTitle": "Export Preset",
+    "WHETSTONE.ExportPresetLabel": "Enter Preset Name",
+    "WHETSTONE.ColorThemeDeleteTitle": "Confirm Delete",
+    "WHETSTONE.ColorThemeDeleteMessage": "Are you sure you wish to remove this color preset? This action cannot be undone.",
 
     "WHETSTONE.InvalidColorFormat": "Invalid Color Format! Must be in hexadecimal format '#rrggbb'",
+    "WHETSTONE.ColorThemeCustom": "Custom Theme",
     "WHETSTONE.ColorOptionCustom": "Custom Color",
 
     "WHETSTONE.BackgroundColor": "Background Color",
@@ -46,29 +52,54 @@
     "WHETSTONE.Edit": "Edit",
     "WHETSTONE.Reset": "Reset",
     "WHETSTONE.Save": "Save",
+    "WHETSTONE.Import": "Import",
+    "WHETSTONE.Export": "Export",
+    "WHETSTONE.Delete": "Delete",
+    "WHETSTONE.Cancel": "Cancel",
     "WHETSTONE.SaveMessage": "Theme Settings Applied",
+
+    "OCEANBLUES.ColorThemeDefault": "Deep Ocean Blue",
+    "OCEANBLUES.ColorThemeIcewind": "Icewind Blues",
+    "OCEANBLUES.ColorThemeGreen": "Earthy Green",
+    "OCEANBLUES.ColorThemeHacker": "Hacker Space",
+    "OCEANBLUES.ColorThemePurple": "Lavender Fields",
+
+    "OCEANBLUES.OceanBlues-bg-color": "Background Color",
+    "OCEANBLUES.OceanBlues-bg-colorHint": "Used in sheet headers, tinges the background.",
+    "OCEANBLUES.OceanBlues-bg-window-blendmode": "Window Background Blend Mode",
+    "OCEANBLUES.OceanBlues-bg-window-blendmodeHint": "Color blend for window titles and sidebar.",
+    "OCEANBLUES.OceanBlues-bg-sheet-blendmode": "Sheet Background Blend Mode",
+    "OCEANBLUES.OceanBlues-bg-sheet-blendmodeHint": "Color blend for sheet backgrounds.",
+    "OCEANBLUES.OceanBlues-text-light-color": "Text Color - Light",
+    "OCEANBLUES.OceanBlues-text-light-colorHint": "Used for text on dark backgrounds.",
+    "OCEANBLUES.OceanBlues-text-dark-color": "Text Color - Dark",
+    "OCEANBLUES.OceanBlues-text-dark-colorHint": "Used for text on light backgrounds.",
+    "OCEANBLUES.OceanBlues-text-highlight-color": "Text Highlight Color",
+    "OCEANBLUES.OceanBlues-text-highlight-colorHint": "Used for hyperlinks when hovering.",
+    "OCEANBLUES.OceanBlues-text-selection-color": "Text Selection Color",
+    "OCEANBLUES.OceanBlues-text-selection-colorHint": "The background color for selected text.",
+    "OCEANBLUES.OceanBlues-fg-color": "Foreground Color",
+    "OCEANBLUES.OceanBlues-fg-colorHint": "Used for textboxes, buttons, and input fields.",
+    "OCEANBLUES.OceanBlues-highlight-color": "Highlight Color",
+    "OCEANBLUES.OceanBlues-highlight-colorHint": "Used when hovering over interface and input elements.",
+    "OCEANBLUES.OceanBlues-border-color": "Border Color",
+    "OCEANBLUES.OceanBlues-border-colorHint": "Used for borders around buttons and seperators.",
+
 
     "OCEANBLUES.SubstyleHotbar": "Hotbar Substyle",
     "OCEANBLUES.SubstyleHotbarHint": "Activates themeing for the hotbar at the bottom.",
-
     "OCEANBLUES.SubstyleToolbar": "Toolbar Substyle",
     "OCEANBLUES.SubstyleToolbarHint": "Activates themeing for the toolbar at the top left.",
-
     "OCEANBLUES.SubstyleSceneButtons": "Scene Buttons Substyle",
     "OCEANBLUES.SubstyleSceneButtonsHint": "Activates themeing for the scene buttons at the top.",
-
     "OCEANBLUES.SubstyleChat": "Chat Cards Substyle",
     "OCEANBLUES.SubstyleChatHint": "Activates themeing for chat.",
-
     "OCEANBLUES.SubstyleCompactSidebar": "Compact Sidebar Substyle",
     "OCEANBLUES.SubstyleCompactSidebarHint": "Makes entries in the sidebar smaller vertically to fit more on screen at once.",
-
     "OCEANBLUES.SubstylePF2eCRBStyle": "Override Pathfinder CRB Sheet Colors",
     "OCEANBLUES.SubstylePF2eCRBStyleHint": "Allows you to changes the colros of the CRB style player sheets.",
-
     "OCEANBLUES.SubstylePF2eSheetColors": "Override Pathfinder Sheet Colors",
     "OCEANBLUES.SubstylePF2eSheetColorsHint": "Overrides the four background colors for Pathfinder 2e sheets",
-
     "OCEANBLUES.SubstyleSceneButtonsSmaller": "Smaller Scene Buttons Substyle",
     "OCEANBLUES.SubstyleSceneButtonsSmallerHint": "Makes the scene buttons smaller."
 }
