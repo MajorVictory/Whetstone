@@ -1,5 +1,12 @@
 # Changelog
 
+## Version 1.1
+
+ * **Breaking Changes**: registered settings, menus, and themes have moved in local storage. All values should be under `Whetstone.` namespace. This breaks exising configurations.
+ * New Feature: Default Global Variables. A new defautl style has been included with a lsit of global variables available to ALL styles. See the wiki for more details. (fixes #1)
+ * New Feature: Themes now support Color Theme Presets, preset values for any theme that can imported or exported.
+ * OceanBlues: Colors have been updated and color theme presets have been added as examples.
+
 ## Version 1.0.2
 
  * OceanBlues: Inline rolls background color adjusted (Fixes #4)
