@@ -62,9 +62,7 @@ Contact me via discord, make a bug report, or submit a pull request if you want 
 
 ## Screenshots 
 
-Comes with a prebuilt style: OceanBlues
-
-![](images/OceanBlues-Preview.jpg)
+![](images/MainPreview-9-26-2020.jpg)
 
 ![](images/OceanBlues-PF2e-Support-9-20-2020.jpg)
 

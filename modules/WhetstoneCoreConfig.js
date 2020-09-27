@@ -4,13 +4,20 @@ import {WhetstoneThemes} from './WhetstoneThemes.js';
  * An interface for storing and retrieving settings for Whetstone core
  */
 export class WhetstoneCoreConfig {
+	constructor() {
+		this.presets;
+		this.addMenuButton = true;
+		this.Whetstone = true;
+	}
 	/**
 	 * get the default values of any registered settings
 	 * @return {Object} key:value pairs denoting the default values
 	 */
 	static get getDefaults() {
 		return {
-			addMenuButton: true
+			presets: {},
+			addMenuButton: true,
+			Whetstone: true
 		};
 	}
 
@@ -31,6 +38,10 @@ export class WhetstoneCoreConfig {
 	 * @param  {Object} options key:value pairs of settings
 	 */
 	static apply(options) {
+		this.presets = options.presets || {};
+		this.addMenuButton = options.addMenuButton;
+		this.Whetstone = options.Whetstone;
+
 		WhetstoneThemes.toggleConfigButton(options.addMenuButton);
 		game.settings.set('Whetstone', 'addMenuButton', options.addMenuButton);
 
@@ -49,7 +60,7 @@ export class WhetstoneCoreConfig {
 		
 		// deactivate all themes
 		for (let i = 0, len = deactivate.length; i < len; ++i) {
-			game.Whetstone.themes.deactivate(deactivate[i]);
+			game.Whetstone.themes.get(deactivate[i]).deactivate();
 		}
 
 		// sort by priority first, then name in alphabetical
@@ -57,7 +68,7 @@ export class WhetstoneCoreConfig {
 
 		// activate all active themes
 		for (let i = 0, len = activate.length; i < len; ++i) {
-			game.Whetstone.themes.activate(activate[i].name);
+			game.Whetstone.themes.get(deactivate[i]).activate();
 		}
 	}
 }
