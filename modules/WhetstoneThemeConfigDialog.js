@@ -56,7 +56,9 @@ export class WhetstoneThemeConfigDialog extends FormApplication {
 
 			// Update setting data
 			const s = duplicate(setting);
-			const currentValue = this._userValues[s.id] || variableValues[s.id] || game.Whetstone.settings.get(`${s.theme}.${s.tab}`, s.id) || s.default;
+			let currentValue = this._userValues[s.id] || variableValues[s.id] || game.Whetstone.settings.get(`${s.theme}.${s.tab}`, s.id);
+			if (currentValue === null || currentValue === '') currentValue = s.default;
+
 			s.isColor = ['color', 'shades'].includes(s.color);
 			s.value = this.reset ? s.default : currentValue;
 			s.colorData = s.isColor ? WhetstoneThemes.colorData(s.value) : null;
@@ -326,8 +328,6 @@ export class WhetstoneThemeConfigDialog extends FormApplication {
 	/** @override */
 	async _updateObject(event, formData) {
 		const theme = game.Whetstone.themes.get($(event.target).data('theme'));
-
-		game.Whetstone.settings.set(`${theme.name}.settings`,'colorTheme', formData.colorTheme);
 
 		for (const [k, newValue] of Object.entries(formData)) {
 

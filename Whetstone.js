@@ -308,7 +308,7 @@ Hooks.once('WhetstoneReady', () => {
 				title: 'OCEANBLUES.OceanBlues-bg-color',
 				hint: 'OCEANBLUES.OceanBlues-bg-colorHint',
 				default: '#3e5c86e6',
-				type: 'color',
+				type: 'shades',
 				presets: 'oceanblues'
 			},
 			{
@@ -332,7 +332,7 @@ Hooks.once('WhetstoneReady', () => {
 				title: 'OCEANBLUES.OceanBlues-text-light-color',
 				hint: 'OCEANBLUES.OceanBlues-text-light-colorHint',
 				default: '#c6dceaff',
-				type: 'color',
+				type: 'shades',
 				presets: 'oceanblues'
 			},
 			{
@@ -340,7 +340,7 @@ Hooks.once('WhetstoneReady', () => {
 				title: 'OCEANBLUES.OceanBlues-text-dark-color',
 				hint: 'OCEANBLUES.OceanBlues-text-dark-colorHint',
 				default: '#8dbbdcff',
-				type: 'color',
+				type: 'shades',
 				presets: 'oceanblues'
 			},
 			{
@@ -348,7 +348,7 @@ Hooks.once('WhetstoneReady', () => {
 				title: 'OCEANBLUES.OceanBlues-text-highlight-color',
 				hint: 'OCEANBLUES.OceanBlues-text-highlight-colorHint',
 				default: '#72b9d5ff',
-				type: 'color',
+				type: 'shades',
 				presets: 'oceanblues'
 			},
 			{
@@ -364,7 +364,7 @@ Hooks.once('WhetstoneReady', () => {
 				title: 'OCEANBLUES.OceanBlues-fg-color',
 				hint: 'OCEANBLUES.OceanBlues-fg-colorHint',
 				default: '#0c5f76ff',
-				type: 'color',
+				type: 'shades',
 				presets: 'oceanblues'
 			},
 			{
@@ -372,7 +372,7 @@ Hooks.once('WhetstoneReady', () => {
 				title: 'OCEANBLUES.OceanBlues-highlight-color',
 				hint: 'OCEANBLUES.OceanBlues-highlight-colorHint',
 				default: '#ee6c4dff',
-				type: 'color',
+				type: 'shades',
 				presets: 'oceanblues'
 			},
 			{

@@ -74,7 +74,7 @@ export class WhetstoneTheme extends Entity {
 			}
 		});
 
-		const systemStyles = this.getSubStyles(game.system.id, game.system.data.version, false);
+		const systemStyles = this.getSubStyles('all', 'all', false);
 		const allStyles = this.getCoreStyles().concat(systemStyles);
 
 		// remove stylesheets
