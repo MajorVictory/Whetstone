@@ -1,12 +1,61 @@
 :root {
-	--OceanBlues-bg-color: #3d5a80;
-	--OceanBlues-text-light-color: #98c1d9;
-	--OceanBlues-text-dark-color: #102632;
-	--OceanBlues-text-highlight-color: #72b9d5;
-	--OceanBlues-text-selection-color: #b0c2bd;
-	--OceanBlues-fg-color: #e0fbfc;
-	--OceanBlues-highlight-color: #ee6c4d;
-	--OceanBlues-border-color: #293241;
+    --OceanBlues-bg-window-blendmode: luminosity;
+    --OceanBlues-bg-sheet-blendmode: color-burn;
+	--OceanBlues-bg-color: #3e5c86e6;
+    --OceanBlues-bg-color-contrast: white;
+    --OceanBlues-bg-color-half: hsla(215,37%,38%,0.45098);
+    --OceanBlues-bg-color-darker: hsla(215,37%,28%,0.901961);
+    --OceanBlues-bg-color-lighter: hsla(215,37%,48%,0.901961);
+    --OceanBlues-text-light-color: #c6dceaff;
+    --OceanBlues-text-light-color-contrast: black;
+    --OceanBlues-text-light-color-half: hsla(203,46%,85%,0.5);
+    --OceanBlues-text-light-color-darker: hsla(203,46%,75%,1);
+    --OceanBlues-text-light-color-lighter: hsla(203,46%,95%,1);
+    --OceanBlues-text-dark-color: #8dbbdcff;
+    --OceanBlues-text-dark-color-contrast: black;
+    --OceanBlues-text-dark-color-half: hsla(205,53%,71%,0.5);
+    --OceanBlues-text-dark-color-darker: hsla(205,53%,61%,1);
+    --OceanBlues-text-dark-color-lighter: hsla(205,53%,81%,1);
+    --OceanBlues-text-highlight-color: #72b9d5ff;
+    --OceanBlues-text-highlight-color-contrast: black;
+    --OceanBlues-text-highlight-color-half: hsla(197,54%,64%,0.5);
+    --OceanBlues-text-highlight-color-darker: hsla(197,54%,54%,1);
+    --OceanBlues-text-highlight-color-lighter: hsla(197,54%,74%,1);
+    --OceanBlues-text-selection-color: #9eb4d3ff;
+    --OceanBlues-fg-color: #0c5f76ff;
+    --OceanBlues-fg-color-contrast: white;
+    --OceanBlues-fg-color-half: hsla(193,82%,25%,0.5);
+    --OceanBlues-fg-color-darker: hsla(193,82%,15%,1);
+    --OceanBlues-fg-color-lighter: hsla(193,82%,35%,1);
+    --OceanBlues-highlight-color: #ee6c4dff;
+    --OceanBlues-highlight-color-contrast: black;
+    --OceanBlues-highlight-color-half: hsla(12,83%,62%,0.5);
+    --OceanBlues-highlight-color-darker: hsla(12,83%,52%,1);
+    --OceanBlues-highlight-color-lighter: hsla(12,83%,72%,1);
+    --OceanBlues-border-color: #293241ff;
+
+	--default-primary-color: var(--OceanBlues-text-light-color);
+	--default-secondary-color: var(--OceanBlues-text-dark-color);
+	--default-tertiary-color: var(--OceanBlues-text-dark-color-darker);
+	--default-light-color: var(--OceanBlues-border-color);
+	--default-faint-color: var(--OceanBlues-bg-color-darker);
+	--default-primary-accent: var(--OceanBlues-highlight-color);
+	--default-secondary-accent: var(--OceanBlues-bg-color-lighter);
+	--always-prepared-accent: var(--OceanBlues-fg-color-half);
+
+	scrollbar-color: var(--OceanBlues-bg-color) var(--OceanBlues-fg-color);
+}
+
+*::placeholder {
+	color: var(--OceanBlues-text-dark-color-darker) !important;
+}
+
+::-webkit-scrollbar-track {
+	box-shadow: 0 0 1px var(--OceanBlues-border-color) inset;
+}
+::-webkit-scrollbar-thumb {
+	background: var(--OceanBlues-bg-color);
+	border: 1px solid var(--OceanBlues-border-color);
 }
 
 .banner {
@@ -31,8 +80,21 @@ li.folder.collapsed > .folder-header h3,
 	color: var(--OceanBlues-text-light-color);
 }
 
+#WhetstoneCoreConfig .theme-list .theme-title,
+#WhetstoneCoreConfig .theme-list .theme-metadata,
+#WhetstoneCoreConfig .theme-list .theme-description,
 .window-app .sidebar-tab .directory-list .directory-item h4 {
 	color: var(--OceanBlues-text-dark-color);
+}
+
+#WhetstoneCoreConfig .form-group,
+#WhetstoneThemeConfigDialog .form-group {
+	border-color: var(--OceanBlues-border-color);
+}
+
+#WhetstoneCoreConfig nav.tabs,
+#WhetstoneThemeConfigDialog nav.tabs {
+	border-bottom: 2px solid var(--OceanBlues-border-color);
 }
 
 .sidebar-tab .directory-list .directory-item.scene h3,
@@ -43,6 +105,13 @@ li.folder.collapsed > .folder-header h3,
 
 a[href] {
 	color: var(--OceanBlues-highlight-color);
+}
+
+a:hover,
+.tabs .item.active,
+.dnd5e.chat-card .card-header h3:hover,
+.filepicker .directory > li:hover {
+	color: var(--OceanBlues-text-highlight-color);
 }
 
 a.entity-link,
@@ -74,13 +143,13 @@ table {
 }
 
 form button {
-	background: var(--OceanBlues-text-light-color);
+	background: var(--OceanBlues-fg-color);
 	border: 2px groove var(--OceanBlues-border-color);
 }
 
 button:hover {
-	background: var(--OceanBlues-text-dark-color);
-	color: var(--OceanBlues-highlight-color);
+	background: var(--OceanBlues-highlight-color);
+	color: var(--OceanBlues-text-highlight-color);
 	border: 2px groove var(--OceanBlues-border-color);
 }
 
@@ -89,6 +158,8 @@ button,
 textarea,
 input[type="text"],
 input[type="password"],
+input[type="range"], .range-value,
+input[type="range"] + .range-value,
 input[type="color"][data-edit],
 input[type="datetime-local"],
 .dnd5e input[type="text"],
@@ -102,42 +173,33 @@ select:hover,
 select:focus,
 input[type="text"]:hover,
 input[type="text"]:focus,
+input[type="color"][data-edit]:hover,
+input[type="color"][data-edit]:focus,
+input[type="range"]:hover,
+input[type="range"]:focus,
 .dnd5e input[type="text"]:hover,
 .dnd5e input[type="text"]:focus {
 	box-shadow: 0px 0px 5px var(--OceanBlues-highlight-color),
 		0px 0px 5px var(--OceanBlues-highlight-color);
 }
 
-input[type="range"] + .range-value {
-	background: var(--OceanBlues-text-light-color);
-	border: 1px solid var(--OceanBlues-border-color);
-}
-
-::-webkit-scrollbar-track {
-	box-shadow: 0 0 1px var(--OceanBlues-border-color) inset;
-}
-::-webkit-scrollbar-thumb {
-	background: var(--OceanBlues-bg-color);
-	border: 1px solid var(--OceanBlues-border-color);
-}
-:root {
-	scrollbar-color: var(--OceanBlues-bg-color) var(--OceanBlues-fg-color);
-}
-
 .app {
 	color: var(--OceanBlues-text-light-color);
 	background-color: var(--OceanBlues-bg-color);
-	background-blend-mode: luminosity;
+	background-blend-mode: var(--OceanBlues-bg-window-blendmode);
 }
 
 .window-app .window-content,
 .dnd5e.sheet .window-content {
 	color: var(--OceanBlues-text-dark-color);
-	background-blend-mode: luminosity;
+	background-blend-mode: var(--OceanBlues-bg-sheet-blendmode);
 	background-color: var(--OceanBlues-bg-color);
 }
 
-.app.sidebar-popout .window-content {
+.app.sidebar-popout .window-content,
+#module-management .package-list .package-title,
+#module-management .package-list .package-metadata,
+#module-management .package-list .package-description {
 	color: var(--OceanBlues-text-light-color);
 }
 
@@ -161,11 +223,25 @@ input[type="range"] + .range-value {
 	border-bottom: 3px solid var(--OceanBlues-highlight-color);
 }
 
+.dnd5e.sheet .sheet-header .summary li {
+	color: var(--OceanBlues-text-dark-color);
+}
+
+.dnd5e.sheet.actor h4.box-title,  h4.box-title,
+.dnd5e.sheet.actor .counters .counter h4,
+.dnd5e .form-group label, .form-group label {
+	color: var(--OceanBlues-text-light-color);
+}
+
 .tabs .item.active {
 	text-shadow: 0 0 10px var(--OceanBlues-highlight-color);
 }
 
+nav.list-filters a.filter.active {
+    border-bottom: 2px solid var(--OceanBlues-border-color);
+}
+
 form .notes,
 form .hint {
-	color: var(--OceanBlues-bg-color);
+	color: var(--OceanBlues-text-light-color);
 }

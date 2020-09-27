@@ -1,7 +1,7 @@
 #chat-log .message {
     color: var(--OceanBlues-text-dark-color);
     background-color: var(--OceanBlues-bg-color);
-    background-blend-mode: luminosity;
+    background-blend-mode: var(--OceanBlues-bg-sheet-blendmode);
 }
 
 #chat-log .message .message-header {
@@ -27,6 +27,6 @@
 .dice-tooltip .dice-rolls .roll {
      color: var(--OceanBlues-text-dark-color);
      background-color: var(--OceanBlues-bg-color);
-     background-blend-mode: luminosity;
+     background-blend-mode: var(--OceanBlues-bg-sheet-blendmode);
      border-radius: 5px;
 }
