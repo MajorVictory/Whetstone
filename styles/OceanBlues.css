@@ -194,8 +194,8 @@ input[type="range"]:focus,
 .window-app .window-content,
 .dnd5e.sheet .window-content {
 	color: var(--OceanBlues-text-dark-color);
-	background-blend-mode: var(--OceanBlues-bg-sheet-blendmode);
 	background-color: var(--OceanBlues-bg-color);
+	background-blend-mode: var(--OceanBlues-bg-sheet-blendmode);
 }
 
 .app.sidebar-popout .window-content,
@@ -246,4 +246,14 @@ nav.list-filters a.filter.active {
 form .notes,
 form .hint {
 	color: var(--OceanBlues-text-dark-color);
+}
+
+.filepicker .display-modes a {
+    background: var(--OceanBlues-fg-color);
+    border: 1px solid var(--OceanBlues-border-color);
+}
+
+.filepicker .display-modes a.active {
+    background: var(--OceanBlues-highlight-color);
+    color: var(--OceanBlues-text-highlight-color);
 }

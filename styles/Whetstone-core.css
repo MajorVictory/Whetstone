@@ -161,7 +161,7 @@ form .form-group > .ws-color-input {
 .ws-shade-preview .ws-shade-item {
 	flex: none;
 	height: 14px;
-	width: 48px;
+	width: 38px;
 	border: 1px solid;
 	border-radius: 2px;
 	padding: 0px;
@@ -182,7 +182,9 @@ form .form-group > .ws-color-input {
 	font-weight: 500;
 }
 
-.theme-presets button {
+.theme-presets button, 
+#WhetstoneCoreConfig button.file-picker,
+#WhetstoneThemeConfigDialog button.file-picker {
 	flex: 0 0 32px;
 	width: 32px;
 	height: 32px;

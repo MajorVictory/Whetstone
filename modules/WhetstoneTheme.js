@@ -42,15 +42,36 @@ export class WhetstoneTheme extends Entity {
 		const allStyles = this.getCoreStyles().concat(systemStyles);
 		const themeVariables = this.getVariableValues();
 
-		// gather and write any overriden css variables
-		Object.keys(themeVariables).forEach((k) => {
-			WhetstoneThemes.writeVariable(k, themeVariables[k]);
-		});
-
 		// add stylesheets
 		for (let i = 0, len = allStyles.length; i < len; ++i) {
 			WhetstoneThemes.addStyle(allStyles[i]);
 		}
+
+		this.data.variables.forEach((cssVar) => {
+
+			const themeSetting = game.Whetstone.settings.settings.get(`Whetstone.themes.${this.name}.variables.${cssVar.name}`);
+
+			let writeValue = themeVariables[cssVar.name];
+
+			if (cssVar.template && typeof cssVar.template === 'function') {
+				writeValue = cssVar.template(cssVar, cssVar.name, writeValue);
+			}
+
+			WhetstoneThemes.writeVariable(cssVar.name, writeValue);
+
+			if(themeSetting.color === 'shades') {
+				Object.keys(WhetstoneThemes.getShades()).forEach((v, k) => {
+
+					writeValue = themeVariables[`${cssVar.name}-${v}`];
+
+					if (cssVar.template && typeof cssVar.template === 'function') {
+						writeValue = cssVar.template(cssVar, `${cssVar.name}-${v}`, writeValue);
+					}
+					WhetstoneThemes.writeVariable(`${cssVar.name}-${v}`, writeValue);
+				});
+			}
+		});
+		Hooks.callAll('onThemeActivated', this);
 	}
 
 	/**
@@ -81,6 +102,7 @@ export class WhetstoneTheme extends Entity {
 		for (let i = 0, len = allStyles.length; i < len; ++i) {
 			WhetstoneThemes.removeStyle(allStyles[i]);
 		}
+		Hooks.callAll('onThemeDeactivated', this);
 	}
 
 	/**
@@ -160,7 +182,7 @@ export class WhetstoneTheme extends Entity {
 				const shades = WhetstoneThemes.getShades(writeValue);
 
 				Object.keys(shades).forEach((k) => {
-					returnValues[k] = shades[k];
+					returnValues[`${cssVar.name}-${k}`] = shades[k];
 				});
 			}
 		});

@@ -312,12 +312,26 @@ Hooks.once('WhetstoneReady', () => {
 				presets: 'oceanblues'
 			},
 			{
+				name: '--OceanBlues-bg-image-window',
+				title: 'OCEANBLUES.OceanBlues-bg-image-window',
+				hint: 'OCEANBLUES.OceanBlues-bg-image-windowHint',
+				default: 'ui/denim075.png',
+				type: 'image'
+			},
+			{
 				name: '--OceanBlues-bg-window-blendmode',
 				title: 'OCEANBLUES.OceanBlues-bg-window-blendmode',
 				hint: 'OCEANBLUES.OceanBlues-bg-window-blendmodeHint',
 				default: 'luminosity',
 				type: String,
 				presets: 'blendmodes'
+			},
+			{
+				name: '--OceanBlues-bg-image-sheet',
+				title: 'OCEANBLUES.OceanBlues-bg-image-sheet',
+				hint: 'OCEANBLUES.OceanBlues-bg-image-sheetHint',
+				default: 'ui/parchment.jpg',
+				type: 'image'
 			},
 			{
 				name: '--OceanBlues-bg-sheet-blendmode',
@@ -466,7 +480,9 @@ Hooks.once('WhetstoneReady', () => {
 				presets: 'oceanblues',
 				values: {
 					'--OceanBlues-bg-color': '#3e5c86e6',
+					'--OceanBlues-bg-image-window': 'ui/denim075.png',
 					'--OceanBlues-bg-window-blendmode': 'luminosity',
+					'--OceanBlues-bg-image-sheet': 'ui/parchment.jpg',
 					'--OceanBlues-bg-sheet-blendmode': 'color-burn',
 					'--OceanBlues-text-light-color': '#c6dceaff',
 					'--OceanBlues-text-dark-color': '#8dbbdcff',
@@ -483,7 +499,9 @@ Hooks.once('WhetstoneReady', () => {
 				presets: 'icewindblues',
 				values: {
 					'--OceanBlues-bg-color': '#3d5a80ff',
+					'--OceanBlues-bg-image-window': 'ui/denim075.png',
 					'--OceanBlues-bg-window-blendmode': 'luminosity',
+					'--OceanBlues-bg-image-sheet': 'ui/parchment.jpg',
 					'--OceanBlues-bg-sheet-blendmode': 'luminosity',
 					'--OceanBlues-text-light-color': '#a0c6dcff',
 					'--OceanBlues-text-dark-color': '#102632ff',
@@ -500,7 +518,9 @@ Hooks.once('WhetstoneReady', () => {
 				presets: 'earthygreen',
 				values: {
 					'--OceanBlues-bg-color': '#55744bd2',
+					'--OceanBlues-bg-image-window': 'ui/denim-dark-090.png',
 					'--OceanBlues-bg-window-blendmode': 'luminosity',
+					'--OceanBlues-bg-image-sheet': 'ui/denim075.png',
 					'--OceanBlues-bg-sheet-blendmode': 'color-burn',
 					'--OceanBlues-text-light-color': '#ecf0bdff',
 					'--OceanBlues-text-dark-color': '#d5bb99ff',
@@ -517,7 +537,9 @@ Hooks.once('WhetstoneReady', () => {
 				presets: 'hackerspace',
 				values: {
 					'--OceanBlues-bg-color': '#032202ff',
+					'--OceanBlues-bg-image-window': 'ui/denim075.png',
 					'--OceanBlues-bg-window-blendmode': 'darken',
+					'--OceanBlues-bg-image-sheet': 'ui/parchment.jpg',
 					'--OceanBlues-bg-sheet-blendmode': 'multiply',
 					'--OceanBlues-text-light-color': '#1caa29ff',
 					'--OceanBlues-text-dark-color': '#00b700ff',
@@ -534,7 +556,9 @@ Hooks.once('WhetstoneReady', () => {
 				presets: 'lavender_fields',
 				values: {
 					'--OceanBlues-bg-color': '#412e5280',
+					'--OceanBlues-bg-image-window': 'ui/denim075.png',
 					'--OceanBlues-bg-window-blendmode': 'luminosity',
+					'--OceanBlues-bg-image-sheet': 'ui/parchment.jpg',
 					'--OceanBlues-bg-sheet-blendmode': 'color-burn',
 					'--OceanBlues-text-light-color': '#f5e0e6ff',
 					'--OceanBlues-text-dark-color': '#60006aff',
@@ -573,4 +597,28 @@ Hooks.once('renderSettings', () => {
 	WhetstoneThemes.toggleConfigButton(
 		JSON.parse(game.settings.get('Whetstone', 'addMenuButton'))
 	);
+});
+
+// this implementation is for v1.1.2 only
+// this process will be streamlined in future versions
+Hooks.on('onThemeActivated', (themeData) => {
+	if(themeData.id !== 'OceanBlues') return;
+
+	let windowImage = game.Whetstone.settings.get('OceanBlues', 'variables.--OceanBlues-bg-image-window');
+	let sheetImage = game.Whetstone.settings.get('OceanBlues', 'variables.--OceanBlues-bg-image-sheet');
+
+	let customStyle = $('#OceanBluesCustomStyle');
+	if (!customStyle.length) {
+		$('head').append('<style id="OceanBluesCustomStyle"></style>');
+		customStyle = $('#OceanBluesCustomStyle');
+	}
+
+	customStyle.html(`
+.app {
+	background: url('/${windowImage}') repeat;
+}
+.window-app .window-content, .dnd5e.sheet .window-content {
+	background: url('/${sheetImage}') repeat;
+}`);
+
 });

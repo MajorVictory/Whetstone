@@ -49,6 +49,12 @@
                min="{{this.range.min}}" max="{{this.range.max}}" step="{{this.range.step}}"/>
         <span class="range-value">{{this.value}}</span>
 
+        {{else if this.isImage}}
+        <input class="image" type="text" value="{{this.value}}" name="{{this.id}}" data-target="{{this.id}}" data-dtype="String" data-tab="{{this.tab}}" />
+        <button type="button" title="Browse Files" class="file-picker" data-type="imagevideo" data-target="{{this.id}}">
+            <i class="fa fa-file-import fa-fw"></i>
+        </button>
+
         {{else}}
         <input type="text" name="{{this.id}}" value="{{this.value}}" data-dtype="{{this.type}}" data-tab="{{this.tab}}"/>
         {{/if}}

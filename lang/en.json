@@ -66,8 +66,12 @@
 
     "OCEANBLUES.OceanBlues-bg-color": "Background Color",
     "OCEANBLUES.OceanBlues-bg-colorHint": "Used in sheet headers, tinges the background.",
+    "OCEANBLUES.OceanBlues-bg-image-window": "Window Background Image",
+    "OCEANBLUES.OceanBlues-bg-image-windowHint": "Background image used for window titles and the sidebar.",
     "OCEANBLUES.OceanBlues-bg-window-blendmode": "Window Background Blend Mode",
     "OCEANBLUES.OceanBlues-bg-window-blendmodeHint": "Color blend for window titles and sidebar.",
+    "OCEANBLUES.OceanBlues-bg-image-sheet": "Sheet Background Image",
+    "OCEANBLUES.OceanBlues-bg-image-sheetHint": "Background image used for sheets and dialogs.",
     "OCEANBLUES.OceanBlues-bg-sheet-blendmode": "Sheet Background Blend Mode",
     "OCEANBLUES.OceanBlues-bg-sheet-blendmodeHint": "Color blend for sheet backgrounds.",
     "OCEANBLUES.OceanBlues-text-light-color": "Text Color - Light",

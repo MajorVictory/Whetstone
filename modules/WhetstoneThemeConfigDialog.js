@@ -59,9 +59,10 @@ export class WhetstoneThemeConfigDialog extends FormApplication {
 			let currentValue = this._userValues[s.id] || variableValues[s.id] || game.Whetstone.settings.get(`${s.theme}.${s.tab}`, s.id);
 			if (currentValue === null || currentValue === '') currentValue = s.default;
 
-			s.isColor = ['color', 'shades'].includes(s.color);
 			s.value = this.reset ? s.default : currentValue;
+			s.isColor = ['color', 'shades'].includes(s.color);
 			s.colorData = s.isColor ? WhetstoneThemes.colorData(s.value) : null;
+			s.isImage = s.type === 'image';
 			s.type = setting.type instanceof Function ? setting.type.name : 'String';
 			s.isCheckbox = setting.type === Boolean;
 			s.isRange = setting.type === Number && s.range;
@@ -110,20 +111,18 @@ export class WhetstoneThemeConfigDialog extends FormApplication {
 		html.find('select[name="colorTheme"]').change(this._updateThemePresets.bind(this));
 		// connect color-pickers to validator
 		html.find('.ws-color-value').change(this._updateColor.bind(this));
-		// Reset Default Values
-		html.find('button[name="reset"]').click(this._onResetDefaults.bind(this));
 
 		// fix for typed colors not always triggering validation on dialog open
 		$('[data-tab="variables"]').change(this._updateVariable.bind(this));
+		$('[data-tab="variables"]').change();
 
 		// theme delete/import/export
 		html.find('button.theme-delete').click(this._themeDelete.bind(this));
 		html.find('button.theme-export').click(this._themeExport.bind(this));
 		html.find('button.theme-import').click(this._themeImport.bind(this));
 
-
-		$('[data-tab="variables"]').change();
-
+		// Reset Default Values
+		html.find('button[name="reset"]').click(this._onResetDefaults.bind(this));
 		this.reset = false;
 	}
 
@@ -220,17 +219,33 @@ export class WhetstoneThemeConfigDialog extends FormApplication {
 	 */
 	_updateVariable(event) {
 		const control = $(event.target);
+		const tab = control.data('tab');
 		const variableKey = control.attr('name');
 		if (!variableKey) return;
 
+		const settingData = game.Whetstone.settings.settings.get(
+			`Whetstone.themes.${this._theme}.${tab}.${variableKey}`
+		);
+		if (!settingData) return;
+
 		this._userValues[variableKey] = control.val();
-		WhetstoneThemes.writeVariable(variableKey, control.val(), true);
+		let writeValue = control.val();
+
+		if (settingData.template && typeof settingData.template === 'function') {
+			writeValue = settingData.template(settingData, variableKey, writeValue);
+		}
+
+		WhetstoneThemes.writeVariable(variableKey, writeValue, true);
 
 		if (control.data('shades') === 'shades') {
 			let colorShades = WhetstoneThemes.getShades(control.val());
 
 			Object.keys(colorShades).forEach((k) => {
-				WhetstoneThemes.writeVariable(`${variableKey}-${k}`, colorShades[k]);
+				writeValue = colorShades[k];
+				if (settingData.template && typeof settingData.template === 'function') {
+					writeValue = settingData.template(settingData, `${variableKey}-${k}`, writeValue);
+				}
+				WhetstoneThemes.writeVariable(`${variableKey}-${k}`, writeValue);
 			});
 		}
 	}
@@ -344,7 +359,9 @@ export class WhetstoneThemeConfigDialog extends FormApplication {
 				game.Whetstone.settings.set(themeKey, settingData.id, newValue);
 
 				if (settingData.tab === 'variables') {
-					WhetstoneThemes.writeVariable(`${settingData.id}`, newValue);
+					this._updateVariable({target:`[name="${k}"]`});
+
+					//WhetstoneThemes.writeVariable(`${settingData.id}`, newValue);
 				}
 				Hooks.callAll(`update${settingData.theme}`, settingData, newValue, current);
 			}

@@ -116,8 +116,13 @@ export class WhetstoneThemeSettings {
 		let value = storage.getItem(key);
 		value = value !== null ? JSON.parse(value) : setting.default;
 
+		let valueType = setting.type;
+		if (['color', 'shades', 'image'].includes(setting.type)) {
+			valueType = String;
+		}
+
 		// Cast the value to a requested type
-		return setting.type ? setting.type(value) : value;
+		return valueType ? valueType(value) : value;
 	}
 
 	/* -------------------------------------------- */

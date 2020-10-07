@@ -48,6 +48,7 @@ export class WhetstoneThemes extends EntityCollection {
 			colorTheme: '',
 			colorThemes: [],
 			dialog: '',
+			template: '',
 			systems: {},
 			dependencies: {},
 			compatible: {},
@@ -109,6 +110,7 @@ export class WhetstoneThemes extends EntityCollection {
 			scope: 'client',
 			default: data.default || data.value,
 			color: data.type,
+			template: data.template,
 			type: (['color', 'shades'].includes(data.type)) ? String : data.type,
 			config: true
 		};
@@ -256,6 +258,7 @@ export class WhetstoneThemes extends EntityCollection {
 			contrast: '',
 			//quarter: '',
 			half: '',
+			full: '',
 			//threequarter: '',
 			//shadow: '',
 			//dark: '',
@@ -279,6 +282,7 @@ export class WhetstoneThemes extends EntityCollection {
 				contrast: WhetstoneThemes.getContrastYIQ((r*255), (g*255), (b*255)),
 				//quarter: `hsla(${h},${s}%,${l}%,0.25)`,
 				half: `hsla(${h},${s}%,${l}%,${a/2})`,
+				full: `hsla(${h},${s}%,${l}%,1)`,
 				//threequarter: `hsla(${h},${s}%,${l}%,0.75)`,
 				//shadow: `hsla(${h},${s}%,25%,1)`,
 				//dark: `hsla(${h},${s}%,25%,0.5)`,

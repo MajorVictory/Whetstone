@@ -1,5 +1,14 @@
 # Changelog
 
+## Version 1.1.2
+
+ * Bug Fix: All theme variables and shades are now written properly on activation. (Fixes #9)
+ * New Feature: Two new hooks available: 'onThemeActivated' and 'onThemeDeactivated' (Fixes #12)
+ * New Feature: You can now specify a 'template' entry for variables to format the value just before being written to page.
+ * New Feature: New variable type 'image' lets you use the filepicker to select an image url.
+ * New Feature: The 'shades' color type includes a 'full' variant with no transparency.
+ * OceanBlues: You can now change the background images of window headers and sheet backgrounds.
+
 ## Version 1.1.1
 
  * OceanBlues: Added 'classic' colors from version 1.0.0
