@@ -615,10 +615,29 @@ Hooks.on('onThemeActivated', (themeData) => {
 
 	customStyle.html(`
 .app {
+	color: var(--OceanBlues-text-light-color);
 	background: url('/${windowImage}') repeat;
+	background-color: var(--OceanBlues-bg-color);
+	background-blend-mode: var(--OceanBlues-bg-window-blendmode);
 }
 .window-app .window-content, .dnd5e.sheet .window-content {
+	color: var(--OceanBlues-text-dark-color);
 	background: url('/${sheetImage}') repeat;
+	background-color: var(--OceanBlues-bg-color);
+	background-blend-mode: var(--OceanBlues-bg-sheet-blendmode);
+}
+
+.tidy5e.sheet.actor.npc .spellcasting-ability {
+	background: url('/${sheetImage}') repeat;
+	background-color: var(--OceanBlues-bg-color);
+	background-blend-mode: var(--OceanBlues-bg-sheet-blendmode);
 }`);
+
+Hooks.on('onThemeDeactivated', (themeData) => {
+	if(themeData.id !== 'OceanBlues') return;
+
+	let customStyle = $('#OceanBluesCustomStyle');
+	if (customStyle.length) customStyle.remove();
+});
 
 });

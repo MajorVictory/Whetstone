@@ -68,7 +68,7 @@ export class WhetstoneCoreConfig {
 
 		// activate all active themes
 		for (let i = 0, len = activate.length; i < len; ++i) {
-			game.Whetstone.themes.get(deactivate[i]).activate();
+			game.Whetstone.themes.get(activate[i].name).activate();
 		}
 	}
 }

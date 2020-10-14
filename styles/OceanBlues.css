@@ -111,7 +111,7 @@ a:hover,
 .tabs .item.active,
 .dnd5e.chat-card .card-header h3:hover,
 .filepicker .directory > li:hover {
-	color: var(--OceanBlues-text-highlight-color);
+	color: var(--OceanBlues-highlight-color);
     text-shadow: 0 0 8px var(--OceanBlues-highlight-color);
 }
 
@@ -171,6 +171,12 @@ input[type="datetime-local"],
 	border: 1px solid var(--OceanBlues-border-color);
 }
 
+.dnd5e input[type="text"],
+.dnd5e input[type="number"],
+.dnd5e select {
+	color: var(--OceanBlues-text-dark-color);
+}
+
 select:hover,
 select:focus,
 input[type="text"]:hover,
@@ -185,6 +191,7 @@ input[type="range"]:focus,
 		0px 0px 5px var(--OceanBlues-highlight-color);
 }
 
+/*
 .app {
 	color: var(--OceanBlues-text-light-color);
 	background-color: var(--OceanBlues-bg-color);
@@ -197,6 +204,7 @@ input[type="range"]:focus,
 	background-color: var(--OceanBlues-bg-color);
 	background-blend-mode: var(--OceanBlues-bg-sheet-blendmode);
 }
+*/
 
 .app.sidebar-popout .window-content,
 #module-management .package-list .package-title,
@@ -216,7 +224,7 @@ input[type="range"]:focus,
 }
 
 #context-menu li.context-item:hover {
-	color: var(--OceanBlues-text-highlight-color-color);
+	color: var(--OceanBlues-highlight-color);
 	text-shadow: 0 0 4px var(--OceanBlues-highlight-color);
 }
 
@@ -233,6 +241,14 @@ input[type="range"]:focus,
 .dnd5e.sheet.actor .counters .counter h4,
 .dnd5e .form-group label, .form-group label {
 	color: var(--OceanBlues-text-dark-color-darker);
+}
+
+.dnd5e.sheet.actor .proficiency-toggle {
+	color: var(--OceanBlues-text-highlight-color);
+}
+
+.dnd5e.sheet.actor .proficient .proficiency-toggle {
+	color: var(--OceanBlues-highlight-color);
 }
 
 .tabs .item.active {
@@ -256,4 +272,85 @@ form .hint {
 .filepicker .display-modes a.active {
     background: var(--OceanBlues-highlight-color);
     color: var(--OceanBlues-text-highlight-color);
+}
+
+.tidy5e.sheet.actor ul.attributes li.attribute .attribute-header .res-options {
+	color: var(--OceanBlues-text-highlight-color);
+}
+
+.tidy5e.sheet.actor .traits label,
+.tidy5e.sheet.actor .traits .senses div[contenteditable]:before {
+    color: var(--OceanBlues-text-light-color);
+}
+
+.tidy5e.sheet.actor .inventory-filters h3,
+.tidy5e.sheet.actor .inventory-filters .filter-title {
+	color: var(--OceanBlues-text-dark-color);
+}
+
+.dnd5e.sheet.actor .inventory-list .item-name {
+	color: var(--OceanBlues-text-dark-color);
+}
+
+.dnd5e.sheet .editable .rollable:hover {
+    color: var(--OceanBlues-highlight-color);
+    text-shadow: 0 0 10px var(--OceanBlues-highlight-color);
+}
+
+.dnd5e.sheet .filter-list .filter-item {
+    border-bottom: 3px solid var(--OceanBlues-border-color);
+}
+
+.dnd5e.sheet .filter-list .filter-item.active {
+    border-bottom: 3px solid var(--OceanBlues-highlight-color);
+}
+
+.dnd5e.sheet .filter-list .filter-item:hover {
+    text-shadow: 0 0 4px var(--OceanBlues-highlight-color);
+    border-bottom: 3px solid var(--OceanBlues-highlight-color);
+}
+
+.dnd5e.sheet span.sep,
+.dnd5e.sheet.actor .spell-school,
+.dnd5e.sheet.actor .spell-action,
+.dnd5e.sheet.actor .spell-target,
+.dnd5e.sheet.actor .spell-slots,
+.dnd5e.sheet.actor .spell-comps,
+.dnd5e.sheet.actor .inventory-list .item-detail,
+.dnd5e.sheet.actor .inventory-list .item-controls a,
+.dnd5e.sheet.actor .inventory-filters .currency label,
+.dnd5e.sheet.actor.character .inventory .item-controls .item-toggle,
+.dnd5e.sheet.actor.character .spellbook .item-controls .item-toggle,
+.tidy5e.sheet.actor .inventory-list .item-detail,
+.tidy5e.sheet.actor .inventory-list .item-controls,
+.tidy5e.sheet.actor .inventory-list .spell-detail,
+.tidy5e.sheet.actor .traits .tag {
+	color: var(--OceanBlues-text-dark-color);
+}
+
+.dnd5e.sheet.actor.character .resource .attribute-value label.recharge {
+	color: var(--OceanBlues-text-light-color);
+}
+
+.dnd5e.sheet.actor .inventory-list .item-controls a:hover,
+.dnd5e.sheet.actor.character .inventory .item-controls .item-toggle.active,
+.dnd5e.sheet.actor.character .spellbook .item-controls .item-toggle.active {
+	color: var(--OceanBlues-highlight-color);
+}
+
+.dnd5e.sheet input[type="text"]:hover,
+.dnd5e.sheet input[type="number"]:hover,
+.dnd5e.sheet input[type="text"]:focus,
+.dnd5e.sheet input[type="number"]:focus {
+    border: 1px solid var(--OceanBlues-highlight-color);
+}
+
+.dnd5e.sheet.actor .spell-component.C,
+.dnd5e.sheet.actor .spell-component.R {
+	color: var(--OceanBlues-text-highlight-color);
+	background: var(--OceanBlues-fg-color);
+}
+
+.dnd5e.sheet.actor ul.skills-list li.skill .skill-passive {
+	color: var(--OceanBlues-text-dark-color-darker);
 }

@@ -1,5 +1,11 @@
 # Changelog
 
+## Version 1.1.3
+
+ * Bug Fix: Themes were not activating properly.
+ * OceanBlues: Improved application of background colors and images.
+ * OceanBlues: Improved compatibility with dnd5e default sheets and tidy5e sheets.
+
 ## Version 1.1.2
 
  * Bug Fix: All theme variables and shades are now written properly on activation. (Fixes #9)
