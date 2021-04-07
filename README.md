@@ -1,5 +1,5 @@
 [![foundry-shield-066]][foundry-url]
-[![foundry-shield-074]][foundry-url]
+[![foundry-shield-079]][foundry-url]
 [![Forks][forks-shield]][forks-url]
 [![Stargazers][stars-shield]][stars-url]
 [![Issues][issues-shield]][issues-url]
@@ -31,7 +31,7 @@
 ### Requirements
 
 **[Core Compatibility]**:
- * *FoundryVTT* 0.6.5-0.7.4
+ * *FoundryVTT* 0.6.5-0.7.9
 
 **[Known Issues]**
  * [Report Problems](https://github.com/MajorVictory/Whetstone/issues)
@@ -75,7 +75,7 @@ Whetstone is a module for Foundry VTT by Majorvictory and is licensed under a [C
 This work is licensed under Foundry Virtual Tabletop [EULA - Limited License Agreement for module development from May 29, 2020](https://foundryvtt.com/article/license/).
 
 [foundry-shield-066]: https://img.shields.io/badge/Foundry-v0.6.6-informational
-[foundry-shield-074]: https://img.shields.io/badge/Foundry-v0.7.4-informational
+[foundry-shield-079]: https://img.shields.io/badge/Foundry-v0.7.9-informational
 [foundry-url]: https://foundryvtt.com/
 [forks-shield]: https://img.shields.io/github/forks/MajorVictory/Whetstone.svg?style=flat-square
 [forks-url]: https://github.com/MajorVictory/Whetstone/network/members

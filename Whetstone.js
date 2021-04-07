@@ -37,7 +37,7 @@ Hooks.once('init', () => {
 	game.settings.register('Whetstone', 'addMenuButton', {
 		name: 'WHETSTONE.AddMenuButton',
 		hint: 'WHETSTONE.AddMenuButtonHint',
-		scope: 'world',
+		scope: 'client',
 		config: true,
 		default: WhetstoneCoreConfig.getDefaults.addMenuButton,
 		type: Boolean,
@@ -441,13 +441,13 @@ Hooks.once('WhetstoneReady', () => {
 				'#62ff62ff': 'Electric Green'
 			},
 			lavender_fields: {
-				'#412e5280': 'Martinique',
+				'#8b54bbff': 'Lavender Blanket',
 				'#f5e0e6ff': 'Vanilla Ice',
 				'#60006aff': 'Ripe Plum',
 				'#fbc4dbff': 'Cupid',
 				'#fef2ffff': 'White Pointer',
 				'#b39dd0ff': 'East Side',
-				'#8338d6ff': 'Purple Heart',
+				'#af31a7ff': 'Dull Barbie',
 				'#4d114dff': 'Loulou'
 			},
 			blendmodes: {
@@ -502,7 +502,7 @@ Hooks.once('WhetstoneReady', () => {
 					'--OceanBlues-bg-image-window': 'ui/denim075.png',
 					'--OceanBlues-bg-window-blendmode': 'luminosity',
 					'--OceanBlues-bg-image-sheet': 'ui/parchment.jpg',
-					'--OceanBlues-bg-sheet-blendmode': 'luminosity',
+					'--OceanBlues-bg-sheet-blendmode': 'soft-light',
 					'--OceanBlues-text-light-color': '#a0c6dcff',
 					'--OceanBlues-text-dark-color': '#102632ff',
 					'--OceanBlues-text-highlight-color': '#20566aff',
@@ -555,17 +555,17 @@ Hooks.once('WhetstoneReady', () => {
 				name: 'OCEANBLUES.ColorThemePurple',
 				presets: 'lavender_fields',
 				values: {
-					'--OceanBlues-bg-color': '#412e5280',
+					'--OceanBlues-bg-color': '#8b54bbff',
 					'--OceanBlues-bg-image-window': 'ui/denim075.png',
-					'--OceanBlues-bg-window-blendmode': 'luminosity',
+					'--OceanBlues-bg-window-blendmode': 'hard-light',
 					'--OceanBlues-bg-image-sheet': 'ui/parchment.jpg',
-					'--OceanBlues-bg-sheet-blendmode': 'color-burn',
+					'--OceanBlues-bg-sheet-blendmode': 'soft-light',
 					'--OceanBlues-text-light-color': '#f5e0e6ff',
 					'--OceanBlues-text-dark-color': '#60006aff',
 					'--OceanBlues-text-highlight-color': '#fbc4dbff',
 					'--OceanBlues-text-selection-color': '#fef2ffff',
 					'--OceanBlues-fg-color': '#b39dd0ff',
-					'--OceanBlues-highlight-color': '#8338d6ff',
+					'--OceanBlues-highlight-color': '#af31a7ff',
 					'--OceanBlues-border-color': '#4d114dff'
 				}
 			}
@@ -593,7 +593,8 @@ Hooks.once('WhetstoneReady', () => {
 });
 
 // create/remove the quick access config button
-Hooks.once('renderSettings', () => {
+Hooks.on('renderSettings', () => {
+	console.log('WhetStone -> renderSettings settings.addMenuButton: ', JSON.parse(game.settings.get('Whetstone', 'addMenuButton')));
 	WhetstoneThemes.toggleConfigButton(
 		JSON.parse(game.settings.get('Whetstone', 'addMenuButton'))
 	);
@@ -614,23 +615,21 @@ Hooks.on('onThemeActivated', (themeData) => {
 	}
 
 	customStyle.html(`
-.app {
-	color: var(--OceanBlues-text-light-color);
-	background: url('/${windowImage}') repeat;
-	background-color: var(--OceanBlues-bg-color);
-	background-blend-mode: var(--OceanBlues-bg-window-blendmode);
+.app,
+#combat-carousel .card,
+#combat-carousel .splide__slide:hover .name,
+#combat-carousel .carousel-icon,
+#combat-carousel .combat-control a,
+#combat-carousel .encounter-info,
+#vtta-notifications > div {
+	background-image: url('/${windowImage}');
+    background-repeat: repeat;
 }
-.window-app .window-content, .dnd5e.sheet .window-content {
-	color: var(--OceanBlues-text-dark-color);
-	background: url('/${sheetImage}') repeat;
-	background-color: var(--OceanBlues-bg-color);
-	background-blend-mode: var(--OceanBlues-bg-sheet-blendmode);
-}
-
+.window-app .window-content,
+.dnd5e.sheet .window-content,
 .tidy5e.sheet.actor.npc .spellcasting-ability {
-	background: url('/${sheetImage}') repeat;
-	background-color: var(--OceanBlues-bg-color);
-	background-blend-mode: var(--OceanBlues-bg-sheet-blendmode);
+	background-image: url('/${sheetImage}');
+    background-repeat: repeat;
 }`);
 
 Hooks.on('onThemeDeactivated', (themeData) => {

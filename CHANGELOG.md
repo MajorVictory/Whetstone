@@ -1,5 +1,17 @@
 # Changelog
 
+## Version 1.1.4
+
+ * Updated known compatibility to Foundry 0.7.9
+ * Bug Fix: Setting for adding menu button was incorrectly set to "global" instead of "client" (Fixes Issue #13)
+ * OceanBlues: Fix for color support with The Furnace module. (macro textbox background)
+ * OceanBlues: Added support for Calendar/Weather module
+ * OceanBlues: Added support for Combat Enhancements
+ * OceanBlues: Added support for Combat Carousel
+ * OceanBlues: Added support for Token Action HUD
+ * OceanBlues: Icewind Blues preset colors adjusted
+ * OceanBlues: Lavendar Fields preset colors adjusted
+
 ## Version 1.1.3
 
  * Bug Fix: Themes were not activating properly.
