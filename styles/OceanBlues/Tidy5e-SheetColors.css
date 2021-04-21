@@ -1,0 +1,20 @@
+/* ******************************************* */
+/* ******* Tidy5e Sheet Color Overrides */
+/* ******************************************* */
+.system-dnd5e {
+  --primary-font: 				var(--OceanBlues-text-dark-color);
+  --background: 				var(--OceanBlues-bg-color);
+  --faintest-color: 			rgba(0,0,0,.05);
+  --faint-color: 				rgba(0,0,0,.1);
+  --light-color: 				var(--OceanBlues-fg-color);
+  --primary-color: 				var(--OceanBlues-text-light-color);
+  --secondary-color: 			var(--OceanBlues-text-dark-color);
+  --tertiary-color: 			var(--OceanBlues-text-dark-color-darker);
+  --primary-accent: 			var(--OceanBlues-highlight-color);
+  --always-prepared-accent: 	var(--OceanBlues-fg-color-half);
+  --warning-accent: 			var(--OceanBlues-highlight-color-lighter);
+  --icon-font:					var(--OceanBlues-text-light-color);
+  --icon-background:			var(--OceanBlues-bg-color);
+  --icon-shadow:				var(--OceanBlues-highlight-color);
+
+}

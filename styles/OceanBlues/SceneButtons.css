@@ -1,0 +1,77 @@
+#navigation #nav-toggle {
+	background: var(--OceanBlues-bg-color);
+}
+
+#navigation .nav-item {
+	border: 1px solid var(--OceanBlues-border-color); 
+	box-shadow: 0 0 5px var(--OceanBlues-border-color) inset;
+}
+
+#navigation #scene-list .scene {
+	background: var(--OceanBlues-bg-color-lighter);
+	border: 1px solid var(--OceanBlues-border-color);
+	box-shadow: 0 0 5px var(--OceanBlues-border-color) inset;
+	color: var(--OceanBlues-text-light-color);
+}
+
+#navigation #scene-list .scene a.scene-name {
+	color: var(--OceanBlues-text-light-color);
+	text-shadow: none;
+}
+
+#navigation #scene-list .scene:hover {
+	border: 1px solid var(--OceanBlues-highlight-color);
+	box-shadow: 0 0 5px var(--OceanBlues-highlight-color) inset;
+	color: var(--OceanBlues-text-light-color-lighter);
+}
+
+#navigation #scene-list .scene:hover a.scene-name,
+#navigation #scene-list .scene:hover a.scene-name:hover {
+	color: var(--OceanBlues-text-light-color-lighter);
+	text-shadow: none;
+}
+
+#navigation #scene-list .scene.active {
+	background: var(--OceanBlues-highlight-color);
+	border: 1px solid var(--OceanBlues-highlight-color);
+	box-shadow: 0 0 10px var(--OceanBlues-fg-color);
+	color: var(--OceanBlues-text-light-color-lighter);
+}
+
+#navigation #scene-list .scene.active a.scene-name {
+	color: var(--OceanBlues-text-highlight-color);
+	text-shadow: none;
+}
+
+#navigation #scene-list .scene.active:hover {
+	color: var(--OceanBlues-highlight-color-contrast);
+}
+
+#navigation #scene-list .scene.active:hover a.scene-name,
+#navigation #scene-list .scene.active:hover a.scene-name:hover {
+	color: var(--OceanBlues-highlight-color-contrast);
+	text-shadow: none;
+}
+
+#navigation #scene-list .scene.gm {
+	background: var(--OceanBlues-bg-color-darker);
+	color: var(--OceanBlues-text-light-color);
+	border: 1px solid var(--OceanBlues-border-color);
+	box-shadow: 0 0 5px var(--OceanBlues-border-color) inset;
+}
+
+#navigation #scene-list .scene.gm:hover {
+	border: 1px solid var(--OceanBlues-highlight-color-darker);
+	box-shadow: 0 0 5px var(--OceanBlues-highlight-color-darker) inset;
+}
+
+#navigation #scene-list .scene.gm.active {
+	background: var(--OceanBlues-highlight-color-darker);
+	border: 1px solid var(--OceanBlues-highlight-color-darker);
+	box-shadow: 0 0 10px var(--OceanBlues-fg-color);
+}
+
+#navigation #scene-list .scene.view,
+#navigation #scene-list .scene.context {
+    box-shadow: 0 0 10px var(--OceanBlues-highlight-color);
+}

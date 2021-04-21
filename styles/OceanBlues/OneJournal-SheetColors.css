@@ -1,0 +1,8 @@
+/* ******************************************* */
+/* ******* OneJournal Sheet Color Overrides */
+/* ******************************************* */
+:root {
+  --ojTextColor: var(--OceanBlues-text-dark-color);
+  --ojTextColorContrast: var(--OceanBlues-text-light-color);
+  --ojAccentColor: var(--OceanBlues-highlight-color);
+}

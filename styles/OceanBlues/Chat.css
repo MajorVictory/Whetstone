@@ -1,0 +1,32 @@
+#chat-log .message {
+    color: var(--OceanBlues-text-dark-color);
+    background-color: var(--OceanBlues-bg-color);
+    background-blend-mode: var(--OceanBlues-bg-sheet-blendmode);
+}
+
+#chat-log .message .message-header {
+    color: var(--OceanBlues-text-dark-color);
+}
+
+.chat-card .card-header, .dnd5e.chat-card .card-header,
+.chat-card .card-footer, .dnd5e.chat-card .card-footer,
+.chat-card .card-footer span, .dnd5e.chat-card .card-footer span {
+    border-color: var(--OceanBlues-border-color);
+}
+
+.chat-card .card-header h3, .dnd5e.chat-card .card-header h3 {
+     color: var(--OceanBlues-text-dark-color);
+}
+
+.dice-roll .dice-formula,
+.dice-roll .dice-total,
+.dice-tooltip .part-formula {
+    border-color: var(--OceanBlues-border-color);
+}
+
+.dice-tooltip .dice-rolls .roll {
+     color: var(--OceanBlues-text-dark-color);
+     background-color: var(--OceanBlues-bg-color);
+     background-blend-mode: var(--OceanBlues-bg-sheet-blendmode);
+     border-radius: 5px;
+}

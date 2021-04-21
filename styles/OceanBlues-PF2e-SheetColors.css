@@ -1,9 +1,0 @@
-/* ******************************************* */
-/* ******* Pathfinder 2e Sheet Color Overrides */
-/* ******************************************* */
-:root {
-	--primary-background: var(--OceanBlues-bg-color);
-	--secondary-background: var(--OceanBlues-bg-color);
-	--tertiary-background: var(--OceanBlues-border-color);
-	--alternate-background: var(--OceanBlues-text-dark-color);
-}

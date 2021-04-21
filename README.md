@@ -26,6 +26,32 @@
   </p>
 </p>
 
+![](images/MainPreview-1.1.5.jpg)
+
+## Screenshots 
+
+The provided Ocean Blues theme comes with 5 pre-made color sets:
+
+### Ocean Blues (Default)
+
+![](images/OceanBlues-1.1.5.jpg)
+
+### Ocean Blues (Icewind Blues)
+
+![](images/IcewindBlues-1.1.5.jpg)
+
+### Ocean Blues (Earthy Green)
+
+![](images/EarthyGreen-1.1.5.jpg)
+
+### Ocean Blues (Hacker Space)
+
+![](images/HackerSpace-1.1.5.jpg)
+
+### Ocean Blues (Lavender Fields)
+
+![](images/LavenderFields-1.1.5.jpg)
+
 ## Installation
 
 ### Requirements
@@ -35,10 +61,13 @@
 
 **[Known Issues]**
  * [Report Problems](https://github.com/MajorVictory/Whetstone/issues)
+ * As of v1.1.5 some pathfinder sheet colors are a litle wonky
 
 ### Latest Release
 
-You can download the module in it's current state by pasting the following manifest url into Foundry or search for `Whetstone` in the module browser.
+This module is available via the Foundry Package Browser, simply search for "Whetstone"
+
+If you want the bleeding edge version use the following manifest URL
 
 > https://raw.githubusercontent.com/MajorVictory/Whetstone/master/module.json
 
@@ -60,13 +89,6 @@ Contact me via discord, make a bug report, or submit a pull request if you want 
 ## Changelog
 
 [Previous Versions Changelog](CHANGELOG.md)
-
-## Screenshots 
-
-![](images/MainPreview-9-26-2020.jpg)
-
-![](images/OceanBlues-PF2e-Support-9-20-2020.jpg)
-
 
 ## License
 

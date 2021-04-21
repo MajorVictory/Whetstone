@@ -1,0 +1,94 @@
+
+:root {
+	--primary: var(--OceanBlues-bg-color);
+	--secondary: var(--OceanBlues-border-color);
+	--tertiary: var(--OceanBlues-text-light-color);
+	--green: #6BAA75;
+	--alt: var(--OceanBlues-border-color);
+	--alt-dark: var(--OceanBlues-text-dark-color);
+	--light: var(--OceanBlues-text-light-color);
+	--lighter: var(--OceanBlues-text-highlight-color);
+	--dark: var(--OceanBlues-text-dark-color);
+	--darker: black;
+	--bg: var(--OceanBlues-fg-color);
+	--sub: var(--OceanBlues-border-color);
+	--btn-color: var(--OceanBlues-highlight-color);
+	--header-color: var(--OceanBlues-fg-color);
+	--header-bg: var(--OceanBlues-bg-color);
+	--body: var(--OceanBlues-text-dark-color);
+	--box-bg: var(--OceanBlues-fg-color);
+	--window-bg: var(--OceanBlues-fg-color);
+	--sidebar-label: var(--OceanBlues-text-light-color);
+	--sidebar-title: var(--OceanBlues-text-light-color);
+	--animate-duration: 1s;
+	--animate-delay: 1s;
+	--animate-repeat: 1;
+}
+
+.crb-style {
+	background-blend-mode: var(--OceanBlues-bg-sheet-blendmode);
+	background-color: var(--OceanBlues-bg-color);
+}
+
+.crb-style aside {
+	background-blend-mode: luminosity;
+	background-color: var(--OceanBlues-bg-color);
+	-webkit-mask: 
+		url('/systems/pf2e/assets/sheet/red_sidebar.png') no-repeat top center,
+		url('/systems/pf2e/assets/pathfinder_logo.png') no-repeat top center;
+	-webkit-mask-size: contain;
+	-webkit-mask-position-y: top, 5px;
+}
+
+.crb-style aside .sidebar .hitpoints .hp-big .container.current-hp {
+    background-image: linear-gradient(90deg, var(--OceanBlues-text-dark-color) 0%, var(--OceanBlues-bg-color) 50%, var(--OceanBlues-text-dark-color) 100%);
+}
+
+.crb-style .sheet-content .skills .skills-pane .core-title {
+    background-blend-mode: luminosity;
+    background-color: var(--OceanBlues-bg-color);
+    -webkit-mask: url('/systems/pf2e/assets/sheet/stroke3.svg') left bottom no-repeat;
+}
+
+.crb-style .sheet-content .directory-list .action-header {
+	background-blend-mode: luminosity;
+	background-color: var(--OceanBlues-bg-color);
+	-webkit-mask: url('/systems/pf2e/assets/sheet/stroke.svg') left bottom no-repeat;
+}
+
+.crb-style .sheet-content .character .character-details .frame .player-image {
+    background-color: var(--OceanBlues-bg-color);
+}
+
+.crb-style nav.sheet-navigation a:hover, .crb-style nav.sheet-navigation a.active {
+	background-blend-mode: luminosity;
+	background-color: var(--OceanBlues-bg-color);
+}
+
+.crb-style header.char-header .char-level .level {
+    background-blend-mode: luminosity;
+    background-color: var(--OceanBlues-bg-color);
+    -webkit-mask: url('/systems/pf2e/assets/sheet/level-badge.png') no-repeat;
+}
+
+.crb-style nav.sheet-navigation a.active {
+	box-shadow: 
+		0 0 0 1px var(--tertiary),
+		0 0 0 2px var(--OceanBlues-highlight-color),
+		inset 0 0 4px rgba(0,0,0,.25),
+		0 0 8px var(--tertiary);
+}
+
+.crb-style header.char-header .char-details h1.char-name input[type=text],
+.crb-style header.char-header .char-details h1.char-name span.non-editable,
+.crb-style header.char-header .char-level .level input,
+.crb-style header.char-header .char-level .exp-data input {
+	color: var(--OceanBlues-text-light-color);
+	background: transparent;
+	border: none;
+}
+
+.crb-style .sheet-content .actions .actions-list .item .item-name .item-image {
+	background-color: var(--OceanBlues-bg-color);
+	border-radius: 50%;
+}

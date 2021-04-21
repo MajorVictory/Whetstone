@@ -1,5 +1,11 @@
 # Changelog
 
+## Version 1.1.5
+
+ * OceanBlues: Reorganized folders and filenames
+ * OceanBlues: Added secondary background color for sheets
+ * OceanBlues: Readjusted all color themes
+
 ## Version 1.1.4
 
  * Updated known compatibility to Foundry 0.7.9

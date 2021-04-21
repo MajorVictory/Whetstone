@@ -1,0 +1,27 @@
+#controls .scene-control, #controls .control-tool {
+	background: var(--OceanBlues-bg-color);
+	color: var(--OceanBlues-text-light-color);
+	border: 1px solid var(--OceanBlues-border-color);
+	box-shadow: 0 0 5px var(--OceanBlues-border-color) inset;
+}
+
+#controls .scene-control.active,
+#controls .control-tool.active,
+#controls .scene-control:hover,
+#controls .control-tool:hover {
+	background: var(--OceanBlues-bg-color);
+	border: 1px solid var(--OceanBlues-highlight-color);
+	box-shadow: 0 0 5px var(--OceanBlues-highlight-color) inset;
+}
+
+#controls .control-tool.toggle {
+	background: var(--OceanBlues-border-color);
+	border: 1px solid var(--OceanBlues-highlight-color);
+}
+
+#controls .control-tool.toggle.active,
+#controls .control-tool.toggle:hover {
+	background: var(--OceanBlues-highlight-color);
+	border: 1px solid var(--OceanBlues-highlight-color);
+	box-shadow: 0 0 10px var(--OceanBlues-fg-color);
+}

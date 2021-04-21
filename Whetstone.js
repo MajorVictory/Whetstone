@@ -100,7 +100,7 @@ Hooks.once('WhetstoneReady', () => {
 	fontList.map(f => fontChoices[`'${f}'`] = f);
 
 
-	// register example theme: OceanBlues
+	// register base theme: Whetstone Core
 	game.Whetstone.themes.register('Whetstone', {
 		id: 'Whetstone',
 		name: 'Whetstone',
@@ -234,56 +234,71 @@ Hooks.once('WhetstoneReady', () => {
 		id: 'OceanBlues',
 		name: 'OceanBlues',
 		title: 'Ocean Blues',
-		description: 'An example Style for Whetstone with variable colors',
+		description: 'An example Light Mode Style for Whetstone with variable colors',
 		version: '1.1.0',
 		authors: [{
 			name: 'MajorVictory',
 			contact: 'Github',
 			url: 'https://github.com/MajorVictory'
 		}],
-		styles: ['modules/Whetstone/styles/OceanBlues.css'],
+		styles: ['modules/Whetstone/styles/OceanBlues/Main.css'],
 		substyles: {
 			'OceanBlues-Hotbar': {
 				name: 'OceanBlues-Hotbar',
 				title: 'OCEANBLUES.SubstyleHotbar',
 				hint: 'OCEANBLUES.SubstyleHotbarHint',
 				active: true,
-				styles: ['modules/Whetstone/styles/OceanBlues-Hotbar.css']
+				styles: ['modules/Whetstone/styles/OceanBlues/Hotbar.css']
 			},
 			'OceanBlues-Toolbar': {
 				name: 'OceanBlues-Toolbar',
 				title: 'OCEANBLUES.SubstyleToolbar',
 				hint: 'OCEANBLUES.SubstyleToolbarHint',
 				active: true,
-				styles: ['modules/Whetstone/styles/OceanBlues-Toolbar.css']
+				styles: ['modules/Whetstone/styles/OceanBlues/Toolbar.css']
 			},
 			'OceanBlues-SceneButtons': {
 				name: 'OceanBlues-SceneButtons',
 				title: 'OCEANBLUES.SubstyleSceneButtons',
 				hint: 'OCEANBLUES.SubstyleSceneButtonsHint',
 				active: true,
-				styles: ['modules/Whetstone/styles/OceanBlues-SceneButtons.css']
+				styles: ['modules/Whetstone/styles/OceanBlues/SceneButtons.css']
 			},
 			'OceanBlues-Chat': {
 				name: 'OceanBlues-Chat',
 				title: 'OCEANBLUES.SubstyleChat',
 				hint: 'OCEANBLUES.SubstyleChatHint',
 				active: true,
-				styles: ['modules/Whetstone/styles/OceanBlues-Chat.css']
+				styles: ['modules/Whetstone/styles/OceanBlues/Chat.css']
 			},
 			'OceanBlues-CompactSidebar': {
 				name: 'OceanBlues-CompactSidebar',
 				title: 'OCEANBLUES.SubstyleCompactSidebar',
 				hint: 'OCEANBLUES.SubstyleCompactSidebarHint',
 				active: false,
-				styles: ['modules/Whetstone/styles/OceanBlues-CompactSidebar.css']
+				styles: ['modules/Whetstone/styles/OceanBlues/CompactSidebar.css']
 			},
 			'OceanBlues-SceneButtonsSmaller': {
 				name: 'OceanBlues-SceneButtonsSmaller',
 				title: 'OCEANBLUES.SubstyleSceneButtonsSmaller',
 				hint: 'OCEANBLUES.SubstyleSceneButtonsSmallerHint',
 				active: false,
-				styles: ['modules/Whetstone/styles/OceanBlues-SceneButtonsSmaller.css']
+				styles: ['modules/Whetstone/styles/OceanBlues/SceneButtonsSmaller.css']
+			},
+			'OceanBlues-OneJournal-SheetColors': {
+				name: 'OceanBlues-OneJournal-SheetColors',
+				title: 'OCEANBLUES.SubstyleOneJournalSheetColors',
+				hint: 'OCEANBLUES.SubstyleOneJournalSheetColorsHint',
+				active: true,
+				styles: ['modules/Whetstone/styles/OceanBlues/OneJournal-SheetColors.css']
+			},
+			'OceanBlues-Tidy5e-SheetColors': {
+				name: 'OceanBlues-Tidy5e-SheetColors',
+				title: 'OCEANBLUES.SubstyleTidy5eSheetColors',
+				hint: 'OCEANBLUES.SubstyleTidy5eSheetColorsHint',
+				system: 'dnd5e',
+				active: true,
+				styles: ['modules/Whetstone/styles/OceanBlues/Tidy5e-SheetColors.css']
 			},
 			'OceanBlues-PF2e-CRBStyle': {
 				name: 'OceanBlues-PF2e-CRBStyle',
@@ -291,7 +306,7 @@ Hooks.once('WhetstoneReady', () => {
 				hint: 'OCEANBLUES.SubstylePF2eCRBStyleHint',
 				system: 'pf2e',
 				active: true,
-				styles: ['modules/Whetstone/styles/OceanBlues-PF2e-CRBStyle.css']
+				styles: ['modules/Whetstone/styles/OceanBlues/PF2e-CRBStyle.css']
 			},
 			'OceanBlues-PF2e-SheetColors': {
 				name: 'OceanBlues-PF2e-SheetColors',
@@ -299,100 +314,108 @@ Hooks.once('WhetstoneReady', () => {
 				hint: 'OCEANBLUES.SubstylePF2eSheetColorsHint',
 				system: 'pf2e',
 				active: true,
-				styles: ['modules/Whetstone/styles/OceanBlues-PF2e-SheetColors.css']
-			}
+				styles: ['modules/Whetstone/styles/OceanBlues/PF2e-SheetColors.css']
+			},
 		},
 		variables: [
 			{
 				name: '--OceanBlues-bg-color',
-				title: 'OCEANBLUES.OceanBlues-bg-color',
-				hint: 'OCEANBLUES.OceanBlues-bg-colorHint',
-				default: '#3e5c86e6',
+				title: 'OCEANBLUES.bg-color',
+				hint: 'OCEANBLUES.bg-colorHint',
+				default: '#3d5a80ff',
 				type: 'shades',
 				presets: 'oceanblues'
 			},
 			{
 				name: '--OceanBlues-bg-image-window',
-				title: 'OCEANBLUES.OceanBlues-bg-image-window',
-				hint: 'OCEANBLUES.OceanBlues-bg-image-windowHint',
+				title: 'OCEANBLUES.bg-image-window',
+				hint: 'OCEANBLUES.bg-image-windowHint',
 				default: 'ui/denim075.png',
 				type: 'image'
 			},
 			{
 				name: '--OceanBlues-bg-window-blendmode',
-				title: 'OCEANBLUES.OceanBlues-bg-window-blendmode',
-				hint: 'OCEANBLUES.OceanBlues-bg-window-blendmodeHint',
+				title: 'OCEANBLUES.bg-window-blendmode',
+				hint: 'OCEANBLUES.bg-window-blendmodeHint',
 				default: 'luminosity',
 				type: String,
 				presets: 'blendmodes'
 			},
 			{
+				name: '--OceanBlues-bg-color-sheet',
+				title: 'OCEANBLUES.bg-color-sheet',
+				hint: 'OCEANBLUES.bg-color-sheetHint',
+				default: '#3d5a80ff',
+				type: 'shades',
+				presets: 'oceanblues'
+			},
+			{
 				name: '--OceanBlues-bg-image-sheet',
-				title: 'OCEANBLUES.OceanBlues-bg-image-sheet',
-				hint: 'OCEANBLUES.OceanBlues-bg-image-sheetHint',
+				title: 'OCEANBLUES.bg-image-sheet',
+				hint: 'OCEANBLUES.bg-image-sheetHint',
 				default: 'ui/parchment.jpg',
 				type: 'image'
 			},
 			{
 				name: '--OceanBlues-bg-sheet-blendmode',
-				title: 'OCEANBLUES.OceanBlues-bg-sheet-blendmode',
-				hint: 'OCEANBLUES.OceanBlues-bg-sheet-blendmodeHint',
-				default: 'color-burn',
+				title: 'OCEANBLUES.bg-sheet-blendmode',
+				hint: 'OCEANBLUES.bg-sheet-blendmodeHint',
+				default: 'soft-light',
 				type: String,
 				presets: 'blendmodes'
 			},
 			{
 				name: '--OceanBlues-text-light-color',
-				title: 'OCEANBLUES.OceanBlues-text-light-color',
-				hint: 'OCEANBLUES.OceanBlues-text-light-colorHint',
-				default: '#c6dceaff',
+				title: 'OCEANBLUES.text-light-color',
+				hint: 'OCEANBLUES.text-light-colorHint',
+				default: '#a0c6dcff',
 				type: 'shades',
 				presets: 'oceanblues'
 			},
 			{
 				name: '--OceanBlues-text-dark-color',
-				title: 'OCEANBLUES.OceanBlues-text-dark-color',
-				hint: 'OCEANBLUES.OceanBlues-text-dark-colorHint',
-				default: '#8dbbdcff',
+				title: 'OCEANBLUES.text-dark-color',
+				hint: 'OCEANBLUES.text-dark-colorHint',
+				default: '#102632ff',
 				type: 'shades',
 				presets: 'oceanblues'
 			},
 			{
 				name: '--OceanBlues-text-highlight-color',
-				title: 'OCEANBLUES.OceanBlues-text-highlight-color',
-				hint: 'OCEANBLUES.OceanBlues-text-highlight-colorHint',
-				default: '#72b9d5ff',
+				title: 'OCEANBLUES.text-highlight-color',
+				hint: 'OCEANBLUES.text-highlight-colorHint',
+				default: '#20566aff',
 				type: 'shades',
 				presets: 'oceanblues'
 			},
 			{
 				name: '--OceanBlues-text-selection-color',
-				title: 'OCEANBLUES.OceanBlues-text-selection-color',
-				hint: 'OCEANBLUES.OceanBlues-text-selection-colorHint',
-				default: '#9eb4d3ff',
+				title: 'OCEANBLUES.text-selection-color',
+				hint: 'OCEANBLUES.text-selection-colorHint',
+				default: '#b0c2bdff',
 				type: 'color',
 				presets: 'oceanblues'
 			},
 			{
 				name: '--OceanBlues-fg-color',
-				title: 'OCEANBLUES.OceanBlues-fg-color',
-				hint: 'OCEANBLUES.OceanBlues-fg-colorHint',
-				default: '#0c5f76ff',
+				title: 'OCEANBLUES.fg-color',
+				hint: 'OCEANBLUES.fg-colorHint',
+				default: '#c1ecfbff',
 				type: 'shades',
 				presets: 'oceanblues'
 			},
 			{
 				name: '--OceanBlues-highlight-color',
-				title: 'OCEANBLUES.OceanBlues-highlight-color',
-				hint: 'OCEANBLUES.OceanBlues-highlight-colorHint',
-				default: '#ee6c4dff',
+				title: 'OCEANBLUES.highlight-color',
+				hint: 'OCEANBLUES.highlight-colorHint',
+				default: '#a3e0ffff',
 				type: 'shades',
 				presets: 'oceanblues'
 			},
 			{
 				name: '--OceanBlues-border-color',
-				title: 'OCEANBLUES.OceanBlues-border-color',
-				hint: 'OCEANBLUES.OceanBlues-border-colorHint',
+				title: 'OCEANBLUES.border-color',
+				hint: 'OCEANBLUES.border-colorHint',
 				default: '#293241ff',
 				type: 'color',
 				presets: 'oceanblues'
@@ -401,34 +424,35 @@ Hooks.once('WhetstoneReady', () => {
 
 		presets: {
 			oceanblues: {
-				'#3e5c86e6': 'East Bay',
-				'#c6dceaff': 'Periwinkle Gray',
-				'#8dbbdcff': 'Morning Glory',
-				'#72b9d5ff': 'Downy',
-				'#9eb4d3ff': 'Rock Blue',
-				'#0c5f76ff': 'Atoll',
-				'#ee6c4dff': 'Burnt Sienna',
-				'#293241ff': 'Ebony Clay'
-			},
-			icewindblues: {
 				'#3d5a80ff': 'Bdazzled Blue',
 				'#a0c6dcff': 'Aqua Island',
 				'#102632ff': 'Charcoal',
 				'#20566aff': 'Cello',
 				'#b0c2bdff': 'Opal',
-				'#e0fbfcff': 'Light Cyan',
-				'#ee6c4dff': 'Burnt Sienna',
+				'#c1ecfbff': 'Diamond',
+				'#a3e0ffff': 'Winter Wizard',
 				'#293241ff': 'Gunmetal'
 			},
+			icewindblues: {
+				'#002861ff': 'Cool Black',
+				'#c6dceaff': 'Periwinkle Gray',
+				'#8dbbdcff': 'Morning Glory',
+				'#72b9d5ff': 'Downy',
+				'#9eb4d3ff': 'Rock Blue',
+				'#0c4079ff': 'Dark Cerulean',
+				'#a3e0ffff': 'Winter Wizard',
+				'#293241ff': 'Ebony Clay'
+			},
 			earthygreen: {
-				'#55744bd2': 'Dingley',
-				'#ecf0bdff': 'Mint Julep',
-				'#d5bb99ff': 'Cameo',
-				'#9ed286ff': 'Feijoa',
-				'#a26f35ff': 'Copper',
-				'#2f271aff': 'Zeus',
-				'#6b501dff': 'West Coast',
-				'#512800ff': 'Indian Tan'
+				'#3f8014ff': 'Sap Green',
+				'#4b6b38ff': 'Dark Olive Green',
+				'#a3d06dff': 'Pistachio',
+				'#95e4a4ff': 'Teal Deer',
+				'#422900ff': 'American Bronze',
+				'#a26f35ff': 'Dark Gold',
+				'#634427ff': 'Van Dyke Brown',
+				'#c7a58fff': 'Khaki',
+				'#3f671eff': 'Dark Moss Green'
 			},
 			hackerspace: {
 				'#032202ff': 'English Holly',
@@ -442,6 +466,7 @@ Hooks.once('WhetstoneReady', () => {
 			},
 			lavender_fields: {
 				'#8b54bbff': 'Lavender Blanket',
+				'#554266ff': 'English Violet',
 				'#f5e0e6ff': 'Vanilla Ice',
 				'#60006aff': 'Ripe Plum',
 				'#fbc4dbff': 'Cupid',
@@ -479,17 +504,18 @@ Hooks.once('WhetstoneReady', () => {
 				name: 'OCEANBLUES.ColorThemeDefault',
 				presets: 'oceanblues',
 				values: {
-					'--OceanBlues-bg-color': '#3e5c86e6',
+					'--OceanBlues-bg-color': '#3d5a80ff',
 					'--OceanBlues-bg-image-window': 'ui/denim075.png',
 					'--OceanBlues-bg-window-blendmode': 'luminosity',
+					'--OceanBlues-bg-color-sheet': '#3d5a80ff',
 					'--OceanBlues-bg-image-sheet': 'ui/parchment.jpg',
-					'--OceanBlues-bg-sheet-blendmode': 'color-burn',
-					'--OceanBlues-text-light-color': '#c6dceaff',
-					'--OceanBlues-text-dark-color': '#8dbbdcff',
-					'--OceanBlues-text-highlight-color': '#72b9d5ff',
-					'--OceanBlues-text-selection-color': '#9eb4d3ff',
-					'--OceanBlues-fg-color': '#0c5f76ff',
-					'--OceanBlues-highlight-color': '#ee6c4dff',
+					'--OceanBlues-bg-sheet-blendmode': 'soft-light',
+					'--OceanBlues-text-light-color': '#a0c6dcff',
+					'--OceanBlues-text-dark-color': '#102632ff',
+					'--OceanBlues-text-highlight-color': '#20566aff',
+					'--OceanBlues-text-selection-color': '#b0c2bdff',
+					'--OceanBlues-fg-color': '#c1ecfbff',
+					'--OceanBlues-highlight-color': '#a3e0ffff',
 					'--OceanBlues-border-color': '#293241ff'
 				}
 			},
@@ -498,37 +524,39 @@ Hooks.once('WhetstoneReady', () => {
 				name: 'OCEANBLUES.ColorThemeIcewind',
 				presets: 'icewindblues',
 				values: {
-					'--OceanBlues-bg-color': '#3d5a80ff',
+					'--OceanBlues-bg-color': '#002861ff',
 					'--OceanBlues-bg-image-window': 'ui/denim075.png',
 					'--OceanBlues-bg-window-blendmode': 'luminosity',
-					'--OceanBlues-bg-image-sheet': 'ui/parchment.jpg',
-					'--OceanBlues-bg-sheet-blendmode': 'soft-light',
-					'--OceanBlues-text-light-color': '#a0c6dcff',
-					'--OceanBlues-text-dark-color': '#102632ff',
-					'--OceanBlues-text-highlight-color': '#20566aff',
-					'--OceanBlues-text-selection-color': '#b0c2bdff',
-					'--OceanBlues-fg-color': '#e0fbfcff',
-					'--OceanBlues-highlight-color': '#ee6c4dff',
+					'--OceanBlues-bg-color-sheet': '#002861ff',
+					'--OceanBlues-bg-image-sheet': 'ui/denim075.png',
+					'--OceanBlues-bg-sheet-blendmode': 'multiply',
+					'--OceanBlues-text-light-color': '#c6dceaff',
+					'--OceanBlues-text-dark-color': '#8dbbdcff',
+					'--OceanBlues-text-highlight-color': '#72b9d5ff',
+					'--OceanBlues-text-selection-color': '#9eb4d3ff',
+					'--OceanBlues-fg-color': '#0c4079ff',
+					'--OceanBlues-highlight-color': '#a3e0ffff',
 					'--OceanBlues-border-color': '#293241ff'
 				}
 			},
 			{
 				id: 'earthygreen',
-				name: 'OCEANBLUES.ColorThemeGreen',
+				name: 'Earthy Green',
 				presets: 'earthygreen',
 				values: {
-					'--OceanBlues-bg-color': '#55744bd2',
+					'--OceanBlues-bg-color': '#3f8014ff',
 					'--OceanBlues-bg-image-window': 'ui/denim-dark-090.png',
 					'--OceanBlues-bg-window-blendmode': 'luminosity',
+					'--OceanBlues-bg-color-sheet': '#4b6b38ff',
 					'--OceanBlues-bg-image-sheet': 'ui/denim075.png',
-					'--OceanBlues-bg-sheet-blendmode': 'color-burn',
-					'--OceanBlues-text-light-color': '#ecf0bdff',
-					'--OceanBlues-text-dark-color': '#d5bb99ff',
-					'--OceanBlues-text-highlight-color': '#9ed286ff',
+					'--OceanBlues-bg-sheet-blendmode': 'luminosity',
+					'--OceanBlues-text-light-color': '#a3d06dff',
+					'--OceanBlues-text-dark-color': '#95e4a4ff',
+					'--OceanBlues-text-highlight-color': '#422900ff',
 					'--OceanBlues-text-selection-color': '#a26f35ff',
-					'--OceanBlues-fg-color': '#2f271aff',
-					'--OceanBlues-highlight-color': '#6b501dff',
-					'--OceanBlues-border-color': '#512800ff'
+					'--OceanBlues-fg-color': '#634427ff',
+					'--OceanBlues-highlight-color': '#c7a58fff',
+					'--OceanBlues-border-color': '#3f671eff'
 				}
 			},
 			{
@@ -539,8 +567,9 @@ Hooks.once('WhetstoneReady', () => {
 					'--OceanBlues-bg-color': '#032202ff',
 					'--OceanBlues-bg-image-window': 'ui/denim075.png',
 					'--OceanBlues-bg-window-blendmode': 'darken',
-					'--OceanBlues-bg-image-sheet': 'ui/parchment.jpg',
-					'--OceanBlues-bg-sheet-blendmode': 'multiply',
+					'--OceanBlues-bg-color-sheet': '#032202ff',
+					'--OceanBlues-bg-image-sheet': 'ui/denim075.png',
+					'--OceanBlues-bg-sheet-blendmode': 'color-burn',
 					'--OceanBlues-text-light-color': '#1caa29ff',
 					'--OceanBlues-text-dark-color': '#00b700ff',
 					'--OceanBlues-text-highlight-color': '#2dff2dff',
@@ -558,6 +587,7 @@ Hooks.once('WhetstoneReady', () => {
 					'--OceanBlues-bg-color': '#8b54bbff',
 					'--OceanBlues-bg-image-window': 'ui/denim075.png',
 					'--OceanBlues-bg-window-blendmode': 'hard-light',
+					'--OceanBlues-bg-color-sheet': '#554266ff',
 					'--OceanBlues-bg-image-sheet': 'ui/parchment.jpg',
 					'--OceanBlues-bg-sheet-blendmode': 'soft-light',
 					'--OceanBlues-text-light-color': '#f5e0e6ff',
@@ -575,7 +605,7 @@ Hooks.once('WhetstoneReady', () => {
 		img: 'modules/Whetstone/images/Whetstone-thumb.png',
 		preview: 'modules/Whetstone/images/OceanBlues-preview.jpg',
 		dependencies: {},
-		systems: {core: '0.6.6'},
+		systems: {core: '0.6.6-0.7.9'},
 		compatible: {},
 		conflicts: {}
 	});
@@ -627,7 +657,8 @@ Hooks.on('onThemeActivated', (themeData) => {
 }
 .window-app .window-content,
 .dnd5e.sheet .window-content,
-.tidy5e.sheet.actor.npc .spellcasting-ability {
+.tidy5e.sheet.actor.npc .spellcasting-ability,
+.tidy5e.sheet.actor #item-info-container {
 	background-image: url('/${sheetImage}');
     background-repeat: repeat;
 }`);
