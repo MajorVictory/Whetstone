@@ -7,7 +7,7 @@
 
 <br />
 <p align="center">
-  <a href="https://github.com/MajorVictory/RetroUI-P5e">
+  <a href="https://github.com/MajorVictory/Whetstone">
     <img src="images/Whetstone-thumb.png" alt="Logo" width="128" height="128">
   </a>
   <h3 align="center">Whetstone - Foundry Theme Manager</h3>
@@ -77,7 +77,11 @@ If you want the bleeding edge version use the following manifest URL
 
 ### Theme Authors
 
+I have created a stub theme, Spearmint. You can use the following module as a base to create your own full system-theme.
+[Spearmin - A Whetstone Theme](https://github.com/MajorVictory/Whetstone-Spearmint)
+
 Themes can be published as normal modules with a depedency listed for Whetstone. Users install your theme through the module browser as normal and enable them via Whetstone's config.
+
 
 ### List of Themes
 
