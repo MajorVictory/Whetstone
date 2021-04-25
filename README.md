@@ -78,7 +78,8 @@ If you want the bleeding edge version use the following manifest URL
 ### Theme Authors
 
 I have created a stub theme, Spearmint. You can use the following module as a base to create your own full system-theme.
-[Spearmin - A Whetstone Theme](https://github.com/MajorVictory/Whetstone-Spearmint)
+
+[Spearmint - A Whetstone Theme](https://github.com/MajorVictory/Whetstone-Spearmint)
 
 Themes can be published as normal modules with a depedency listed for Whetstone. Users install your theme through the module browser as normal and enable them via Whetstone's config.
 
