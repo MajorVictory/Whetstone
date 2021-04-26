@@ -1,5 +1,10 @@
 # Changelog
 
+## Version 1.1.6
+
+ * OceanBlues: Fix for Midi-Qol colors in setting menus
+ * OceanBlues: Fix for number and password fields
+
 ## Version 1.1.5
 
  * OceanBlues: Reorganized folders and filenames

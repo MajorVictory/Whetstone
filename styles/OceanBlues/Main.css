@@ -173,6 +173,11 @@ form button,
 	border: 2px groove var(--OceanBlues-border-color);
 }
 
+.dialog .dialog-buttons button.default {
+    background: var(--OceanBlues-fg-color-darker);
+    border: 2px groove var(--OceanBlues-border-color);
+}
+
 button:hover,
 .dialog .dialog-buttons button:hover {
 	background: var(--OceanBlues-highlight-color);
@@ -186,6 +191,7 @@ button,
 textarea,
 input[type="text"],
 input[type="password"],
+input[type="number"],
 input[type="range"], .range-value,
 input[type="range"] + .range-value,
 input[type="color"][data-edit],
@@ -208,6 +214,10 @@ select:hover,
 select:focus,
 input[type="text"]:hover,
 input[type="text"]:focus,
+input[type="password"]:hover,
+input[type="password"]:focus,
+input[type="number"]:hover,
+input[type="number"]:focus,
 input[type="color"][data-edit]:hover,
 input[type="color"][data-edit]:focus,
 input[type="range"]:hover,
@@ -565,4 +575,13 @@ form .hint,
 	border: 1px solid var(--OceanBlues-border-color);
 	border-radius: 5px;
     box-shadow: 0 0 20px #000;
+}
+
+/* Midi-Qol */
+.midi-qol-faint {
+    color: var(--OceanBlues-text-dark-color);
+}
+
+.midi-qol-box {
+    border: 2px groove var(--OceanBlues-border-color);
 }
