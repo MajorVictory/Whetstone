@@ -1,3 +1,4 @@
+import {Entity} from './Whetstone-0.7-Core.js';
 import {WhetstoneThemes} from './WhetstoneThemes.js';
 /**
  * The EntityCollection of Whetstone theme entities.

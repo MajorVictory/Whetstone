@@ -1,3 +1,4 @@
+import {WorldSettingsStorage} from './Whetstone-0.7-Core.js';
 import {WhetstoneThemeConfigDialog} from './WhetstoneThemeConfigDialog.js';
 import {WhetstoneCoreConfigDialog} from './WhetstoneCoreConfigDialog.js';
 

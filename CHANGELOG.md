@@ -1,5 +1,10 @@
 # Changelog
 
+## Version 1.2.0
+
+ * Whetstone Core: reimplemented Foundry 0.7.x Core classes to bring Whetstone back into working order for Foundry 0.8.x
+ * Implemented Pull Request #18 - Thanks cclloyd
+
 ## Version 1.1.6
 
  * OceanBlues: Fix for Midi-Qol colors in setting menus

@@ -1,3 +1,4 @@
+import {Collection, EntityCollection} from './Whetstone-0.7-Core.js';
 import {WhetstoneTheme} from './WhetstoneTheme.js';
 
 export class WhetstoneThemes extends EntityCollection {

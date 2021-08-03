@@ -1,6 +1,6 @@
 {
   "name": "whetstone",
-  "version": "1.1.4",
+  "version": "1.2.0",
   "description": "A robust theme manager for FoundryVtt.",
   "main": "module.json",
   "scripts": {
