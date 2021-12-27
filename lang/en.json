@@ -111,5 +111,7 @@
     "OCEANBLUES.SubstylePF2eSheetColors": "Override Pathfinder Sheet Colors",
     "OCEANBLUES.SubstylePF2eSheetColorsHint": "Overrides the four background colors for Pathfinder 2e sheets",
     "OCEANBLUES.SubstyleSceneButtonsSmaller": "Smaller Scene Buttons Substyle",
-    "OCEANBLUES.SubstyleSceneButtonsSmallerHint": "Makes the scene buttons smaller."
+    "OCEANBLUES.SubstyleSceneButtonsSmallerHint": "Makes the scene buttons smaller.",
+    "OCEANBLUES.SubstyleWeatherControl": "Styles for Weather Control",
+    "OCEANBLUES.SubstyleWeatherControlHint": "Overrides the styles for the Weather Control module."
 }

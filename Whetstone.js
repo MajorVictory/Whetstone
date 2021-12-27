@@ -316,6 +316,13 @@ Hooks.once('WhetstoneReady', () => {
 				active: true,
 				styles: ['modules/Whetstone/styles/OceanBlues/PF2e-SheetColors.css']
 			},
+			'OceanBlues-WeatherControl': {
+				name: 'OceanBlues-WeatherControl',
+				title: 'OCEANBLUES.SubstyleWeatherControl',
+				hint: 'OCEANBLUES.SubstyleWeatherControlHint',
+				active: true,
+				styles: ['modules/Whetstone/styles/OceanBlues/WeatherControl.css']
+			},
 		},
 		variables: [
 			{

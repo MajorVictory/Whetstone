@@ -1,0 +1,25 @@
+/* ******************************************* */
+/* ******* Weather Control Style Overrides */
+/* ******************************************* */
+#weather-control-container {
+  color: var(--OceanBlues-text-light-color);
+  background-color: var(--OceanBlues-bg-color);
+  background-blend-mode: var(--OceanBlues-bg-window-blendmode);
+  border: 1px solid var(--OceanBlues-border-color);
+}
+#weather-control-container .calendar-header,
+#weather-container header {
+  background: var(--OceanBlues-bg-color-darker);
+}
+
+#weather-container header select {
+  color: var(--OceanBlues-fg-color);
+}
+#weather-container header select:hover {
+  background: var(--OceanBlues-bg-color);
+}
+
+#weather-container header select option {
+  background: var(--OceanBlues-bg-color-darker);
+  color: var(--OceanBlues-text-light-color);
+}
