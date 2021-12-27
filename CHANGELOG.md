@@ -1,5 +1,10 @@
 # Changelog
 
+## Version 1.2.1
+
+ * Updated compatibleCoreVersion to Foundry V9
+ * Added theming support for Weather control to the OceanBlues theme.
+
 ## Version 1.2.0
 
  * Whetstone Core: reimplemented Foundry 0.7.x Core classes to bring Whetstone back into working order for Foundry 0.8.x
