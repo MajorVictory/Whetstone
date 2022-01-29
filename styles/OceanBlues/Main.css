@@ -81,13 +81,15 @@ h2 {
 }
 
 .window-app .window-content, .dnd5e.sheet .window-content,
-.tidy5e.sheet.actor #item-info-container {
+.tidy5e.sheet.actor #item-info-container,
+.ve-window, .fltr__mini-view, .ui-list__wrp-preview,.veapp-ctx-menu__wrp {
 	color: var(--OceanBlues-text-dark-color);
 	background-color: var(--OceanBlues-bg-color-sheet);
 	background-blend-mode: var(--OceanBlues-bg-sheet-blendmode);
 }
 
-.tidy5e.sheet.actor.npc .spellcasting-ability {
+.tidy5e.sheet.actor.npc .spellcasting-ability,
+.ui-tab__wrp-tab-body--background, .cfg__btn-tab-header {
 	background-color: var(--OceanBlues-bg-color-sheet);
 	background-blend-mode: var(--OceanBlues-bg-sheet-blendmode);
 }
@@ -127,14 +129,15 @@ li.folder.collapsed > .folder-header h3,
 	text-shadow: 1px 1px 3px var(--OceanBlues-fg-color);
 }
 
-a[href] {
+a[href], .ui-list__btn-inline {
 	color: var(--OceanBlues-highlight-color);
 }
 
 a:hover,
 .tabs .item.active,
 .dnd5e.chat-card .card-header h3:hover,
-.filepicker .directory > li:hover {
+.filepicker .directory > li:hover,
+.ui-list__btn-inline:hover {
 	color: var(--OceanBlues-highlight-color);
 	text-shadow: 0 0 8px var(--OceanBlues-highlight-color);
 }
@@ -189,6 +192,8 @@ button:hover,
 select,
 button,
 textarea,
+#chat-form textarea,
+#chat-controls .roll-type-select,
 input[type="text"],
 input[type="password"],
 input[type="number"],
@@ -196,9 +201,15 @@ input[type="range"], .range-value,
 input[type="range"] + .range-value,
 input[type="color"][data-edit],
 input[type="datetime-local"],
+.directory .directory-header .header-search input,
 .dnd5e input[type="text"],
 .dnd5e select,
-.dnd5e.sheet select {
+.dnd5e.sheet select,
+.btn-group > input.form-control,
+.input-group > input.form-control,
+input.form-control,
+textarea.form-control,
+a.btn, label.btn, div.btn, select.ve-foundry-button {
 	color: var(--OceanBlues-text-dark-color);
 	background: var(--OceanBlues-fg-color);
 	border: 1px solid var(--OceanBlues-border-color);
@@ -584,4 +595,19 @@ form .hint,
 
 .midi-qol-box {
     border: 2px groove var(--OceanBlues-border-color);
+}
+
+/* IW */
+.imp-wiz__head-panel {
+	text-decoration-color: var(--OceanBlues-border-color);
+}
+
+.imp-wiz__spc-panels {
+	background-color: var(--OceanBlues-border-color);
+}
+
+.imp-wiz__tab-config, .vr-2,
+.cfg__btn-tab-header, .cfg__wrp-search,
+.imp-folder__row:nth-child(1)::before {
+	border-color: var(--OceanBlues-border-color);
 }

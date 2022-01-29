@@ -1,6 +1,7 @@
 [![foundry-shield-066]][foundry-url]
 [![foundry-shield-079]][foundry-url]
 [![foundry-shield-088]][foundry-url]
+[![foundry-shield-v9]][foundry-url]
 [![Forks][forks-shield]][forks-url]
 [![Stargazers][stars-shield]][stars-url]
 [![Issues][issues-shield]][issues-url]
@@ -58,7 +59,7 @@ The provided Ocean Blues theme comes with 5 pre-made color sets:
 ### Requirements
 
 **[Core Compatibility]**:
- * *FoundryVTT* 0.6.5-0.7.9
+ * *FoundryVTT* 0.6.5 to V9
 
 **[Known Issues]**
  * [Report Problems](https://github.com/MajorVictory/Whetstone/issues)
@@ -105,6 +106,7 @@ This work is licensed under Foundry Virtual Tabletop [EULA - Limited License Agr
 [foundry-shield-066]: https://img.shields.io/badge/Foundry-v0.6.6-informational
 [foundry-shield-079]: https://img.shields.io/badge/Foundry-v0.7.9-informational
 [foundry-shield-088]: https://img.shields.io/badge/Foundry-v0.8.8-informational
+[foundry-shield-v9]: https://img.shields.io/badge/Foundry-v9-informational
 [foundry-url]: https://foundryvtt.com/
 [forks-shield]: https://img.shields.io/github/forks/MajorVictory/Whetstone.svg?style=flat-square
 [forks-url]: https://github.com/MajorVictory/Whetstone/network/members

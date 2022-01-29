@@ -1,5 +1,10 @@
 # Changelog
 
+## Version 1.2.2
+
+ * OceanBlues: fixes for chatbox text area, search bars, and roll selector
+ * OceanBlues: fixes for misc IW elements
+
 ## Version 1.2.1
 
  * Updated compatibleCoreVersion to Foundry V9
